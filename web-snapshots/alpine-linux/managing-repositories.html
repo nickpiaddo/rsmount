@@ -1,0 +1,408 @@
+<!DOCTYPE html> <html class="client-js vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-language-alert-in-sidebar-enabled vector-feature-sticky-header-disabled vector-feature-page-tools-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-enabled vector-feature-main-menu-pinned-disabled vector-feature-limited-width-enabled vector-feature-limited-width-content-enabled vector-animations-ready" lang=en dir=ltr style><!--
+ Page saved with SingleFile
+ url: https://wiki.alpinelinux.org/wiki/Repositories#Managing_repositories
+--><meta charset=utf-8>
+<title>Repositories - Alpine Linux</title>
+<style>:root{--sf-img-6: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAYAAAAHkiXEAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAwAAAAMADO7oxXAAAM8klEQVR42u1ba0wUVxt+ZnZm57IXdikC3eWysAILKyJFUgSCSqHaGrVNK1oiqcZoa2MvGo3aNrFpaqKJvWli0jS9pemfGiomLT9qTGxLL6hV2qZVe/ESUNJaDQX2AnuZ78eb8w0spQsqLE15/kzOmTNnZ573nPd6FpjGNKYxjWlMYxoJAZfoFxgr3ngDAERRlgHg5Zepd80aTQMAQeB5APjoo1AIADZuXLcOAPr6Ev3e8SAk+gXGCiL+zTdnzMjNzc1taPB46uvr6xWF43ie54Hffjt+/PjxFSuuXj179uzZO++kp+65J9HvHQ98ol8gHt56CwBKSkTRZDKZGhq83qVLly5VFJ/v008//RTo7T1y5MgRIC+vrq6uzmiUJKvVaq2oeOcdAKivT/T7x8OUF4AgAMDrr3s8tbW1tbIcDH733XffAQMDFy9evAiEQlevXr0KBALffvvtt0BBQXV1dbWqGgwAsH8/qShuyqraKSsAWvnV1YqSkpKSUl6ekuJ2u90c19//9ddffz1yvM938uTJk4DNlpGRkQFYLGlpaWmZmbQTHnoo0d8zGqasAIxGADhwwOOpqampURSfj4jXtIGBgYGR4zUtFAqFAJ+vvb29HcjLq6ioqDCZaCe89toLLwBsP00lTDkBvPsuACxZYrE4HA5HXl5SksPhcHCc308qhkEQKisrKwFRXLBgwQK9PxD44YcffgBMpqSkpCQgOdnpdDpttpwcACDfaCphyuhGWqE8n5sLAD//XFa2atWqVW43x507d+4c4Pd3dHR00BieB8zmjz/++GOA500mkwno7a2vJ5M7ODg4CMhyfn5+PsDzxcXFxcDJk83Nzc03bigKAGRkNDQAQCCQ6O+eMjvA5QKARx6x210ulys93WymFez3f//999/r44zGZcuWLQMEgRHsdDqdgCQ1NjY26uOCwV9++eUXQJJIYOnpubm5ubJMlG/enOjvZUi4AFiARX7Kvn15eTU1NTUmU1/fZ5999hkARKPRKAAIgiAAsvz0008/PXIeWd64ceNGgONUVVUBQNM0DfD5vvnmm2+A7OyysrIyVQU4juN27vzgAwCw2xP9/QkXAJnFDRtSUz0ej8dqZSs2GCTVwyBJK1euXAnwfGZmZibRyHH6ledTUlJSAFleu3btWv25wcHOzs5OwGAIBAIBICMjPz8/XxDCYQB4/vlEf3/CBEArX1UFgeM47qWXZs6sqqqqUtX+frbyCRwny7IMyPITTzzxhE54LFi/LG/YsGEDwPM2m82m3/f5Tpw4cQLIzCwpKSmRZY4zGAyGxx9//30AYJHz5CNhApAkANiyxeksLi4uliSDwe/3+/UAi8FobGpqagJ4Pj09PX3kPLEC4Xmr1WrVBcEQDv/xxx9/AJr2559//glkZXk8Ho8oUqC2Z0+ieJh0ATDdy/MGg8GwfbvLNW/evHmK0tf3+eeffz6UWLPZbAYU5bHHHnts5DyxxMe2ZXnNmjVrAJ5PTU1N1fv9/tOnT58GnE6v1+sVRZ4XRVFcsYICtry8yeZj0gXAdG9m5pw5c+aIIsfRigyFrly5cmUogevWrVsHcJzdPtRUxiP+/x/GkzFW1aeeeuopvT8S6enp6QHCYbINLpfX6/UajRSwvfLKZPMxaXGArmtFURR//bWqav369etVtbf30KFDh4Bw+Nq1a9d0wpOSjh8/flzfCYzo1tbW1tZWoLOTCGTIysrKysoClixZsmTJkiEfyIXD4TBw48bChQsXApEIPccEZLEsXrx4MXDiRGtra6vfHwoFg8FgTc2aNQAwNPSbGEzyDti9Oze3vLy8XBQjkcuXL1/WiWeQZVI5scQzHDlC2c+9e/fu3btXv7a0tLS0tAwlnj0niqIIqOqWLVu26PejUbI5oRDZHLfb6/V6ZZmeOXBgshiZcAFQasHt5nlZluVVq5zO0tLSUlHs7//yyy+/HEpYWlpaGiBJZHRHUzUmE0W+sTCb/15gDIry4IMPPggIQkFBQYHeHwj8+OOPPwJ33OF0Op08L8tms9lcUvL22wBQW/uvFwBVqvbtc7srKioqjMbBwfPnz5/XdbFO0KZNmzYBPK8olC4YTnws0bEYrV9/nqUwtm3btk2/r2mUuhgYoMg5J6ewsLBQVSk+OXBgotPZEyYAvZBiNpvN996bnl5UVFRkMMSmk3medLcsU6A1GvEMFovFYrHE7x9tB8nyokWLFgGiWFpaWqrfZwKw2ymgUxSbzWbLzp7odPaECYAVUvLyKisrKxUlGKScTjTq8/l8+jhFYakFSjXEC7RGW+lMNY1GvN5PV6t1586dO/VxmkbGmkXgbrfH4/GwdParr05UOvu2C4AVUmTZbrfby8tnzJg5c+ZMjvP7T506dUofZzBQMk2Sli9fvjw+8QzxVFAs4aMJxGisqqqqAozG6urqav3+wAA5ByYTeUlJSSkpKSl2O6WzyTea0gIQRQDYv7+ggAIslsePRoPBYFAfpyibN2/eDFBKID7x8YzwWFVQbNtq3bFjxw7WA7DkH9sJLld+fn4++8U9ez78kN5+ygmAdOXixaqampqamp9vt2dmZmZyHIs8GQShpKSkBJAk0sVjJZ7hZlXQaG1JKisrKwNkmeIBBlZrlmUan5ycnp6erqq0iP4uH5sgATAvgbyd/fvz8ysrKytNpv5+SgOzUiGDqm7dunUro2LsRMUTQGz/eAWRlLR9+/btAPOWGIJB8tqys91ut1tRolGO47hnn6VkYlLSrfJnuNUJsrMBYOXK5OSMjIyM1auzs2fNmjXLaOzrO3r06FESkaYBolhRUVExMiAaK1HsKghkrCVJkiQJKC8vLy8vBxYsoNKkzTY8CxpvPn3eGTNmzAAikUuXLl0CQqGffvrpJz1gkyTKKUUiHMdxmjYw0NfX1ydJFPzRl94Mbtq/ZV4BGafLl+fObWhoaHA4NI28ndh8flJSc3NzMyAId911113jX6GsrWkk0DNnzpw5c0a/X1ZGqiSe8Y33OyxV0d1NNWcWJxgMlGUVRa/X6wVOn25vb28PBDguGo1G3e6mJgDo7h4vjzetgliROyUlNzc312ZTVVqRbMsyiGJtbW0tIIrDCRov8Qw7dpDRXL6cvCd23bVr165du26eeH0nUFxiNq9evXr1UMH09vb2AhzX19fXBzgcTqfTydzS3btvlsdx7wDmBQQCHMdxXV13393Y2NiYnBwKUYA1MHDhwoULANOldvsnn3zyCWAwFBYWFt488axdUECpBJ9veDzBvKDz52kBjJf42HYk8vvvv/8OXLlCKk7TqKLGkniSNHv27NnAmTOnTp06FQiEw+FwOFxcTI7qb7+Nlc9x7wDmBTgcHo/HoyiiSEZWJ55gNN5///333z7iGZgAYuF2u91u960TzyAIVACyWocXdphNiEavX79+HXA6HQ6HQxTJcL/66nj5HPMOYFZflnme5zs7KyubmpqaLJZA4NixY8eAwcGurq4ugOPISNpsZIQNhpycnJxbJ4S1u7u7u7u7gYMHDx48eFC3CRs3UlGepaVvl8A17a+//voL6Oyk1EU0ylQRqVxZpp1w+nRHR0dHIBCNhkKhUFXVo48CwFAr9fcYsxf08MMA8OKLmZnFxcXFVVU2m6qqqiCwWiuDLK9YsWKFfr1dxDNYrWQMa2vJttTV1dXV1Y3d+xlvmyUHNS0SiUSAYPCLL774AgCoTRU1QFGsVqvVYOjp6enp6Zk16/BhgEVH/4Q4KojnN20CgJwcnhcEQXjySZdr7ty5cyWpv/+rr776auhYo9FoBFT1mWeeeeb2E3+rxvVW57Xb6VCAIAwvcbJKXnKy3W6387wgSJIklZa+9x4ALFx4kwKg0/iA3V5UBAC7dmVlFRYWFgpCNErFbVbkZhCEOXPmzAEMhuHF83878Xo/GV9FoZ3HwJJ44TAZ7aystLS0NFWlAJX9kYQfdaHHZPfoSCzAch8WC2U97rsvPZ2K2IFAW1tb28iJwmFSRdeukc7/r4EtSJutqKioiOM0rbOzs3P2bJdL0zTNar10CQCGVkAIMZJhAqBDI4Ak0am0aJQZO3ZOh+NI902D3G1mlCMRsg2EcPj6dUBPY49kTIg3OcV2LS3nz7e1tbWtXev11tTU1EiSxTJ//vz5AMCymewIIQlK01h7ovupze5PdH/s7+sqiNzxCxe6urq6Bgb6+zVN05qbh/9LbWR2K6aD6X6rla4WC52ztFrpEN/WraTfH3iApqK702AIBonww4dJ+z/33OXLAHDjBt1n4iBRAqPGASyvyGwBI5rlwZmKYpl8ZmT4hJ81nRwMze8ObbOKh98//NrfT9fBwdiZ4gRijOhY4pkuY4T/16wBHS9jyXi9zQhmgmD/P9CtQizGmQtiK54ZFSYA1p66f4a7vWAqhBHLBBArmGlMYxr/jP8BZuJHYCgGjMMAAAAASUVORK5CYII=")}</style><style>.mw-ui-button{border:1px solid #a2a9b1;cursor:pointer;font-family:inherit;text-align:center;-webkit-appearance:none}.mw-ui-button:not(.mw-ui-icon-element){min-height:32px;min-width:4em;max-width:28.75em;padding:5px 12px}.mw-ui-button:not(:disabled){transition-property:background-color,color,border-color,box-shadow;transition-duration:100ms}.mw-ui-button:not(:disabled):visited{color:#202122}.mw-ui-button:not(:disabled):hover{background-color:#ffffff;color:#404244;border-color:#a2a9b1}.mw-ui-button:not(:disabled):focus{color:#202122;border-color:#3366cc;box-shadow:inset 0 0 0 1px #3366cc,inset 0 0 0 2px #ffffff;outline-width:0}.mw-ui-button:not(:disabled):focus::-moz-focus-inner{border-color:transparent;padding:0}.mw-ui-button:not(:disabled):active,.mw-ui-button:not(:disabled).is-on{background-color:#c8ccd1;color:#000000;border-color:#72777d;box-shadow:none}.mw-ui-button:disabled{background-color:#c8ccd1;color:#ffffff;border-color:#c8ccd1;cursor:default}input[type="checkbox"]:hover+.mw-ui-button,.mw-ui-button:hover{background-color:#ffffff;color:#404244;border-color:#a2a9b1}input[type="checkbox"]:focus+.mw-ui-button,.mw-ui-button:focus{color:#202122;border-color:#3366cc;box-shadow:inset 0 0 0 1px #3366cc,inset 0 0 0 2px #ffffff;outline-width:0}input[type="checkbox"]:active+.mw-ui-button,.mw-ui-button:active{background-color:#c8ccd1;color:#000000;border-color:#72777d;box-shadow:none}.mw-ui-button.mw-ui-icon-element:not(.mw-ui-icon-with-label-desktop){color:transparent!important}.mw-ui-button.mw-ui-icon-element:not(.mw-ui-icon-with-label-desktop) span:not(.mw-ui-icon){display:block;position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden}@media all and (max-width:1000px){.mw-ui-button.mw-ui-icon-element span:not(.mw-ui-icon){display:block;position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden}}.mw-ui-button.mw-ui-quiet{background-color:transparent;color:#202122;border-color:transparent;font-weight:bold}.mw-ui-button.mw-ui-quiet:not(.mw-ui-icon-element),.mw-ui-button.mw-ui-quiet.mw-ui-progressive:not(.mw-ui-icon-element),.mw-ui-button.mw-ui-quiet.mw-ui-destructive:not(.mw-ui-icon-element){min-height:32px}input[type="checkbox"]:hover+.mw-ui-button.mw-ui-quiet,input[type="checkbox"]:hover+.mw-ui-button.mw-ui-quiet.mw-ui-progressive,input[type="checkbox"]:hover+.mw-ui-button.mw-ui-quiet.mw-ui-destructive,.mw-ui-button.mw-ui-quiet:hover,.mw-ui-button.mw-ui-quiet.mw-ui-progressive:hover,.mw-ui-button.mw-ui-quiet.mw-ui-destructive:hover{background-color:rgba(0,24,73,0.02745098);color:#202122;border-color:transparent}input[type="checkbox"]:focus+.mw-ui-button.mw-ui-quiet,input[type="checkbox"]:focus+.mw-ui-button.mw-ui-quiet.mw-ui-progressive,input[type="checkbox"]:focus+.mw-ui-button.mw-ui-quiet.mw-ui-destructive,.mw-ui-button.mw-ui-quiet:focus,.mw-ui-button.mw-ui-quiet.mw-ui-progressive:focus,.mw-ui-button.mw-ui-quiet.mw-ui-destructive:focus{color:#202122;border-color:#3366cc;box-shadow:inset 0 0 0 1px #3366cc,inset 0 0 0 2px #ffffff}input[type="checkbox"]:active+.mw-ui-button.mw-ui-quiet,input[type="checkbox"]:active+.mw-ui-button.mw-ui-quiet.mw-ui-progressive,input[type="checkbox"]:active+.mw-ui-button.mw-ui-quiet.mw-ui-destructive,.mw-ui-button.mw-ui-quiet:active,.mw-ui-button.mw-ui-quiet.mw-ui-progressive:active,.mw-ui-button.mw-ui-quiet.mw-ui-destructive:active{background-color:rgba(0,36,73,0.08235294);color:#000000;border-color:#72777d;box-shadow:none}.mw-ui-button.mw-ui-quiet:disabled,.mw-ui-button.mw-ui-quiet.mw-ui-progressive:disabled,.mw-ui-button.mw-ui-quiet.mw-ui-destructive:disabled,.mw-ui-button.mw-ui-quiet:disabled:hover,.mw-ui-button.mw-ui-quiet.mw-ui-progressive:disabled:hover,.mw-ui-button.mw-ui-quiet.mw-ui-destructive:disabled:hover,.mw-ui-button.mw-ui-quiet:disabled:active,.mw-ui-button.mw-ui-quiet.mw-ui-progressive:disabled:active,.mw-ui-button.mw-ui-quiet.mw-ui-destructive:disabled:active{background-color:transparent;color:#72777d;border-color:transparent}.mw-ui-icon{font-size:initial;position:relative;display:inline-block;box-sizing:content-box!important;width:1.25em;height:1.25em;min-width:1.25em;min-height:1.25em;flex-basis:1.25em;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-moz-appearance:none;-webkit-appearance:none;background-color:transparent;margin:0;padding:0}.mw-ui-icon:not(.mw-ui-button){border:0}.mw-ui-icon:before{content:"";display:block;width:100%;height:100%;min-width:1.25em;min-height:1.25em;background-repeat:no-repeat;background-size:1.25em 1.25em;background-position:center}.mw-ui-icon-flush-left{margin-left:-0.75em}@media all and (min-width:1000px){.mw-ui-icon-flush-left{margin-left:-0.375em}}.mw-ui-icon-flush-right{margin-right:-0.75em}@media all and (min-width:1000px){.mw-ui-icon-flush-right{margin-right:-0.375em}}.mw-ui-icon-element{border-radius:2px;line-height:0;transition:background-color 100ms}.mw-ui-icon-element.mw-ui-button{padding:0.6875em}.mw-ui-icon-element:focus,.mw-ui-icon-element:active,.mw-ui-icon-element:visited{color:transparent}@media (min-width:1000px){.mw-ui-icon-element.mw-ui-button{padding:0.3125em}}.mw-ui-icon-small{width:1em;height:1em;min-width:1em;min-height:1em;flex-basis:1em;line-height:1em}.mw-ui-icon-small:before{content:"";display:block;width:100%;height:100%;min-width:1em;min-height:1em;background-repeat:no-repeat;background-size:1em 1em;background-position:center}@media all and (min-width:1000px){}.mw-ui-icon-wikimedia-expand:before{background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj48dGl0bGU+CgkJZXhwYW5kCgk8L3RpdGxlPjxnIGZpbGw9IiMwMDAiPjxwYXRoIGQ9Im0xNy41IDQuNzUtNy41IDcuNS03LjUtNy41TDEgNi4yNWw5IDkgOS05eiIvPjwvZz48L3N2Zz4K)}@media (prefers-reduced-motion:reduce){*,::before,::after{animation-delay:-0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0ms!important}}body{margin:0}main{display:block}@supports (text-decoration:underline dotted){abbr[title]{border-bottom:0;text-decoration:underline dotted}}pre,code{font-family:monospace,monospace}img{border:0}button,input{margin:0}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}figure[typeof~="mw:File"].mw-halign-left{margin:0 0.5em 0.5em 0;clear:left;float:left}@media screen{html,body{height:100%}:focus{outline-color:#3366cc}html{font-size:100%}html,body{font-family:sans-serif}ul{list-style-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjEzIj4KCTxjaXJjbGUgY3g9IjIuNSIgY3k9IjkiIHI9IjIuNSIgZmlsbD0iIzIwMjEyMiIvPgo8L3N2Zz4K)}pre{line-height:1.3}.mw-jump-link:not(:focus){display:block;position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden}.mw-body h1,.mw-body-content h2{margin-bottom:0.25em;padding:0;font-family:"Linux Libertine","Georgia","Times",serif;line-height:1.3}.mw-body h1:lang(ja),.mw-body-content h1:lang(ja),.mw-body-content h2:lang(ja),.mw-body h1:lang(he),.mw-body-content h1:lang(he),.mw-body-content h2:lang(he),.mw-body h1:lang(ko),.mw-body-content h1:lang(ko),.mw-body-content h2:lang(ko){font-family:sans-serif}.mw-body h1:lang(ckb),.mw-body-content h1:lang(ckb),.mw-body-content h2:lang(ckb){font-family:"Scheherazade","Linux Libertine","Georgia","Times",serif}.mw-body h1:lang(my),.mw-body-content h1:lang(my),.mw-body-content h2:lang(my){line-height:normal}.mw-body h1{font-size:1.8em}.vector-body{font-size:calc(1em*0.875);line-height:1.6}.vector-body h1{margin-top:1em}.vector-body h2{margin-top:1em;font-size:1.5em}.vector-body h3{margin-top:0.3em;margin-bottom:0;padding-bottom:0;line-height:1.6}.vector-body h3{font-size:1.2em}.vector-body h3{font-weight:bold}.vector-body p{margin:0.5em 0}.mw-parser-output a{word-wrap:break-word}.mw-parser-output a.external{background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDEyIDEyIj4KCTx0aXRsZT4KCQlleHRlcm5hbCBsaW5rCgk8L3RpdGxlPgoJPHBhdGggZmlsbD0iIzM2YyIgZD0iTTYgMWg1djVMOC44NiAzLjg1IDQuNyA4IDQgNy4zbDQuMTUtNC4xNkw2IDFaIE0yIDNoMnYxSDJ2Nmg2VjhoMXYyYTEgMSAwIDAgMS0xIDFIMmExIDEgMCAwIDEtMS0xVjRhMSAxIDAgMCAxIDEtMVoiLz4KPC9zdmc+Cg==);background-position:center right;background-repeat:no-repeat;background-size:0.857em;padding-right:1em}.mw-parser-output a.external.free{word-break:break-all}.mw-indicators{font-size:0.875em;line-height:1.6;position:relative;float:right}#siteNotice{font-size:0.8em;margin:24px 0;position:relative;text-align:center}.vector-search-box-inner{position:relative;height:100%}.vector-search-box-input{background-color:rgba(255,255,255,0.5);color:#000000;width:100%;height:2.15384615em;box-sizing:border-box;border:1px solid #a2a9b1;border-radius:2px;padding:5px 2.15384615em 5px 0.4em;box-shadow:inset 0 0 0 1px transparent;font-family:inherit;font-size:0.8125em;direction:ltr;transition-property:border-color,box-shadow;transition-duration:250ms;-webkit-appearance:none;-moz-appearance:textfield}.vector-search-box-inner:hover .vector-search-box-input{border-color:#72777d}.vector-search-box-input:focus,.vector-search-box-inner:hover .vector-search-box-input:focus{outline:0;border-color:#3366cc;box-shadow:inset 0 0 0 1px #3366cc}.vector-search-box-input::-webkit-input-placeholder{color:#72777d;opacity:1}.vector-search-box-input::-moz-placeholder{color:#72777d;opacity:1}.vector-search-box-input::placeholder{color:#72777d;opacity:1}.vector-search-box-input::-webkit-search-decoration,.vector-search-box-input::-webkit-search-cancel-button,.vector-search-box-input::-webkit-search-results-button,.vector-search-box-input::-webkit-search-results-decoration{display:none}.searchButton{background-color:transparent;position:absolute;top:1px;bottom:1px;right:1px;min-width:28px;width:2.15384615em;border:0;padding:0;cursor:pointer;font-size:0.8125em;direction:ltr;text-indent:-99999px;white-space:nowrap;overflow:hidden;z-index:1}.searchButton[name="go"]{background:no-repeat center/1.23076923em url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQlzZWFyY2gKCTwvdGl0bGU+Cgk8cGF0aCBkPSJNMTIuMiAxMy42YTcgNyAwIDEgMSAxLjQtMS40bDUuNCA1LjQtMS40IDEuNHpNMyA4YTUgNSAwIDEgMCAxMCAwQTUgNSAwIDAgMCAzIDh6Ii8+Cjwvc3ZnPgo=);opacity:0.67}.vector-search-box-collapses>div{display:none}.mw-footer{direction:ltr}.mw-footer ul{list-style:none;margin:0;padding:0}.mw-footer li{color:#202122;margin:0;padding:0.5em 0;font-size:0.75em}#footer-icons{float:right}#footer-icons li{float:left;margin-left:0.5em;line-height:2;text-align:right}#footer-info li{line-height:1.4}#footer-places li{float:left;margin-right:1em;line-height:2}}@media screen and (min-width:1000px){}@media screen and (min-width:1000px){.vector-search-box-collapses>div{display:block}}@media screen{html{scroll-padding-top:75px}body{background-color:#f8f9fa;color:#202122;overflow-y:scroll}.mw-body{direction:ltr}.mw-body{padding:0.5em 0 1.5em}.mw-body .firstHeading{word-wrap:break-word;margin-bottom:0}.mw-header{position:relative;z-index:4}.mw-body-content{margin-top:16px}.mw-body,.mw-footer{margin-left:0}.mw-indicators{z-index:1}.vector-page-titlebar:after{clear:both;content:"";display:block}.vector-body-before-content{overflow:hidden}.vector-body{position:relative;z-index:0}#contentSub:not(:empty),#contentSub2{font-size:84%;line-height:1.2em;color:#54595d;width:auto;margin:8px 0 0}.mw-page-container{position:relative;z-index:0;max-width:99.75em;min-width:31.25em;min-height:100%;margin-left:auto;margin-right:auto;padding:0.05px 1.5em;background-color:#ffffff;box-sizing:border-box}.vector-feature-page-tools-disabled #vector-toc-pinned-container .vector-toc:after,.vector-feature-page-tools-disabled #vector-toc-pinned-container .vector-toc{width:220px}.vector-feature-page-tools-disabled .mw-content-container,.vector-feature-page-tools-disabled .mw-table-of-contents-container{max-width:60em}.mw-table-of-contents-container{align-self:start;height:100%}@keyframes search-loader-progress-bar{0%{background-size:0 2px;background-position:-10%0}30%{background-size:30% 2px;background-position:-10%0}70%{background-size:30% 2px;background-position:110%0}100%{background-size:0 2px;background-position:110%0}}.vector-search-box{font-size:calc(1em*0.875);flex-grow:1}.vector-search-box-vue .vector-search-box-input,.vector-search-box-vue .searchButton{font-size:inherit}.vector-search-box-vue .vector-search-box-input{height:auto;min-height:32px;line-height:1.4285714;padding-top:4px;padding-bottom:4px}.client-js .vector-search-box-vue .vector-search-box-input{padding-left:36px;padding-right:8px}.client-js .vector-search-box-vue .searchButton{pointer-events:none;right:auto;top:0;bottom:0;width:36px;opacity:0.51;background-size:1.42857143em auto;background-position-x:8px}.client-js .vector-search-box-vue .vector-search-box-input:focus~.searchButton{opacity:0.87}.client-js .vector-search-box-vue.vector-search-box-show-thumbnail>div{max-width:37.42857143em}.client-js .vector-search-box-vue.vector-search-box-show-thumbnail.vector-search-box-auto-expand-width .searchButton{left:25px}.client-js .vector-search-box-vue.vector-search-box-show-thumbnail.vector-search-box-auto-expand-width .vector-search-box-input{margin-left:24px;width:calc(100% - 24px)}.vector-user-links{display:flex;align-items:center;position:relative;justify-content:flex-end;flex-shrink:1}.vector-user-links .mw-list-item{margin:0}.vector-user-links .mw-portlet-vector-user-menu-overflow{font-size:0.875em}.vector-user-links .mw-portlet-vector-user-menu-overflow .vector-menu-content-list{display:flex;align-items:center}.vector-user-links .mw-portlet-vector-user-menu-overflow a:not(.mw-ui-button):not(.mw-echo-notifications-badge){margin:0 8px}.mw-header{min-height:3.125em;padding:8px 0;display:flex;flex-wrap:nowrap;align-items:center}.mw-header .vector-header-start,.mw-header .vector-header-end{display:flex;align-items:center}.mw-header .vector-header-end{flex-grow:1}.mw-footer{border-top:1px solid #a2a9b1;padding:0.75em 0}.mw-footer-container{padding-top:50px;padding-bottom:82px}.vector-menu ul{list-style:none;margin:0}.vector-menu-tabs{float:left}.vector-menu-tabs .mw-list-item a{color:#3366cc}.vector-menu-tabs .mw-list-item.vector-tab-noicon a:focus,.vector-menu-tabs .mw-list-item.vector-tab-noicon a:hover{text-decoration:none;border-bottom:1px solid}.vector-menu-tabs .mw-list-item.new a,.vector-menu-tabs .mw-list-item.new a:visited{color:#dd3333}.vector-menu-tabs .mw-list-item.selected a,.vector-menu-tabs .mw-list-item.selected a:visited{color:#202122;border-bottom:1px solid}.vector-menu-tabs .mw-list-item.vector-tab-noicon{margin:0 8px}.vector-menu-tabs .mw-list-item{white-space:nowrap}.vector-menu-tabs .mw-list-item{float:left;margin-bottom:0}.vector-menu-tabs .mw-list-item>a{display:inline-flex;position:relative;cursor:pointer;max-height:3.15384615em;box-sizing:border-box;font-weight:normal}.vector-menu-tabs .mw-list-item.vector-tab-noicon>a{padding:18px 0 7px 0;margin-bottom:-1px}.mw-checkbox-hack-button{display:inline-block;cursor:pointer}#mw-sidebar-button:before{}.vector-feature-page-tools-disabled #mw-sidebar-button:before{background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQljaGV2cm9uCgk8L3RpdGxlPgoJPHBhdGggZD0ibTkgMiAxLjMgMS4zTDMuNyAxMGw2LjYgNi43TDkgMThsLTgtOCA4LTh6bTguNSAwTDE5IDMuMyAxMi4yIDEwbDYuNyA2LjctMS40IDEuMy04LTggOC04eiIvPgo8L3N2Zz4K)}.vector-feature-page-tools-disabled #mw-sidebar-checkbox:not(:checked)~.mw-header #mw-sidebar-button:before{background-image:url(data:image/svg+xml,%3Csvg\ xmlns=%22http://www.w3.org/2000/svg%22\ width=%2220%22\ height=%2220%22\ viewBox=%220\ 0\ 20\ 20%22%3E\ %3Ctitle%3E\ menu\ %3C/title%3E\ %3Cpath\ d=%22M1\ 3v2h18V3zm0\ 8h18V9H1zm0\ 6h18v-2H1z%22/%3E\ %3C/svg%3E)}#mw-sidebar-button:hover:before{opacity:1}.vector-page-titlebar{display:flex;justify-content:flex-end;box-shadow:0 1px #a2a9b1;align-items:center}.vector-page-titlebar .firstHeading{flex-grow:1;border:0}.vector-page-toolbar-container{display:flex;font-size:0.8125em;box-shadow:0 1px #c8ccd1;margin-bottom:1px}.vector-page-toolbar-container .mw-portlet-views{display:none}#left-navigation{display:flex;margin-left:-8px;flex-grow:1}#right-navigation{display:flex;margin-right:-8px}#right-navigation .vector-menu-content{left:auto;right:-1px}.vector-pinnable-header-label{display:inline-block;color:#54595d;font-size:0.875rem;margin:0;padding:0;border:0}.vector-pinnable-header-toggle-button{border:0;padding:0;background-color:transparent;color:#3366cc;cursor:pointer}.vector-pinnable-header-toggle-button:hover{color:#447ff5}.vector-pinnable-header-toggle-button:before{content:"[";color:#54595d}.vector-pinnable-header-toggle-button:after{content:"]";color:#54595d}.client-js .vector-pinnable-header-pinned .vector-pinnable-header-unpin-button{display:inline-block}.vector-pinned-container .vector-pinnable-element .vector-pinnable-header{padding-left:0;padding-right:0}@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.vector-toc{max-height:75vh;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;background-color:#ffffff}.vector-feature-page-tools-disabled .vector-toc{padding:18px 12px 20px 27px}.vector-feature-page-tools-disabled .vector-toc .vector-toc-pinnable-header{padding:0 0 12px 0;border:0;line-height:initial}.vector-toc .vector-pinnable-header-label{overflow:unset}.vector-toc .vector-toc-toggle{position:absolute;top:1px;left:calc(-1*1.834em - 1px);width:1.834em;height:1.834em;font-size:0.75em;transition:100ms;color:transparent;cursor:pointer}.vector-toc .vector-toc-link{word-break:break-word;color:#3366cc;display:block}.vector-toc .vector-toc-level-1-active:not(.vector-toc-list-item-expanded)>.vector-toc-link,.vector-toc .vector-toc-list-item-active.vector-toc-level-1-active>.vector-toc-link{color:#202122;font-weight:bold}.vector-toc .vector-toc-level-1-active:not(.vector-toc-list-item-expanded)>.vector-toc-link .vector-toc-text,.vector-toc .vector-toc-list-item-active.vector-toc-level-1-active>.vector-toc-link .vector-toc-text{width:calc(100% + 14px)}.vector-toc .vector-toc-level-1-active:not(.vector-toc-list-item-active)>.vector-toc-link{color:#202122}.vector-feature-page-tools-disabled .vector-toc .vector-toc-text{padding:4px 0}.vector-toc .vector-toc-contents,.vector-toc .vector-toc-list{margin:0;list-style:none}.vector-feature-page-tools-disabled .vector-toc .vector-toc-contents,.vector-feature-page-tools-disabled .vector-toc .vector-toc-list{line-height:18px}.vector-toc .vector-toc-list-item{display:block;position:relative;list-style-type:none;padding-left:8px}.vector-toc .vector-toc-list-item.vector-toc-level-1{padding-left:0}.vector-toc .vector-toc-list-item a{font-size:0.875em}.client-js .vector-toc .vector-toc-level-1.vector-toc-list-item-expanded .vector-toc-list-item{display:block}.client-js .vector-toc .vector-toc-toggle{display:block}.client-js .vector-toc .vector-toc-level-1.vector-toc-list-item-expanded .vector-toc-toggle{transform:rotate(0deg)}.vector-toc-landmark{display:none}.mw-ui-icon:before{opacity:0.87}}@media screen and (min-width:1000px){.mw-page-container{padding-left:2.75em;padding-right:2.75em}}@media screen and (min-width:1200px){.mw-page-container{padding-left:3.25em;padding-right:3.25em}}@media screen and (min-width:1200px){.vector-feature-page-tools-disabled #vector-toc-pinned-container .vector-toc:after,.vector-feature-page-tools-disabled #vector-toc-pinned-container .vector-toc{width:244px}}@media screen and (min-width:1000px){.mw-page-container-inner{display:grid;grid-template:min-content min-content min-content 1fr min-content/12.25em minmax(0,1fr);grid-template-areas:"header header""siteNotice siteNotice""mainMenu pageContent""toc pageContent""footer footer"}.vector-feature-page-tools-disabled .mw-page-container-inner{column-gap:44px}.vector-sitenotice-container{grid-area:siteNotice}.mw-table-of-contents-container{grid-area:toc;overflow-anchor:none}.mw-header{grid-area:header}.vector-main-menu-container{grid-area:mainMenu;overflow-anchor:none}.mw-content-container{grid-area:pageContent}.mw-footer-container{grid-area:footer}}@media screen and (min-width:1200px){.mw-page-container-inner{grid-template-columns:15.5em minmax(0,1fr)}}@media screen and (min-width:1000px){}@media screen and (min-width:1000px){.vector-feature-toc-pinned-enabled #mw-panel-toc{contain:paint}.vector-feature-page-tools-disabled.vector-feature-toc-pinned-enabled #mw-panel-toc{margin-left:-27px}#vector-toc-pinned-container{position:sticky;top:0}.vector-feature-toc-pinned-enabled #vector-toc-pinned-container{margin-top:1.5em}.vector-feature-page-tools-disabled.vector-feature-toc-pinned-enabled #mw-sidebar-checkbox:not(:checked)~.mw-table-of-contents-container #vector-toc-pinned-container{margin-top:2.09em}#vector-toc-pinned-container .vector-toc{max-height:calc(100vh - 16px);padding-bottom:24px}#vector-toc-pinned-container .vector-toc:after{content:"";display:block;position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(rgba(255,255,255,0),#ffffff);background-repeat:no-repeat;background-position:-12px;pointer-events:none}.vector-feature-page-tools-disabled #vector-toc-pinned-container .vector-toc{padding-top:calc(0.75em + 18px)}}@media screen and (max-width:999px){}@media screen and (max-width:999px){.client-js #vector-toc-pinned-container .vector-toc{display:none}.client-js .vector-toc .vector-pinnable-header-toggle-button{display:none}}@media screen and (min-width:1000px){}@media screen and (max-width:999px){}@media screen and (min-width:720px){}@media screen and (min-width:1000px){.vector-user-links .mw-portlet-vector-user-menu-overflow{margin-right:8px}.vector-user-links .mw-portlet-vector-user-menu-overflow .vector-menu-content-list{column-gap:8px}}@media screen and (max-width:719px){.vector-user-links .mw-portlet-vector-user-menu-overflow .user-links-collapsible-item{display:none}}@media screen and (min-width:1200px){}@media screen and (min-width:1200px){.vector-feature-page-tools-disabled .mw-header .vector-search-box:not(.vector-search-box-auto-expand-width),.vector-feature-page-tools-disabled:not(.client-js) .mw-header .vector-search-box{padding-left:24px}}@media screen and (min-width:1000px){.mw-header .vector-search-box{margin-right:12px}}@media screen and (max-width:999px){}@media screen and (max-width:999px){}@media screen and (min-width:1000px){}@media screen and (min-width:720px){.vector-page-toolbar-container .mw-portlet-views:not(.emptyPortlet){display:block}}@media screen and (min-width:720px){}@media screen and (max-width:719px){}@media screen and (max-width:999px){.vector-pinned-container{display:none}}@media screen and (min-width:1200px){}@media screen and (min-width:1000px){}@media screen and (min-width:1000px){.client-js.vector-feature-toc-pinned-enabled .mw-table-of-contents-container.vector-toc-landmark{display:block}}@media screen and (max-width:999px){.client-js .mw-table-of-contents-container.vector-toc-landmark{display:none}}@media all{.mw-logo{display:flex;height:100%;align-items:center;min-width:13.875em}.vector-feature-page-tools-disabled .mw-logo{margin-left:24px}.mw-logo-container{float:left;max-width:120px}.mw-logo-wordmark{display:block;margin:0 auto}}@media all and (min-width:720px){}@media all and (min-width:720px){.mw-logo-container{max-width:none}}.vector-pinned-container{display:none}@supports (display:grid){.vector-pinned-container{display:block}}@media screen{.mw-parser-output a.external{color:#3366cc}.mw-parser-output a.extiw:visited,.mw-parser-output a.external:visited{color:#795cb2}.mw-parser-output a.extiw:active,.mw-parser-output a.external:active{color:#faa700}.mw-body-content:after{clear:both;content:"";display:block}.mw-body-content a.external.free{word-wrap:break-word}#catlinks{text-align:left}.catlinks{border:1px solid #a2a9b1;background-color:#f8f9fa;padding:5px;margin-top:1em;clear:both}.catlinks ul{display:inline;margin:0;padding:0;list-style:none}.catlinks li{display:inline-block;line-height:1.25em;border-left:1px solid #a2a9b1;margin:0.125em 0;padding:0 0.5em}.catlinks li:first-child{padding-left:0.25em;border-left:0}a{text-decoration:none;color:#3366cc;background:none}a:not([href]){cursor:pointer}a:visited{color:#795cb2}a:active{color:#faa700}a:hover,a:focus{text-decoration:underline}a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}img{border:0;vertical-align:middle}h1,h2,h3{color:#000;margin:0;padding-top:0.5em;padding-bottom:0.17em;overflow:hidden}h1,h2{margin-bottom:0.6em;border-bottom:1px solid #a2a9b1}h3{margin-bottom:0.3em}h1{font-size:188%;font-weight:normal}h2{font-size:150%;font-weight:normal}h3{font-size:128%}p{margin:0.4em 0 0.5em 0}ul{margin:0.3em 0 0 1.6em;padding:0}ol{list-style-image:none}li{margin-bottom:0.1em}pre,code{font-family:monospace,monospace}pre,code{background-color:#f8f9fa;color:#000;border:1px solid #eaecf0}code{border-radius:2px;padding:1px 4px}pre{padding:1em;white-space:pre-wrap;overflow-x:hidden;word-wrap:break-word}table{font-size:100%}form{border:0;margin:0}@counter-style meetei{system:numeric;symbols:"꯰""꯱""꯲""꯳""꯴""꯵""꯶""꯷""꯸""꯹";suffix:") "}@counter-style santali{system:numeric;symbols:"᱐""᱑""᱒""᱓""᱔""᱕""᱖""᱗""᱘""᱙"}@counter-style myanmar_with_period{system:numeric;symbols:"၀""၁""၂""၃""၄""၅""၆""၇""၈""၉";suffix:"။ "}ol:lang(azb) li,ol:lang(bcc) li,ol:lang(bgn) li,ol:lang(bqi) li,ol:lang(fa) li,ol:lang(glk) li,ol:lang(kk-arab) li,ol:lang(lrc) li,ol:lang(luz) li,ol:lang(mzn) li{list-style-type:persian}ol:lang(ckb) li,ol:lang(sdh) li{list-style-type:arabic-indic}ol:lang(hi) li,ol:lang(mai) li,ol:lang(mr) li,ol:lang(ne) li{list-style-type:devanagari}ol:lang(as) li,ol:lang(bn) li{list-style-type:bengali}ol:lang(mni) li{list-style-type:meetei}ol:lang(or) li{list-style-type:oriya}ol:lang(sat) li{list-style-type:santali}ol:lang(blk) li,ol:lang(kjp) li,ol:lang(ksw) li,ol:lang(mnw) li,ol:lang(my) li,ol:lang(shn) li{list-style-type:myanmar_with_period}.mw-content-ltr ul{margin:0.3em 0 0 1.6em;padding:0}.mw-content-ltr ol{margin:0.3em 0 0 3.2em;padding:0}h1:lang(anp),h1:lang(as),h1:lang(bh),h1:lang(bho),h1:lang(blk),h1:lang(bn),h1:lang(gu),h1:lang(hi),h1:lang(kjp),h1:lang(kn),h1:lang(ks),h1:lang(ksw),h1:lang(mag),h1:lang(ml),h1:lang(mr),h1:lang(my),h1:lang(mai),h1:lang(mnw),h1:lang(ne),h1:lang(new),h1:lang(or),h1:lang(pa),h1:lang(pi),h1:lang(rki),h1:lang(sa),h1:lang(shn),h1:lang(syl),h1:lang(ta),h1:lang(te){line-height:1.6em!important}h2:lang(anp),h2:lang(as),h2:lang(bh),h2:lang(bho),h2:lang(blk),h2:lang(bn),h2:lang(gu),h2:lang(hi),h2:lang(kjp),h2:lang(kn),h2:lang(ks),h2:lang(ksw),h2:lang(mag),h2:lang(ml),h2:lang(mr),h2:lang(my),h2:lang(mai),h2:lang(mnw),h2:lang(ne),h2:lang(new),h2:lang(or),h2:lang(pa),h2:lang(pi),h2:lang(rki),h2:lang(sa),h2:lang(shn),h2:lang(syl),h2:lang(ta),h2:lang(te),h3:lang(anp),h3:lang(as),h3:lang(bh),h3:lang(bho),h3:lang(blk),h3:lang(bn),h3:lang(gu),h3:lang(hi),h3:lang(kjp),h3:lang(kn),h3:lang(ks),h3:lang(ksw),h3:lang(mag),h3:lang(ml),h3:lang(mr),h3:lang(my),h3:lang(mai),h3:lang(mnw),h3:lang(ne),h3:lang(new),h3:lang(or),h3:lang(pa),h3:lang(pi),h3:lang(rki),h3:lang(sa),h3:lang(shn),h3:lang(syl),h3:lang(ta),h3:lang(te),h4:lang(anp),h4:lang(as),h4:lang(bh),h4:lang(bho),h4:lang(blk),h4:lang(bn),h4:lang(gu),h4:lang(hi),h4:lang(kjp),h4:lang(kn),h4:lang(ks),h4:lang(ksw),h4:lang(mag),h4:lang(ml),h4:lang(mr),h4:lang(my),h4:lang(mai),h4:lang(mnw),h4:lang(ne),h4:lang(new),h4:lang(or),h4:lang(pa),h4:lang(pi),h4:lang(rki),h4:lang(sa),h4:lang(shn),h4:lang(syl),h4:lang(ta),h4:lang(te),h5:lang(anp),h5:lang(as),h5:lang(bh),h5:lang(bho),h5:lang(blk),h5:lang(bn),h5:lang(gu),h5:lang(hi),h5:lang(kjp),h5:lang(kn),h5:lang(ks),h5:lang(ksw),h5:lang(mag),h5:lang(ml),h5:lang(mr),h5:lang(my),h5:lang(mai),h5:lang(mnw),h5:lang(ne),h5:lang(new),h5:lang(or),h5:lang(pa),h5:lang(pi),h5:lang(rki),h5:lang(sa),h5:lang(shn),h5:lang(syl),h5:lang(ta),h5:lang(te),h6:lang(anp),h6:lang(as),h6:lang(bh),h6:lang(bho),h6:lang(blk),h6:lang(bn),h6:lang(gu),h6:lang(hi),h6:lang(kjp),h6:lang(kn),h6:lang(ks),h6:lang(ksw),h6:lang(mag),h6:lang(ml),h6:lang(mr),h6:lang(my),h6:lang(mai),h6:lang(mnw),h6:lang(ne),h6:lang(new),h6:lang(or),h6:lang(pa),h6:lang(pi),h6:lang(rki),h6:lang(sa),h6:lang(shn),h6:lang(syl),h6:lang(ta),h6:lang(te){line-height:1.4em}h2:lang(th){line-height:1.6}}</style>
+<meta name=generator content="MediaWiki 1.40.0">
+<meta name=robots content=max-image-preview:standard>
+<meta name=format-detection content="telephone=no">
+<meta name=viewport content="width=1000">
+<link rel=search type=application/opensearchdescription+xml href=https://wiki.alpinelinux.org/w/opensearch_desc.php title="Alpine Linux (en)">
+<link rel=EditURI type=application/rsd+xml href="https://wiki.alpinelinux.org/w/api.php?action=rsd">
+<link rel=license href=https://wiki.alpinelinux.org/wiki/MediaWiki:Copyright>
+<link rel=alternate type=application/atom+xml title="Alpine Linux Atom feed" href="https://wiki.alpinelinux.org/w/index.php?title=Special:RecentChanges&amp;feed=atom">
+<style>@media screen{}</style><style>@media (min-width:1400px){}</style><meta property=mw:PageProp/toc><meta name=referrer content=no-referrer><link rel=icon href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAATJQTFRF////AICAC1qADVmAFGJ2DVmADVl/EFiADVmADlmADVmAAAAADVmADVl+DVl/Dlp/F110DVl/DVmADVmADVl/DliADFd8DliADVl+DVuADVl/CVh7DVmADFuADVh/DVqADVmADVmADFmADVl/FVWAC1h+Dlh+AFVVDFiADVl/DluADFl9DVl/DViADVh7DFqADVmADVmADVh/DVl/DVl+AECADlp/DVmADlmADVl/DFmADVmADFeAGk2ADlmADlqADlqADVh/DVqAAFVxDVl/DVeADlp+DlqADlqADll/AFWAAGCADFp/DFl/AGZmDVl/Dld9DV55DVmADVmADVl/DVh/DVl/DVmADFmADVl/DVl/DVt9Dll/DVmADViADll/DlmADFl9DVmADFiADVl/////pwlF4gAAAGR0Uk5TAAIwZA3ohyD4qjwBzF/nlwvlKIybgimWc0z5HfYqoHdQ+qbpDENLA1T7OCvDTjlY/P7HwU0Eqopc/aTqLAqESqiFYAmjJkeAXoEGCLmPBfc1E8jktdvRxrjzyzuphmLPzj/wQC8LztMAAAABYktHRACIBR1IAAAACXBIWXMAAABIAAAASABGyWs+AAABW0lEQVQ4y72TZ1vCMBCAD9lTUBEFVEAUwQlO6kBxFVcVcLFc9/9/g9c0lTYtX70PbXLv+7SXXALwb+EYE8IhCE4UwmnmLrcouF0mwYOW8Bi512cVfF6D4Eeb8A95AG0joPNgyF4IBbkQ1jORcbMR1ng0pq9sAibV95RecizKhLjOp2mSQJyB2SRPxVWeSnM+x+qZX6BnJqvl0ima5LTxIvH8EjVluUDJlaKWzQGUOF8lvlbMABTWN8jY3GLpcgkqfzy6jZjdAdjd2yfjoMpABST1dXgEcCyd0ChZI+P0jIw6MyRWo8rPLy7rrAVX9JfcNRlyVauygZi4gdu7+wcmoEKVPqbJeGoiNtR9atEn2s+0zhfexnazjPj69o7YYjsl48iQtV51RvEO71Z3lNDV+92z573hiVPsuGI4c307oW84k/mIlUfyxmM9sAoD8837EPmncPe+voX44eAXvM/afnTm3m8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTQtMTItMTBUMTE6Mjc6MzEtMDU6MDCD+78IAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE0LTEyLTEwVDExOjI3OjI3LTA1OjAwXdwyEAAAAABJRU5ErkJggg=="><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://wiki.alpinelinux.org/wiki/Repositories#Managing_repositories><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body class="skin-vector skin-vector-search-vue mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Repositories rootpage-Repositories skin-vector-2022 action-view uls-dialog-sticky-hide"><div class=mw-page-container>
+ <a class=mw-jump-link href=#bodyContent>Jump to content</a>
+ <div class=mw-page-container-inner>
+ <input type=checkbox id=mw-sidebar-checkbox class="mw-checkbox-hack-checkbox sf-hidden">
+ <header class="mw-header mw-ui-icon-flush-left mw-ui-icon-flush-right">
+ <div class=vector-header-start>
+ <label id=mw-sidebar-button class="mw-checkbox-hack-button mw-ui-icon mw-ui-button mw-ui-quiet mw-ui-icon-element mw-ui-icon-flush-right" for=mw-sidebar-checkbox role=button aria-controls=mw-panel data-event-name=ui.sidebar tabindex=0 title="Main menu" aria-expanded=false>
+ <span>Toggle sidebar</span>
+ </label>
+
+<a href=https://wiki.alpinelinux.org/wiki/Main_Page class=mw-logo>
+ <span class=mw-logo-container>
+ <strong class=mw-logo-wordmark>Alpine Linux</strong>
+ </span>
+</a>
+ </div>
+ <div class=vector-header-end>
+
+<div id=p-search role=search class="vector-search-box-vue vector-search-box-collapses vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+ <a href=https://wiki.alpinelinux.org/wiki/Special:Search title="Search Alpine Linux [Alt+Shift+f]" accesskey=f class="mw-ui-button mw-ui-quiet mw-ui-icon mw-ui-icon-element mw-ui-icon-wikimedia-search search-toggle sf-hidden">
+
+ </a>
+
+ <div>
+ <form action=/w/index.php id=searchform class=vector-search-box-form>
+ <div id=simpleSearch class=vector-search-box-inner data-search-loc=header-moved>
+ <input class=vector-search-box-input type=search name=search placeholder="Search Alpine Linux" aria-label="Search Alpine Linux" autocapitalize=sentences title="Search Alpine Linux [Alt+Shift+f]" accesskey=f id=searchInput autocomplete=off value>
+
+ <input id=mw-searchButton class="searchButton mw-fallbackSearchButton" type=submit name=fulltext title="Search the pages for this text" value=Search>
+ <input id=searchButton class=searchButton type=submit name=go title="Go to a page with this exact name if it exists" value=Go>
+ </div>
+ </form>
+ </div>
+</div>
+ <nav class=vector-user-links aria-label="Personal tools" role=navigation>
+
+<div id=p-vector-user-menu-overflow class="vector-menu mw-portlet mw-portlet-vector-user-menu-overflow">
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=pt-createaccount-2 class="user-links-collapsible-item mw-list-item"><a href="https://wiki.alpinelinux.org/w/index.php?title=Special:CreateAccount&amp;returnto=Repositories" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a><li id=pt-login-2 class="user-links-collapsible-item mw-list-item"><a href="https://wiki.alpinelinux.org/w/index.php?title=Special:UserLogin&amp;returnto=Repositories" title="You are encouraged to log in; however, it is not mandatory [Alt+Shift+o]" accesskey=o><span>Log in</span></a></ul>
+
+ </div>
+</div>
+
+<div id=vector-user-links-dropdown class="vector-menu vector-dropdown vector-menu-dropdown vector-user-menu vector-user-menu-logged-out user-links-collapsible-item sf-hidden" title="More options">
+
+
+
+</div>
+</nav>
+ </div>
+ </header>
+ <div class=vector-main-menu-container>
+ <div id=mw-navigation>
+ <nav id=mw-panel class=vector-main-menu-landmark aria-label=Site role=navigation>
+
+<div id=vector-main-menu class="vector-main-menu vector-pinnable-element sf-hidden">
+
+
+
+
+
+</div>
+ </nav>
+ </div>
+ </div>
+ <div class=vector-sitenotice-container>
+ <div id=siteNotice></div>
+ </div>
+ <input type=checkbox id=vector-toc-collapsed-checkbox class="mw-checkbox-hack-checkbox sf-hidden">
+ <nav id=mw-panel-toc role=navigation aria-label=Contents data-event-name=ui.sidebar-toc class="mw-table-of-contents-container vector-toc-landmark">
+ <div id=vector-toc-pinned-container class=vector-pinned-container>
+ <div id=vector-toc class="vector-toc vector-pinnable-element">
+ <div class="vector-pinnable-header vector-toc-pinnable-header vector-pinnable-header-pinned" data-feature-name=toc-pinned data-pinnable-element-id=vector-toc>
+ <h2 class=vector-pinnable-header-label>Contents</h2>
+ <button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button sf-hidden" data-event-name=pinnable-header.vector-toc.pin>move to sidebar</button>
+ <button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name=pinnable-header.vector-toc.unpin>hide</button>
+</div>
+ <ul class=vector-toc-contents id=mw-panel-toc-list>
+ <li id=toc-mw-content-text class="vector-toc-list-item vector-toc-level-1 vector-toc-level-1-active vector-toc-list-item-active">
+ <a href=# class=vector-toc-link>
+ <div class=vector-toc-text>Beginning</div>
+ </a>
+ </li>
+ <li id=toc-Managing_repositories class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+ <a class=vector-toc-link href=#Managing_repositories>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">1</span>Managing repositories</div>
+ </a>
+
+ <button aria-controls=toc-Managing_repositories-sublist class="mw-ui-icon mw-ui-icon-wikimedia-expand mw-ui-icon-small vector-toc-toggle" aria-expanded=true>
+ Toggle Managing repositories subsection
+ </button>
+
+ <ul id=toc-Managing_repositories-sublist class=vector-toc-list>
+ <li id=toc-Changing_repositories_to_https class="vector-toc-list-item vector-toc-level-2">
+ <a class=vector-toc-link href=#Changing_repositories_to_https>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">1.1</span>Changing repositories to https</div>
+ </a>
+
+ <ul id=toc-Changing_repositories_to_https-sublist class=vector-toc-list>
+ </ul>
+ </li>
+ <li id=toc-Avoid_manually_changing_the_repositories_file_for_a_new_release class="vector-toc-list-item vector-toc-level-2">
+ <a class=vector-toc-link href=#Avoid_manually_changing_the_repositories_file_for_a_new_release>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">1.2</span>Avoid manually changing the repositories file for a new release</div>
+ </a>
+
+ <ul id=toc-Avoid_manually_changing_the_repositories_file_for_a_new_release-sublist class=vector-toc-list>
+ </ul>
+ </li>
+ </ul>
+ </li>
+ <li id=toc-Release_Branches class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+ <a class=vector-toc-link href=#Release_Branches>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">2</span>Release Branches</div>
+ </a>
+
+ <button aria-controls=toc-Release_Branches-sublist class="mw-ui-icon mw-ui-icon-wikimedia-expand mw-ui-icon-small vector-toc-toggle" aria-expanded=true>
+ Toggle Release Branches subsection
+ </button>
+
+ <ul id=toc-Release_Branches-sublist class=vector-toc-list>
+ <li id=toc-Main class="vector-toc-list-item vector-toc-level-2">
+ <a class=vector-toc-link href=#Main>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">2.1</span>Main</div>
+ </a>
+
+ <ul id=toc-Main-sublist class=vector-toc-list>
+ </ul>
+ </li>
+ <li id=toc-Community class="vector-toc-list-item vector-toc-level-2">
+ <a class=vector-toc-link href=#Community>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">2.2</span>Community</div>
+ </a>
+
+ <ul id=toc-Community-sublist class=vector-toc-list>
+ </ul>
+ </li>
+ </ul>
+ </li>
+ <li id=toc-Edge class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+ <a class=vector-toc-link href=#Edge>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">3</span>Edge</div>
+ </a>
+
+ <button aria-controls=toc-Edge-sublist class="mw-ui-icon mw-ui-icon-wikimedia-expand mw-ui-icon-small vector-toc-toggle" aria-expanded=true>
+ Toggle Edge subsection
+ </button>
+
+ <ul id=toc-Edge-sublist class=vector-toc-list>
+ <li id=toc-Upgrading_to_edge class="vector-toc-list-item vector-toc-level-2">
+ <a class=vector-toc-link href=#Upgrading_to_edge>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">3.1</span>Upgrading to edge</div>
+ </a>
+
+ <ul id=toc-Upgrading_to_edge-sublist class=vector-toc-list>
+ </ul>
+ </li>
+ <li id=toc-Testing class="vector-toc-list-item vector-toc-level-2">
+ <a class=vector-toc-link href=#Testing>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">3.2</span>Testing</div>
+ </a>
+
+ <ul id=toc-Testing-sublist class=vector-toc-list>
+ <li id=toc-Using_the_testing_repository_on_stable_branches class="vector-toc-list-item vector-toc-level-3">
+ <a class=vector-toc-link href=#Using_the_testing_repository_on_stable_branches>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">3.2.1</span>Using the testing repository on stable branches</div>
+ </a>
+
+ <ul id=toc-Using_the_testing_repository_on_stable_branches-sublist class=vector-toc-list>
+ </ul>
+ </li>
+ </ul>
+ </li>
+ </ul>
+ </li>
+ <li id=toc-See_also class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+ <a class=vector-toc-link href=#See_also>
+ <div class=vector-toc-text>
+ <span class="vector-toc-numb sf-hidden">4</span>See also</div>
+ </a>
+
+ <ul id=toc-See_also-sublist class=vector-toc-list>
+ </ul>
+ </li>
+</ul>
+</div>
+ </div>
+ </nav>
+ <div class=mw-content-container>
+ <main id=content class=mw-body role=main>
+ <header class="mw-body-header vector-page-titlebar">
+ <label id=vector-toc-collapsed-button class="mw-ui-button mw-ui-quiet mw-ui-icon mw-ui-icon-flush-left mw-ui-icon-element mw-ui-icon-wikimedia-listBullet mw-checkbox-hack-button sf-hidden" for=vector-toc-collapsed-checkbox role=button aria-controls=toc-toggle-list data-event-name=vector.toc-toggle-list tabindex=0 title="Table of Contents">
+ Toggle the table of contents
+ </label>
+
+ <nav role=navigation aria-label=Contents class="vector-toc-landmark sf-hidden">
+
+ </nav>
+ <h1 id=firstHeading class="firstHeading mw-first-heading"><span class=mw-page-title-main>Repositories</span></h1>
+
+
+ </header>
+ <div class=vector-page-toolbar>
+ <div class=vector-page-toolbar-container>
+ <div id=left-navigation>
+ <nav aria-label=Namespaces>
+
+<div id=p-associated-pages class="vector-menu vector-menu-tabs mw-portlet mw-portlet-associated-pages">
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list>
+ <li id=ca-nstab-main class="selected vector-tab-noicon mw-list-item"><a data-mw=interface href=https://wiki.alpinelinux.org/wiki/Repositories title="View the content page [Alt+Shift+c]" accesskey=c><span>Page</span></a>
+</li>
+<li id=ca-talk class="new vector-tab-noicon mw-list-item"><a data-mw=interface href="https://wiki.alpinelinux.org/w/index.php?title=Talk:Repositories&amp;action=edit&amp;redlink=1" rel=discussion title="Discussion about the content page (page does not exist) [Alt+Shift+t]" accesskey=t><span>Discussion</span></a>
+</li>
+ </ul>
+
+ </div>
+</div>
+
+<div id=p-variants class="vector-menu vector-dropdown vector-menu-dropdown mw-portlet mw-portlet-variants emptyPortlet sf-hidden">
+
+
+
+</div>
+ </nav>
+ </div>
+ <div id=right-navigation class=vector-collapsible>
+ <nav aria-label=Views>
+
+<div id=p-views class="vector-menu vector-menu-tabs mw-portlet mw-portlet-views">
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list>
+ <li id=ca-view class="selected vector-tab-noicon mw-list-item"><a data-mw=interface href=https://wiki.alpinelinux.org/wiki/Repositories><span>Read</span></a>
+</li>
+<li id=ca-viewsource class="vector-tab-noicon mw-list-item"><a data-mw=interface href="https://wiki.alpinelinux.org/w/index.php?title=Repositories&amp;action=edit" title="This page is protected.
+You can view its source [Alt+Shift+e]" accesskey=e><span>View source</span></a>
+</li>
+<li id=ca-history class="vector-tab-noicon mw-list-item"><a data-mw=interface href="https://wiki.alpinelinux.org/w/index.php?title=Repositories&amp;action=history" title="Past revisions of this page [Alt+Shift+h]" accesskey=h><span>View history</span></a>
+</li>
+ </ul>
+
+ </div>
+</div>
+ </nav>
+
+ <nav class=vector-page-tools-landmark aria-label="More options">
+
+<div id=p-cactions class="vector-menu vector-dropdown vector-menu-dropdown mw-portlet mw-portlet-cactions emptyPortlet vector-has-collapsible-items sf-hidden" title="More options">
+
+
+
+</div>
+ </nav>
+ </div>
+ </div>
+ </div>
+
+ <div id=bodyContent class=vector-body aria-labelledby=firstHeading data-mw-ve-target-container>
+ <div class=vector-body-before-content>
+ <div class=mw-indicators>
+ </div>
+ <div id=siteSub class="noprint sf-hidden">From Alpine Linux</div>
+ </div>
+ <div id=contentSub><div id=mw-content-subtitle></div></div>
+
+
+ <div id=mw-content-text class="mw-body-content mw-content-ltr" lang=en dir=ltr><div class=mw-parser-output><table cellspacing=0 cellpadding=0 style="clear:right;margin-bottom:.5em;float:right;padding:.5em 0 .8em 1.4em;background:none;width:auto">
+<tbody><tr>
+<td>
+</table>
+<p>There are three repositories:
+</p>
+<ul><li><b>main</b> packages are the software that have direct support and updates from the Alpine core and main team. They also have official special documentation, are always available for all releases and will have substitutions if some are not continued from upstream. Commonly these packages are selected due to their responsibility and stability with respect to upstream availability. Packages from <i>community</i> or (rarely) <i>testing</i> can be accepted into the <i>main</i> repository.</ul>
+<ul><li><b>community</b> packages are those made by users in team with the official developers and close to the Alpine package process. They are supported by those user(s) contributions and could end if the user(s) stops; they may also be removed in a future release due to lack of support by upstream authors. Packages from <i>testing</i> that are accepted go to the <i>community</i> repository.</ul>
+<ul><li><b>testing</b> is where new packages go. These are made by any contributor to Alpine. Testing has no release linked. The <i>testing</i> repository is only available on <i>edge</i>. Packages from <i>testing</i> that are accepted go to the <i>community</i> repository or (rarely) the <i>main</i> repository.</ul>
+<h1><span class=mw-headline id=Managing_repositories>Managing repositories</span></h1>
+<p>The package repositories that <code>apk</code> uses to retrieve package files for installation are specified in file <span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span>. Each line of this file specifies the location of a package repository, and optionally a tag. Lines that start with a hash character (#) are ignored.
+<p>The location may be an <code>http://</code> or <code>https://</code> URL, or the path to a directory on the local filesystem. A <a href=https://wiki.alpinelinux.org/wiki/Package_management#Repository_pinning class=mw-redirect title="Package management">tagged</a> repository is prefixed with the <code>@tag</code> specifier, followed by a space and the repository location.
+<p>The default will look something like:
+</p>
+<div><p style="background-color:#f9f9f9;border:1px solid #2f6fab;border-bottom:0;padding:.2em 1.2em;display:inline"><strong>Contents of </strong><span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span><div style="background-color:#f9f9f9;border:1px dashed #2f6fab;border-left:1px solid #2f6fab;margin-top:-.2em;line-height:1.1em;padding:1em;font-family:monospace;font-size:10pt;white-space:pre;overflow:auto">#/media/cdrom/apks
+http://dl-cdn.alpinelinux.org/alpine/v3.19/main
+http://dl-cdn.alpinelinux.org/alpine/v3.19/community</div></div>
+<p>After making changes to <span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span> you should update the package index using:
+</p>
+<p style="background-color:#eeeeee;border:1px dashed #bbbbbb;line-height:1.1em;padding:1em;font-family:monospace,Courier;font-size:10pt;white-space:pre;overflow:auto"># apk update</p>
+<h3><span class=mw-headline id=Changing_repositories_to_https>Changing repositories to https</span></h3>
+<p>For better security you should probably change the url's from <b>http</b> to <b>https</b>. <a rel=nofollow class="external autonumber" href=https://en.wikipedia.org/wiki/HTTPS#Technical>[1]</a>
+</p>
+<div style="padding:0.25em;margin:0.50em 0;background-color:#DDDDFF;border:2px solid #BBBBFF"><strong> Note: </strong><span class=Alp-Note>Some Alpine Linux package mirrors may not support <b>https</b>. If that is the case, you will need to change mirrors or revert back. You can check if your mirror supports <b>https</b> on <a rel=nofollow class="external free" href=https://mirrors.alpinelinux.org/>https://mirrors.alpinelinux.org</a> </span></div>
+<h3><span class=mw-headline id=Avoid_manually_changing_the_repositories_file_for_a_new_release>Avoid manually changing the repositories file for a new release</span></h3>
+<p>You can avoid having to manually update the version in <span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span> for each Alpine Linux release by changing <code>v3.19</code> to <code>latest-stable</code>.
+<p>Example:
+</p>
+<div><p style="background-color:#f9f9f9;border:1px solid #2f6fab;border-bottom:0;padding:.2em 1.2em;display:inline"><strong>Contents of </strong><span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span><div style="background-color:#f9f9f9;border:1px dashed #2f6fab;border-left:1px solid #2f6fab;margin-top:-.2em;line-height:1.1em;padding:1em;font-family:monospace;font-size:10pt;white-space:pre;overflow:auto">#/media/cdrom/apks
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
+#http://dl-cdn.alpinelinux.org/alpine/edge/main
+#http://dl-cdn.alpinelinux.org/alpine/edge/community
+#http://dl-cdn.alpinelinux.org/alpine/edge/testing</div></div>
+<figure class=mw-halign-left typeof=mw:File><span><img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect fill-opacity="0"/></svg>' decoding=async width=48 height=48 style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-6)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></span><figcaption class=sf-hidden></figcaption></figure><div style="padding:0.25em;margin:0.50em 0;background-color:#FFDDDD;border:2px solid #FFBBBB"><strong> Warning: </strong>Changing the repositories to <code>latest-stable</code> may initiate unexpected release upgrades.</div><p><br>
+<h1><span class=mw-headline id=Release_Branches>Release Branches</span></h1>
+<p>There are several release branches for Alpine Linux available at the same time. Each May and November we make a release branch from <b>edge</b>. The <b>main</b> repository is typically supported for 2 years and the <b>community</b> repository is supported until next stable release.
+<p>Security fixes beyond that can be made on request when there are patches available.
+</p>
+<h2><span class=mw-headline id=Main>Main</span></h2>
+<p><i>main</i> has a support cycle of 2 years. We also try to limit the amount of packages in <i>main</i> to only include base system packages, in base you can think of packages which are needed by other packages or are needed to setup a basic system. Packages in <i>main</i> must <b>not</b> have dependencies in other repositories.
+</p>
+<h2><span class=mw-headline id=Community>Community</span></h2>
+<p>The <b>community</b> repository was introduced with Alpine Linux version <a rel=nofollow class="external text" href=https://alpinelinux.org/posts/Alpine-3.3.0-released.html>3.3.0</a>. <i>community</i> has a maximum support cycle of 6 months. After that you will need to update to the new release to continue to have support.
+</p>
+<h1><span class=mw-headline id=Edge>Edge</span></h1>
+<p><i>edge</i> is the name given to the current <a href=https://wiki.alpinelinux.org/wiki/Aports_tree title="Aports tree">development tree</a> of Alpine Linux. It consists of an APK repository called <i>edge</i> and contains the latest build of all available Alpine Linux packages. Those packages are updated on a regular basis.
+</p>
+<figure class=mw-halign-left typeof=mw:File><span><img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect fill-opacity="0"/></svg>' decoding=async width=48 height=48 style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-6)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></span><figcaption class=sf-hidden></figcaption></figure><div style="padding:0.25em;margin:0.50em 0;background-color:#FFDDDD;border:2px solid #FFBBBB"><strong> Warning: </strong><i>edge</i> is under constant development so be careful using it in production. It is possible that bugs in <i>edge</i> could cause data loss or could break your system.</div><p><br>
+<p>End users should not use <i>edge</i> as their main day-to-day workstation or as a productive system. Because <i>edge</i> is a development branch, many changes are not heavily tested (or tested at all) and packages in <i>edge</i> can and sometimes do break without warning.
+<p>However, testing <i>edge</i> is a very valuable activity which helps the Alpine Linux development to ensure that the quality of the stable releases is high. Testing <i>edge</i> is a great way to contribute to the Alpine Linux development.
+</p>
+<h2><span class=mw-headline id=Upgrading_to_edge>Upgrading to edge</span></h2>
+<p>An upgrade of Alpine Linux from a stable version to the rolling development version <i>edge</i> basically requires the same steps as <a href=https://wiki.alpinelinux.org/wiki/Upgrading_Alpine#Upgrading_to_latest_release title="Upgrading Alpine">Upgrading to latest release</a>.
+<p>The crucial difference is, that when editing the <span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span> file, all referenced repository versions (such as <code>v3.19</code> or <code>latest-stable</code>) therein need to be pointing to <code><b>edge</b></code> as in:
+<p><code>https://&lt;mirror-server&gt;/alpine/edge/main</code>
+</p>
+<figure class=mw-halign-left typeof=mw:File><span><img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect fill-opacity="0"/></svg>' decoding=async width=48 height=48 style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-6)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></span><figcaption class=sf-hidden></figcaption></figure><div style="padding:0.25em;margin:0.50em 0;background-color:#FFDDDD;border:2px solid #FFBBBB"><strong> Warning: </strong>Do not enable stable and edge repos at the same time. This can break your system. Either use edge <b>or</b> stable.</div><p><br>
+After upgrading to edge, the currently installed edge version may be checked with <p style="background-color:#eeeeee;border:1px dashed #bbbbbb;line-height:1.1em;padding:1em;font-family:monospace,Courier;font-size:10pt;white-space:pre;overflow:auto">$ cat /etc/alpine-release<p> and referring to the build date that is attached to the release.
+<h2><span class=mw-headline id=Testing>Testing</span></h2>
+<p>The <b>testing</b> repository was introduced with Alpine Linux <i>edge</i> development. No support (staging only) and only built for <i>edge</i>. If it stays here long enough it gets moved to unmaintained/purged (gets cleaned up every 6 months).
+<p>Before a package can move from <i>testing</i> to <i>main</i> or <i>community</i>, the following requirements must be met:
+</p>
+<ol><li>Package must work correctly, including the init.d script (if provided) and default configuration.</li>
+<li>Packaging must be done correctly, with files installed in the right places, e.g. configs are in <code>/etc/</code> and not in <code>/usr/etc</code>.</li>
+<li>Package dependencies are handled correctly. Abuild can (and should) autodetect shared libs, for example <b>sqlite-libs</b> provides <b>so:libsqlite3.so.0</b>. Any package linked to <b>sqlite</b> should have an automatically (by abuild) added <code>depend=so:libsqlite3.so.0</code> and the user should not have to manually add a <code>depend="sqlite-libs"</code> in the APKBUILD.</li>
+<li>There is a maintainer who claims responsibility for the maintenance of the package and can help fix things if they break in the future.</ol>
+<h3><span class=mw-headline id=Using_the_testing_repository_on_stable_branches>Using the testing repository on stable branches</span></h3>
+<figure class=mw-halign-left typeof=mw:File><span><img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect fill-opacity="0"/></svg>' decoding=async width=48 height=48 style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-6)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></span><figcaption class=sf-hidden></figcaption></figure><div style="padding:0.25em;margin:0.50em 0;background-color:#FFDDDD;border:2px solid #FFBBBB"><strong> Warning: </strong><b>Only do this if you're 100% sure what you're doing!</b> Installing packages from edge that link to something in <i>main</i> or <i>community</i> usually will not work. Alpine does not officially support mixing branches this way.</div><p><br>
+<p>Edit the file <span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span> and add (or uncomment) a line that points to the "testing" directory, while also <a href=https://wiki.alpinelinux.org/wiki/Package_management#Repository_pinning class=mw-redirect title="Package management">tagging</a> the repository, for example:
+</p>
+<div><p style="background-color:#f9f9f9;border:1px solid #2f6fab;border-bottom:0;padding:.2em 1.2em;display:inline"><strong>Contents of </strong><span style=font-family:monospace,Courier;font-size:10pt;color:#000055;white-space:nowrap>/etc/apk/repositories</span><div style="background-color:#f9f9f9;border:1px dashed #2f6fab;border-left:1px solid #2f6fab;margin-top:-.2em;line-height:1.1em;padding:1em;font-family:monospace;font-size:10pt;white-space:pre;overflow:auto">
+https://dl-cdn.alpinelinux.org/alpine/v3.19/main
+https://dl-cdn.alpinelinux.org/alpine/v3.19/community
+@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing
+</div></div>
+<p>In that case, the tag is <code>@testing</code>, which allows you to pull packages from that repository without potentially messing up your install (too badly):
+</p>
+<pre>$ apk add wireguard-go@testing
+</pre>
+<h1><span class=mw-headline id=See_also>See also</span></h1>
+<ul><li><a href=https://wiki.alpinelinux.org/wiki/Alpine_Linux_in_a_chroot title="Alpine Linux in a chroot">Alpine Linux in a chroot</a></li>
+<li><a rel=nofollow class="external text" href=https://bugs.alpinelinux.org/>Report Bugs</a></ul>
+</div>
+<div class="printfooter sf-hidden" data-nosnippet>Retrieved from ""</div></div>
+ <div id=catlinks class=catlinks data-mw=interface><div id=mw-normal-catlinks class=mw-normal-catlinks><a href=https://wiki.alpinelinux.org/wiki/Special:Categories title=Special:Categories>Categories</a>: <ul><li><a href=https://wiki.alpinelinux.org/wiki/Category:Package_Manager title="Category:Package Manager">Package Manager</a><li><a href=https://wiki.alpinelinux.org/wiki/Category:Installation title=Category:Installation>Installation</a><li><a href=https://wiki.alpinelinux.org/wiki/Category:Development title=Category:Development>Development</a></ul></div></div>
+
+ </div>
+
+ </main>
+
+ </div>
+ <div class=mw-footer-container>
+
+<footer id=footer class=mw-footer role=contentinfo>
+ <ul id=footer-info>
+ <li id=footer-info-lastmod> This page was last edited on 1 February 2024, at 18:15.</li>
+ <li id=footer-info-copyright><div align=right><div id=footer-inner>
+ <p><a href=https://wiki.alpinelinux.org/wiki/Privacy_Policy#Copyright>© Copyright 2008-2021 Alpine Linux Development Team</a>
+ all rights reserved </p></div></div></li>
+</ul>
+ <ul id=footer-places>
+ <li id=footer-places-privacy><a href=https://wiki.alpinelinux.org/wiki/Alpine_Linux:Privacy_policy>Privacy policy</a></li>
+ <li id=footer-places-about><a href=https://wiki.alpinelinux.org/wiki/Alpine_Linux:About>About</a></li>
+ <li id=footer-places-disclaimers><a href=https://wiki.alpinelinux.org/wiki/Alpine_Linux:General_disclaimer>Disclaimers</a></li>
+</ul>
+ <ul id=footer-icons class=noprint>
+ <li id=footer-poweredbyico><a href=https://www.mediawiki.org/><img src="data:image/png;base64,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" alt="Powered by MediaWiki" srcset width=88 height=31 loading=lazy sizes></a></li>
+</ul>
+</footer>
+ </div>
+ </div>
+</div>
+<button title="Toggle limited content width" aria-hidden=true class="mw-ui-icon mw-ui-icon-element mw-ui-button vector-limited-width-toggle sf-hidden" data-event-name=limited-width-toggle-off>Toggle limited content width</button><div id=p-namespaces style=display:none></div>

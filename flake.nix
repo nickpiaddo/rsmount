@@ -17,6 +17,7 @@
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
   };
 
+
   outputs = { self, nixpkgs, utils, naersk, flake-compat }:
     utils.lib.eachDefaultSystem (system:
       let
@@ -48,9 +49,11 @@
             cargo-modules
             cargo-nextest
             cargo-tarpaulin
+            cargo-rr
             cargo-vet
             cargo-valgrind
             cargo-workspaces
+            gdb
             lldb
             pkg-config
             rustc
@@ -78,6 +81,13 @@
 
           # Required by `libblkid-sys`
           LIBCLANG_PATH = pkgs.lib.makeLibraryPath [ pkgs.libclang ];
+
+          # Inspired by: "C header includes in NixOS"
+          # https://discourse.nixos.org/t/c-header-includes-in-nixos/17410
+          # Solve the error message when trying to compile libblkid-sys from inside test-microvm.
+          # --- stderr
+          # src/wrapper.h:1:10: fatal error: 'blkid/blkid.h' file not found
+          C_INCLUDE_PATH="${pkgs.util-linux.dev}/include";
         };
       });
 }

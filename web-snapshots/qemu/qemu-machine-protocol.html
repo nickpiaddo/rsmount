@@ -1,0 +1,332 @@
+<!DOCTYPE html> <html class=client-js lang=en dir=ltr style><!--
+ Page saved with SingleFile
+ url: https://wiki.qemu.org/Documentation/QMP
+--><meta charset=utf-8>
+<title>Documentation/QMP - QEMU</title>
+<style>@media (prefers-reduced-motion:reduce){*,::before,::after{animation-delay:-0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:0ms!important}}body{margin:0}@supports (text-decoration:underline dotted){abbr[title]{border-bottom:0;text-decoration:underline dotted}}pre{font-family:monospace,monospace}img{border:0}input{margin:0}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}.toctogglecheckbox:checked~ul{display:none}@media screen{html,body{height:100%}:focus{outline-color:#3366cc}html{font-size:100%}html,body{font-family:sans-serif}ul{list-style-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjEzIj4KCTxjaXJjbGUgY3g9IjIuNSIgY3k9IjkiIHI9IjIuNSIgZmlsbD0iIzIwMjEyMiIvPgo8L3N2Zz4K)}pre{line-height:1.3}.mw-jump-link:not(:focus){display:block;position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden}.mw-body h1,.mw-body-content h2{margin-bottom:0.25em;padding:0;font-family:"Linux Libertine","Georgia","Times",serif;line-height:1.3}.mw-body h1:lang(ja),.mw-body-content h1:lang(ja),.mw-body-content h2:lang(ja),.mw-body h1:lang(he),.mw-body-content h1:lang(he),.mw-body-content h2:lang(he),.mw-body h1:lang(ko),.mw-body-content h1:lang(ko),.mw-body-content h2:lang(ko){font-family:sans-serif}.mw-body h1:lang(my),.mw-body-content h1:lang(my),.mw-body-content h2:lang(my){line-height:normal}.mw-body h1{font-size:1.8em}.vector-body{font-size:calc(1em*0.875);line-height:1.6}.vector-body h1{margin-top:1em}.vector-body h2{margin-top:1em;font-size:1.5em}.vector-body h3{margin-top:0.3em;margin-bottom:0;padding-bottom:0;line-height:1.6}.vector-body h3{font-size:1.2em}.vector-body h3{font-weight:bold}.vector-body .toc h2{font-family:sans-serif;font-size:100%}.vector-body p{margin:0.5em 0}.mw-parser-output a.external{background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDEyIDEyIj4KCTx0aXRsZT4KCQlleHRlcm5hbCBsaW5rCgk8L3RpdGxlPgoJPHBhdGggZmlsbD0iIzM2YyIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTEgMUg2bDIgMiAuMy4zLTQgNCAuNi43IDQtNEg5bDIgMlYxWk0yIDJoMnYxSDJ2N2g3VjhoMXYyYTEgMSAwIDAgMS0xIDFIMmExIDEgMCAwIDEtMS0xVjNhMSAxIDAgMCAxIDEtMVoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K);background-position:center right;background-repeat:no-repeat;background-size:0.857em;padding-right:1em}.mw-indicators{font-size:0.875em;line-height:1.6;position:relative;float:right}#siteNotice{font-size:0.8em;margin:24px 0;position:relative;text-align:center}.mw-portlet ul{list-style:none;margin:0}.vector-menu-portal{margin:0 0.6em 0 0.7em;padding:0.25em 0;direction:ltr}.vector-menu-portal .vector-menu-heading{display:block;color:#54595d;margin:0.5em 0 0 0.66666667em;border:0;padding:0.25em 0;font-size:0.75em;font-weight:normal;cursor:default}.vector-menu-portal .vector-menu-content{margin-left:0.5em;padding-top:0}.vector-menu-portal .vector-menu-content ul{list-style:none;margin:0;padding-top:0.3em}.vector-menu-portal .vector-menu-content li{margin:0;padding:0.25em 0;font-size:0.75em;line-height:1.125em;word-wrap:break-word}.vector-menu-portal .vector-menu-content li a{color:#0645ad}.vector-menu-portal .vector-menu-content li a:visited{color:#0b0080}.vector-search-box-inner{position:relative;height:100%}.vector-search-box-input{background-color:rgba(255,255,255,0.5);color:#000000;width:100%;height:2.15384615em;box-sizing:border-box;border:1px solid #a2a9b1;border-radius:2px;padding:5px 2.15384615em 5px 0.4em;box-shadow:inset 0 0 0 1px transparent;font-family:inherit;font-size:0.8125em;direction:ltr;transition-property:border-color,box-shadow;transition-duration:250ms;-webkit-appearance:none;-moz-appearance:textfield}.vector-search-box-inner:hover .vector-search-box-input{border-color:#72777d}.vector-search-box-input:focus,.vector-search-box-inner:hover .vector-search-box-input:focus{outline:0;border-color:#3366cc;box-shadow:inset 0 0 0 1px #3366cc}.vector-search-box-input::-webkit-input-placeholder{color:#72777d;opacity:1}.vector-search-box-input::-moz-placeholder{color:#72777d;opacity:1}.vector-search-box-input::placeholder{color:#72777d;opacity:1}.vector-search-box-input::-webkit-search-decoration,.vector-search-box-input::-webkit-search-cancel-button,.vector-search-box-input::-webkit-search-results-button,.vector-search-box-input::-webkit-search-results-decoration{display:none}.searchButton{background-color:transparent;position:absolute;top:1px;bottom:1px;right:1px;min-width:28px;width:2.15384615em;border:0;padding:0;cursor:pointer;font-size:0.8125em;direction:ltr;text-indent:-99999px;white-space:nowrap;overflow:hidden;z-index:1}.searchButton[name="go"]{background:no-repeat center/1.23076923em url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQlzZWFyY2gKCTwvdGl0bGU+Cgk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMi4yIDEzLjZhNyA3IDAgMSAxIDEuNC0xLjRsNS40IDUuNC0xLjQgMS40LTUuNC01LjR6TTEzIDhBNSA1IDAgMSAxIDMgOGE1IDUgMCAwIDEgMTAgMHoiLz4KPC9zdmc+Cg==);opacity:0.67}#p-logo{width:10em;height:160px;margin-bottom:1em}#p-logo a{background-position:center center;background-repeat:no-repeat;display:block;width:10em;height:160px;text-decoration:none}.mw-footer{direction:ltr}.mw-footer ul{list-style:none;margin:0;padding:0}.mw-footer li{color:#202122;margin:0;padding:0.5em 0;font-size:0.75em}#footer-icons{float:right}#footer-icons li{float:left;margin-left:0.5em;line-height:2;text-align:right}#footer-info li{line-height:1.4}#footer-places li{float:left;margin-right:1em;line-height:2}}@media screen and (min-width:1000px){}@media screen and (min-width:1000px){}@media screen{body{background-color:#f6f6f6;overflow-y:scroll}.mw-body{background-color:#ffffff;color:#202122;direction:ltr;padding:1em}#p-personal{position:absolute;top:6px;right:0.75em;z-index:100}#p-personal ul{padding-left:10em}.mw-body{margin-left:10em}.mw-body{margin-top:-1px;border:1px solid #a7d7f9;border-right-width:0}.mw-body .firstHeading{overflow:visible}.mw-indicators{z-index:1}.vector-body{position:relative;z-index:0}#mw-page-base{background-color:#fbfbfb;background-image:linear-gradient(to bottom,#ffffff 50%,#f6f6f6 100%);background-position:bottom left;height:5em}#mw-head-base{margin-top:-5em;margin-left:10em;height:5em}#mw-navigation h2{position:absolute;top:-9999px}#mw-head{position:absolute;top:0;right:0;width:100%}#left-navigation{float:left;margin-left:10em;margin-top:2.5em;margin-bottom:-2.5em}#right-navigation{float:right;margin-top:2.5em}.vector-search-box{float:left;margin-right:0.5em;margin-left:0.5em}.vector-search-box form{margin:0.5em 0 0}.vector-search-box-inner{min-width:5em;width:20vw;max-width:20em}#mw-panel{position:absolute;top:0;width:10em;left:0}.mw-footer{margin-left:10em;margin-top:0;padding:0.75em}.mw-content-ltr{direction:ltr}.vector-menu-tabs-legacy{background-position:left bottom;float:left;height:2.5em;padding-left:1px}.vector-menu-tabs-legacy ul{float:left;height:100%;list-style:none;margin:0;padding:0}.vector-menu-tabs-legacy li{background-image:linear-gradient(to top,#77c1f6 0,#e8f2f8 1px,#ffffff 100%);background-position:left bottom;background-repeat:repeat-x;float:left;display:block;height:100%;margin:0;padding:0;line-height:1.125em;white-space:nowrap}.vector-menu-tabs-legacy li a{background-position:right bottom;color:#0645ad;box-sizing:border-box;display:block;float:left;height:3.07692308em;position:relative;padding-top:1.25em;padding-left:8px;padding-right:8px;font-size:0.8125em;cursor:pointer}.vector-menu-tabs-legacy .new a,.vector-menu-tabs-legacy .new a:visited{color:#ba0000}.vector-menu-tabs-legacy .selected{background:#ffffff}.vector-menu-tabs-legacy .selected a,.vector-menu-tabs-legacy .selected a:visited{color:#202122;text-decoration:none}.vector-menu-tabs,.vector-menu-tabs a{background-image:linear-gradient(to bottom,rgba(167,215,249,0)0,#a7d7f9 100%);background-repeat:no-repeat;background-size:1px 100%}.vector-menu-portal .vector-menu-heading{background-image:linear-gradient(to right,rgba(200,204,209,0)0,#c8ccd1 33%,#c8ccd1 66%,rgba(200,204,209,0) 100%);background-position:center bottom;background-repeat:no-repeat;background-size:100% 1px}.vector-search-box h3{display:block;position:absolute!important;clip:rect(1px,1px,1px,1px);width:1px;height:1px;margin:-1px;border:0;padding:0;overflow:hidden}#mw-panel{font-size:inherit}#mw-panel nav:first-child{background-image:none}#mw-panel nav:first-child .vector-menu-heading{display:none}#mw-panel nav:first-child .vector-menu-content{margin-left:0.5em}@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.vector-user-menu-legacy li{font-size:0.75em;float:left;margin-left:0.75em;padding-top:0.5em;line-height:1.16666667}.vector-user-menu-legacy .vector-menu-content-list{display:flex;flex-wrap:wrap;flex-grow:1;justify-content:flex-end;align-items:baseline}}@media screen and (min-width:982px){.mw-body,#mw-head-base,#left-navigation,.mw-footer{margin-left:11em}.mw-body{padding:1.25em 1.5em 1.5em 1.5em}.mw-footer{padding:1.25em}#mw-panel{padding-left:0.5em}.vector-search-box{margin-right:1em}#p-personal{right:1em}}.mw-wiki-logo{background-image:url(data:image/png;base64,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)}@media screen{.mw-parser-output a.external{color:#3366bb}.mw-parser-output a.extiw:visited,.mw-parser-output a.external:visited{color:#663366}.mw-parser-output a.extiw:active,.mw-parser-output a.external:active{color:#bb6633}.mw-body-content:after{clear:both;content:"";display:block}#catlinks{text-align:left}.catlinks{border:1px solid #a2a9b1;background-color:#f8f9fa;padding:5px;margin-top:1em;clear:both}.catlinks ul{display:inline;margin:0;padding:0;list-style:none}.catlinks li{display:inline-block;line-height:1.25em;border-left:1px solid #a2a9b1;margin:0.125em 0;padding:0 0.5em}.catlinks li:first-child{padding-left:0.25em;border-left:0}.mw-indicators{float:right}#siteNotice{position:relative;text-align:center;margin:0}#contentSub,#contentSub2{font-size:84%;line-height:1.2em;margin:0 0 1.4em 1em;color:#54595d;width:auto}a{text-decoration:none;color:#0645ad;background:none}a:not([href]){cursor:pointer}a:visited{color:#0b0080}a:active{color:#faa700}a:hover,a:focus{text-decoration:underline}a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}img{border:0;vertical-align:middle}h1,h2,h3{color:#000;margin:0;padding-top:0.5em;padding-bottom:0.17em;overflow:hidden}h1,h2{margin-bottom:0.6em;border-bottom:1px solid #a2a9b1}h3{margin-bottom:0.3em}h1{font-size:188%;font-weight:normal}h2{font-size:150%;font-weight:normal}h3{font-size:128%}p{margin:0.4em 0 0.5em 0}ul{margin:0.3em 0 0 1.6em;padding:0}li{margin-bottom:0.1em}pre{font-family:monospace,monospace}pre{background-color:#f8f9fa;color:#000;border:1px solid #eaecf0}pre{padding:1em;white-space:pre-wrap;overflow-x:hidden;word-wrap:break-word}form{border:0;margin:0}@counter-style meetei{system:numeric;symbols:"꯰""꯱""꯲""꯳""꯴""꯵""꯶""꯷""꯸""꯹";suffix:") "}@counter-style santali{system:numeric;symbols:"᱐""᱑""᱒""᱓""᱔""᱕""᱖""᱗""᱘""᱙"}@counter-style myanmar_with_period{system:numeric;symbols:"၀""၁""၂""၃""၄""၅""၆""၇""၈""၉";suffix:"။ "}.mw-content-ltr ul{margin:0.3em 0 0 1.6em;padding:0}h1:lang(anp),h1:lang(as),h1:lang(bh),h1:lang(bho),h1:lang(blk),h1:lang(bn),h1:lang(gu),h1:lang(hi),h1:lang(kjp),h1:lang(kn),h1:lang(ks),h1:lang(ksw),h1:lang(ml),h1:lang(mr),h1:lang(my),h1:lang(mai),h1:lang(mnw),h1:lang(ne),h1:lang(new),h1:lang(or),h1:lang(pa),h1:lang(pi),h1:lang(sa),h1:lang(shn),h1:lang(syl),h1:lang(ta),h1:lang(te){line-height:1.6em!important}h2:lang(anp),h2:lang(as),h2:lang(bh),h2:lang(bho),h2:lang(blk),h2:lang(bn),h2:lang(gu),h2:lang(hi),h2:lang(kjp),h2:lang(kn),h2:lang(ks),h2:lang(ksw),h2:lang(ml),h2:lang(mr),h2:lang(my),h2:lang(mai),h2:lang(mnw),h2:lang(ne),h2:lang(new),h2:lang(or),h2:lang(pa),h2:lang(pi),h2:lang(sa),h2:lang(shn),h2:lang(syl),h2:lang(ta),h2:lang(te),h3:lang(anp),h3:lang(as),h3:lang(bh),h3:lang(bho),h3:lang(blk),h3:lang(bn),h3:lang(gu),h3:lang(hi),h3:lang(kjp),h3:lang(kn),h3:lang(ks),h3:lang(ksw),h3:lang(ml),h3:lang(mr),h3:lang(my),h3:lang(mai),h3:lang(mnw),h3:lang(ne),h3:lang(new),h3:lang(or),h3:lang(pa),h3:lang(pi),h3:lang(sa),h3:lang(shn),h3:lang(syl),h3:lang(ta),h3:lang(te),h4:lang(anp),h4:lang(as),h4:lang(bh),h4:lang(bho),h4:lang(blk),h4:lang(bn),h4:lang(gu),h4:lang(hi),h4:lang(kjp),h4:lang(kn),h4:lang(ks),h4:lang(ksw),h4:lang(ml),h4:lang(mr),h4:lang(my),h4:lang(mai),h4:lang(mnw),h4:lang(ne),h4:lang(new),h4:lang(or),h4:lang(pa),h4:lang(pi),h4:lang(sa),h4:lang(shn),h4:lang(syl),h4:lang(ta),h4:lang(te),h5:lang(anp),h5:lang(as),h5:lang(bh),h5:lang(bho),h5:lang(blk),h5:lang(bn),h5:lang(gu),h5:lang(hi),h5:lang(kjp),h5:lang(kn),h5:lang(ks),h5:lang(ksw),h5:lang(ml),h5:lang(mr),h5:lang(my),h5:lang(mai),h5:lang(mnw),h5:lang(ne),h5:lang(new),h5:lang(or),h5:lang(pa),h5:lang(pi),h5:lang(sa),h5:lang(shn),h5:lang(syl),h5:lang(ta),h5:lang(te),h6:lang(anp),h6:lang(as),h6:lang(bh),h6:lang(bho),h6:lang(blk),h6:lang(bn),h6:lang(gu),h6:lang(hi),h6:lang(kjp),h6:lang(kn),h6:lang(ks),h6:lang(ksw),h6:lang(ml),h6:lang(mr),h6:lang(my),h6:lang(mai),h6:lang(mnw),h6:lang(ne),h6:lang(new),h6:lang(or),h6:lang(pa),h6:lang(pi),h6:lang(sa),h6:lang(shn),h6:lang(syl),h6:lang(ta),h6:lang(te){line-height:1.4em}h2:lang(th){line-height:1.6}.toc{border:1px solid #a2a9b1;background-color:#f8f9fa;font-size:95%}.toc{display:table;padding:7px}.toc h2{display:inline;border:0;padding:0;font-size:100%;font-weight:bold}.toc .toctitle{text-align:center}.toc ul{list-style:none;margin:0.3em 0;padding:0}.tocnumber,.toctext{display:table-cell;text-decoration:inherit}.tocnumber{color:#202122}.mw-content-ltr .tocnumber{padding-left:0;padding-right:0.5em}.toctogglecheckbox{display:inline!important;position:absolute;opacity:0;z-index:-1}.toctogglespan{font-size:94%}.toctogglespan:before{content:" ["}.toctogglespan:after{content:"]"}.toctogglelabel{cursor:pointer;color:#0645ad}.toctogglelabel:hover{text-decoration:underline}.toctogglecheckbox:focus+.toctitle .toctogglelabel{text-decoration:underline;outline:dotted 1px;outline:auto -webkit-focus-ring-color}.toctogglecheckbox:checked+.toctitle .toctogglelabel:after{content:"show"}.toctogglecheckbox:not(:checked)+.toctitle .toctogglelabel:after{content:"hide"}.toc .toctitle{direction:ltr}.mw-content-ltr .toc ul{text-align:left}.mw-content-ltr .toc ul ul{margin:0 0 0 2em}}</style>
+<meta name=generator content="MediaWiki 1.39.1">
+<meta name=format-detection content="telephone=no">
+<meta name=viewport content="width=1000">
+<link rel=search type=application/opensearchdescription+xml href=https://wiki.qemu.org/opensearch_desc.php title="QEMU (en)">
+<link rel=EditURI type=application/rsd+xml href="https://wiki.qemu.org/api.php?action=rsd">
+<link rel=license href=http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt>
+<link rel=alternate type=application/atom+xml title="QEMU Atom feed" href="https://wiki.qemu.org/index.php?title=Special:RecentChanges&amp;feed=atom">
+<style>@media screen{}</style><meta name=referrer content=no-referrer><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://wiki.qemu.org/Documentation/QMP><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Documentation_QMP rootpage-Documentation_QMP skin-vector action-view skin-vector-legacy vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-language-alert-in-sidebar-disabled vector-feature-sticky-header-disabled vector-feature-sticky-header-edit-disabled vector-feature-table-of-contents-disabled vector-feature-visual-enhancement-next-disabled"><div id=mw-page-base class=noprint></div>
+<div id=mw-head-base class=noprint></div>
+<div id=content class=mw-body role=main>
+ <a id=top></a>
+ <div id=siteNotice></div>
+ <div class=mw-indicators>
+ </div>
+ <h1 id=firstHeading class="firstHeading mw-first-heading"><span class=mw-page-title-main>Documentation/QMP</span></h1>
+ <div id=bodyContent class=vector-body>
+ <div id=siteSub class="noprint sf-hidden">From QEMU</div>
+ <div id=contentSub></div>
+ <div id=contentSub2></div>
+
+ <div id=jump-to-nav></div>
+ <a class=mw-jump-link href=#mw-head>Jump to navigation</a>
+ <a class=mw-jump-link href=#searchInput>Jump to search</a>
+ <div id=mw-content-text class="mw-body-content mw-content-ltr" lang=en dir=ltr><div class=mw-parser-output><div id=toc class=toc role=navigation aria-labelledby=mw-toc-heading><input type=checkbox role=button id=toctogglecheckbox class=toctogglecheckbox style=display:none><div class=toctitle lang=en dir=ltr><h2 id=mw-toc-heading>Contents</h2><span class=toctogglespan><label class=toctogglelabel for=toctogglecheckbox></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href=#QEMU_Machine_Protocol><span class=tocnumber>1</span> <span class=toctext>QEMU Machine Protocol</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href=#Examples><span class=tocnumber>1.1</span> <span class=toctext>Examples</span></a>
+<ul>
+<li class="toclevel-3 tocsection-3"><a href=#Capabilities_Negotiation><span class=tocnumber>1.1.1</span> <span class=toctext>Capabilities Negotiation</span></a></li>
+<li class="toclevel-3 tocsection-4"><a href=#Eject_a_medium><span class=tocnumber>1.1.2</span> <span class=toctext>Eject a medium</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href=#Query_VM_status><span class=tocnumber>1.1.3</span> <span class=toctext>Query VM status</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href=#Asynchronous_message><span class=tocnumber>1.1.4</span> <span class=toctext>Asynchronous message</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-7"><a href=#Development><span class=tocnumber>1.2</span> <span class=toctext>Development</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href=#Trying_it><span class=tocnumber>1.3</span> <span class=toctext>Trying it</span></a>
+<ul>
+<li class="toclevel-3 tocsection-9"><a href=#By_hand><span class=tocnumber>1.3.1</span> <span class=toctext>By hand</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href=#qmp-shell_script><span class=tocnumber>1.3.2</span> <span class=toctext>qmp-shell script</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-11"><a href=#Historic_information><span class=tocnumber>1.4</span> <span class=toctext>Historic information</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1><span class=mw-headline id=QEMU_Machine_Protocol>QEMU Machine Protocol</span></h1>
+<p>The QEMU Machine Protocol (QMP) is a <a rel=nofollow class="external text" href=http://www.json.org/>JSON</a>-based protocol which allows applications to control a QEMU instance.
+<p>Features:
+</p>
+<ul><li>Lightweight, text-based, easy to parse data format</li>
+<li>Asynchronous messages support (events)</li>
+<li>Capabilities negotiation</li>
+<li>API/ABI stability guarantees</ul>
+<p>Please, also check the <a rel=nofollow class="external text" href="http://git.qemu.org/?p=qemu.git;a=blob_plain;f=docs/interop/qmp-intro.txt;hb=HEAD">QMP intro</a> file for more information.
+</p>
+<h2><span class=mw-headline id=Examples>Examples</span></h2>
+<p>The first example explains some important details about QMP. The others are simpler and run on top of the first one.
+<p>In all examples "C" stands for "Client" and "S" stands for "Server".
+</p>
+<h3><span class=mw-headline id=Capabilities_Negotiation>Capabilities Negotiation</span></h3>
+<p>When a new QMP connection is established, QMP sends its greeting message and enters <i>capabilities negotiation</i> mode. In this mode, only the qmp_capabilities command works. To exit <i>capabilities negotiation</i> mode and enter <i>command mode</i>, the qmp_capabilities command must be issued:
+</p>
+<pre> S: {
+        "QMP": {
+            "version": {
+                "qemu": {
+                    "micro": 0,
+                    "minor": 6,
+                    "major": 1
+                },
+                "package": ""
+            },
+            "capabilities": [
+            ]
+        }
+    }
+C: { "execute": "qmp_capabilities" }
+S: { "return": {}}
+</pre>
+<p>The <i>{ "return": {} }</i> response is QMP's success response. An error response will contain the "error" keyword instead of "return".
+</p>
+<h3><span class=mw-headline id=Eject_a_medium>Eject a medium</span></h3>
+<pre>C: { "execute": "eject", "arguments": { "device": "ide1-cd0" } }
+S: { "return": {}}
+</pre>
+<h3><span class=mw-headline id=Query_VM_status>Query VM status</span></h3>
+<pre>C: { "execute": "query-status" }
+S: {
+       "return": {
+           "status": "running",
+           "singlestep": false,
+           "running": true
+       }
+   }
+</pre>
+<h3><span class=mw-headline id=Asynchronous_message>Asynchronous message</span></h3>
+<pre>S: { "event": "BLOCK_IO_ERROR",
+     "data": { "device": "ide0-hd1",
+               "operation": "write",
+               "action": "stop" },
+     "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
+</pre>
+<h2><span class=mw-headline id=Development>Development</span></h2>
+<p>QMP being a core part of QEMU, all discussions happen on the <a rel=nofollow class="external text" href=http://lists.nongnu.org/mailman/listinfo/qemu-devel>qemu-devel</a> mailing list.
+</p>
+<h2><span class=mw-headline id=Trying_it>Trying it</span></h2>
+<h3><span class=mw-headline id=By_hand>By hand</span></h3>
+<p>1. Start QMP on a TCP socket, so that telnet can be used
+</p>
+<pre># qemu [...] -qmp tcp:localhost:4444,server,wait=off
+</pre>
+<p>2. Run telnet
+</p>
+<pre>$ telnet localhost 4444
+</pre>
+<p>3. You should see QMP's greeting banner
+</p>
+<pre>{"QMP": {"version": {"qemu": {"micro": 0, "minor": 6, "major": 1}, "package": ""}, "capabilities": []}}
+</pre>
+<p>4. Issue the <i>qmp_capabilities</i> command, so that QMP enters command mode
+</p>
+<pre>{ "execute": "qmp_capabilities" }
+</pre>
+<p>5. You can now issue commands. For example, to get a list of QMP supported commands, issue <i>query-commands</i>
+</p>
+<pre>{ "execute": "query-commands" }
+</pre>
+<p>There's an optimization to this procedure in case you plan to use it often:
+<p>1. Install programs <i>socat</i> and <i>rlwrap</i>. If you're running Fedora, you can do
+</p>
+<pre># yum install socat rlwrap
+</pre>
+<p>2. Add the following sections to your QEMU config file (or create a <i>qemu-qmp.conf</i> one):
+</p>
+<pre>[chardev "qmp"]
+  backend = "socket"
+  path = "path to the QMP unix socket"
+  server = "on"
+  wait = "off"
+[mon "qmp"]
+  mode = "control"
+  chardev = "qmp"
+  pretty = "on"
+</pre>
+<p>3. Run QEMU
+</p>
+<pre># qemu [...] -readconfig qemu-qmp.conf
+</pre>
+<p>4. Run rlwrap
+</p>
+<pre># rlwrap -C qmp socat STDIO UNIX:path-to-the-QMP-unix-socket
+</pre>
+<p>You can now issue commands, rlwrap will give you readline support (including persistent history).
+</p>
+<h3><span class=mw-headline id=qmp-shell_script>qmp-shell script</span></h3>
+<p>This script is available under the <a rel=nofollow class="external text" href="http://git.qemu.org/?p=qemu.git;a=tree;f=scripts/qmp;hb=HEAD">scripts/qmp/</a> directory in QEMU's source-tree. It automates a bit the testing work, as it can construct commands objects for you.
+<p>1. Start QMP on a unix socket
+</p>
+<pre># qemu [...] -qmp unix:./qmp-sock,server,wait=off
+</pre>
+<p>2. Run the script
+</p>
+<pre># qmp-shell ./qmp-sock
+</pre>
+<p>3. You should get the following prompt
+</p>
+<pre>(QEMU)
+</pre>
+<p>4. You can now issue commands. For example, let's add a new device
+</p>
+<pre>(QEMU) device_add driver=e1000 id=net1
+</pre>
+<h2><span class=mw-headline id=Historic_information>Historic information</span></h2>
+<ul><li>Luiz's QMP talk on KVM Forum 2010 can be found <a rel=nofollow class="external text" href=http://www.linux-kvm.org/images/1/17/2010-forum-qmp-status-talk.pp.pdf>here</a></li>
+<li>Old QMP page can be accessed <a rel=nofollow class="external text" href="http://www.linux-kvm.org/index.php?title=MonitorProtocol&amp;oldid=3100">here</a></ul>
+</div>
+<div class="printfooter sf-hidden" data-nosnippet>Retrieved from ""</div></div>
+ <div id=catlinks class=catlinks data-mw=interface><div id=mw-normal-catlinks class=mw-normal-catlinks><a href=https://wiki.qemu.org/Special:Categories title=Special:Categories>Category</a>: <ul><li><a href=https://wiki.qemu.org/Category:User_documentation title="Category:User documentation">User documentation</a></ul></div></div>
+ </div>
+</div>
+<div id=mw-navigation>
+ <h2>Navigation menu</h2>
+ <div id=mw-head>
+
+<nav id=p-personal class="vector-menu mw-portlet mw-portlet-personal vector-user-menu-legacy" aria-labelledby=p-personal-label role=navigation>
+ <h3 id=p-personal-label class="vector-menu-heading sf-hidden">
+
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=pt-login class=mw-list-item><a href="https://wiki.qemu.org/index.php?title=Special:UserLogin&amp;returnto=Documentation%2FQMP" title="You are encouraged to log in; however, it is not mandatory [Alt+Shift+o]" accesskey=o><span>Log in</span></a></ul>
+
+ </div>
+</nav>
+ <div id=left-navigation>
+
+<nav id=p-namespaces class="vector-menu mw-portlet mw-portlet-namespaces vector-menu-tabs vector-menu-tabs-legacy" aria-labelledby=p-namespaces-label role=navigation>
+ <h3 id=p-namespaces-label class="vector-menu-heading sf-hidden">
+
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=ca-nstab-main class="selected mw-list-item"><a href=https://wiki.qemu.org/Documentation/QMP title="View the content page [Alt+Shift+c]" accesskey=c><span>Page</span></a><li id=ca-talk class="new mw-list-item"><a href="https://wiki.qemu.org/index.php?title=Talk:Documentation/QMP&amp;action=edit&amp;redlink=1" rel=discussion title="Discussion about the content page (page does not exist) [Alt+Shift+t]" accesskey=t><span>Discussion</span></a></ul>
+
+ </div>
+</nav>
+
+<nav id=p-variants class="vector-menu mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown sf-hidden" aria-labelledby=p-variants-label role=navigation>
+
+
+
+</nav>
+ </div>
+ <div id=right-navigation>
+
+<nav id=p-views class="vector-menu mw-portlet mw-portlet-views vector-menu-tabs vector-menu-tabs-legacy" aria-labelledby=p-views-label role=navigation>
+ <h3 id=p-views-label class="vector-menu-heading sf-hidden">
+
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=ca-view class="selected mw-list-item collapsible"><a href=https://wiki.qemu.org/Documentation/QMP><span>Read</span></a><li id=ca-viewsource class="mw-list-item collapsible"><a href="https://wiki.qemu.org/index.php?title=Documentation/QMP&amp;action=edit" title="This page is protected.
+You can view its source [Alt+Shift+e]" accesskey=e><span>View source</span></a><li id=ca-history class="mw-list-item collapsible"><a href="https://wiki.qemu.org/index.php?title=Documentation/QMP&amp;action=history" title="Past revisions of this page [Alt+Shift+h]" accesskey=h><span>View history</span></a></ul>
+
+ </div>
+</nav>
+
+<nav id=p-cactions class="vector-menu mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown sf-hidden" aria-labelledby=p-cactions-label role=navigation title="More options">
+
+
+
+</nav>
+
+<div id=p-search role=search class="vector-search-box-vue vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+ <div>
+ <h3>
+ <label for=searchInput>Search</label>
+ </h3>
+ <form action=/index.php id=searchform class=vector-search-box-form>
+ <div id=simpleSearch class=vector-search-box-inner data-search-loc=header-navigation>
+ <input class=vector-search-box-input type=search name=search placeholder="Search QEMU" aria-label="Search QEMU" autocapitalize=sentences title="Search QEMU [Alt+Shift+f]" accesskey=f id=searchInput value>
+
+ <input id=mw-searchButton class="searchButton mw-fallbackSearchButton" type=submit name=fulltext title="Search the pages for this text" value=Search>
+ <input id=searchButton class=searchButton type=submit name=go title="Go to a page with this exact name if it exists" value=Go>
+ </div>
+ </form>
+ </div>
+</div>
+ </div>
+ </div>
+
+<div id=mw-panel>
+ <div id=p-logo role=banner>
+ <a class=mw-wiki-logo href=https://wiki.qemu.org/Main_Page title="Visit the main page"></a>
+ </div>
+
+<nav id=p-Link_to_website class="vector-menu mw-portlet mw-portlet-Link_to_website vector-menu-portal portal" aria-labelledby=p-Link_to_website-label role=navigation>
+ <h3 id=p-Link_to_website-label class="vector-menu-heading sf-hidden">
+
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=n-About-QEMU class=mw-list-item><a href=https://wiki.qemu.org/QEMU:About><span>About QEMU</span></a></ul>
+
+ </div>
+</nav>
+
+<nav id=p-Get class="vector-menu mw-portlet mw-portlet-Get vector-menu-portal portal" aria-labelledby=p-Get-label role=navigation>
+ <h3 id=p-Get-label class=vector-menu-heading>
+ <span class=vector-menu-heading-label>Get</span>
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=n-Download class=mw-list-item><a href=https://wiki.qemu.org/Download><span>Download</span></a><li id=n-License class=mw-list-item><a href=https://wiki.qemu.org/License><span>License</span></a></ul>
+
+ </div>
+</nav>
+<nav id=p-Contribute class="vector-menu mw-portlet mw-portlet-Contribute vector-menu-portal portal" aria-labelledby=p-Contribute-label role=navigation>
+ <h3 id=p-Contribute-label class=vector-menu-heading>
+ <span class=vector-menu-heading-label>Contribute</span>
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=n-Start-Here class=mw-list-item><a href=https://wiki.qemu.org/Contribute><span>Start Here</span></a><li id=n-Report-a-Bug class=mw-list-item><a href=https://wiki.qemu.org/Contribute/ReportABug><span>Report a Bug</span></a><li id=n-Report-a-security-issue class=mw-list-item><a href=https://wiki.qemu.org/SecurityProcess><span>Report a security issue</span></a><li id=n-Submit-a-Patch class=mw-list-item><a href=https://wiki.qemu.org/Contribute/SubmitAPatch><span>Submit a Patch</span></a><li id=n-Mailing-Lists class=mw-list-item><a href=https://wiki.qemu.org/Contribute/MailingLists><span>Mailing Lists</span></a><li id=n-Testing-QEMU class=mw-list-item><a href=https://wiki.qemu.org/Testing><span>Testing QEMU</span></a></ul>
+
+ </div>
+</nav>
+<nav id=p-Learn class="vector-menu mw-portlet mw-portlet-Learn vector-menu-portal portal" aria-labelledby=p-Learn-label role=navigation>
+ <h3 id=p-Learn-label class=vector-menu-heading>
+ <span class=vector-menu-heading-label>Learn</span>
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=n-Documentation class=mw-list-item><a href=https://wiki.qemu.org/Documentation><span>Documentation</span></a><li id=n-Links class=mw-list-item><a href=https://wiki.qemu.org/Links><span>Links</span></a></ul>
+
+ </div>
+</nav>
+<nav id=p-tb class="vector-menu mw-portlet mw-portlet-tb vector-menu-portal portal" aria-labelledby=p-tb-label role=navigation>
+ <h3 id=p-tb-label class=vector-menu-heading>
+ <span class=vector-menu-heading-label>Tools</span>
+ </h3>
+ <div class=vector-menu-content>
+
+ <ul class=vector-menu-content-list><li id=t-whatlinkshere class=mw-list-item><a href=https://wiki.qemu.org/Special:WhatLinksHere/Documentation/QMP title="A list of all wiki pages that link here [Alt+Shift+j]" accesskey=j><span>What links here</span></a><li id=t-recentchangeslinked class=mw-list-item><a href=https://wiki.qemu.org/Special:RecentChangesLinked/Documentation/QMP rel=nofollow title="Recent changes in pages linked from this page [Alt+Shift+k]" accesskey=k><span>Related changes</span></a><li id=t-specialpages class=mw-list-item><a href=https://wiki.qemu.org/Special:SpecialPages title="A list of all special pages [Alt+Shift+q]" accesskey=q><span>Special pages</span></a><li id=t-print class=mw-list-item><a href=javascript:void(0) rel=alternate title="Printable version of this page [Alt+Shift+p]" accesskey=p><span>Printable version</span></a><li id=t-permalink class=mw-list-item><a href="https://wiki.qemu.org/index.php?title=Documentation/QMP&amp;oldid=10845" title="Permanent link to this revision of this page"><span>Permanent link</span></a><li id=t-info class=mw-list-item><a href="https://wiki.qemu.org/index.php?title=Documentation/QMP&amp;action=info" title="More information about this page"><span>Page information</span></a></ul>
+
+ </div>
+</nav>
+
+</div>
+</div>
+<footer id=footer class=mw-footer role=contentinfo>
+ <ul id=footer-info>
+ <li id=footer-info-lastmod> This page was last edited on 22 March 2022, at 12:35.</li>
+ <li id=footer-info-copyright>Content is available under <a class=external rel=nofollow href=http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt>GNU Free Documentation License 1.2</a>.<br>QEMU is a trademark of Fabrice Bellard.<br></li>
+</ul>
+ <ul id=footer-places>
+ <li id=footer-places-about><a href=https://wiki.qemu.org/QEMU:About>About QEMU</a></li>
+</ul>
+ <ul id=footer-icons class=noprint>
+ <li id=footer-copyrightico><a href=http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt><img src="data:image/png;base64,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" alt="GNU Free Documentation License 1.2" width=88 height=31 loading=lazy></a></li>
+ <li id=footer-poweredbyico><a href=https://www.mediawiki.org/><img src="data:image/png;base64,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" alt="Powered by MediaWiki" srcset width=88 height=31 loading=lazy sizes></a></li>
+</ul>
+</footer>

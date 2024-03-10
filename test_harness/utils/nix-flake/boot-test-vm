@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Copyright (c) 2023 Nick Piaddo
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+################################################################################
+# Description
+#
+# start-test-vm:
+#   starts a virtual machine to perform library unit and integration tests.
+#
+################################################################################
+
+# Coding convention
+#
+# CAPITAL_SNAKE_CASE: global variable
+# snake_case: local variable
+# camelCase: function
+
+# Script template inspired by
+# https://sharats.me/posts/shell-script-best-practices/
+set -o errexit
+set -o nounset
+set -o pipefail
+shopt -s globstar
+shopt -s nullglob
+
+# Run script `TRACE=1 ./start-test-vm' to enable debug mode
+if [[ "${TRACE-0}" == "1" ]]; then
+  set -o xtrace
+fi
+
+################################################################################
+#                        HELPER FUNCTIONS
+################################################################################
+
+#### OUTPUT FORMATTING FUNCTIONS
+
+function formatText {
+  # escape character start
+  local on="$1"
+  # escape character end
+  local off="$2"
+  local text="$3"
+
+  echo -ne "${on}${text}${off}"
+}
+
+function bold { formatText "$(tput bold)" "$(tput sgr0)" "$1"; }
+function redbg { formatText "$(tput setab 1)" "$(tput sgr0)" "$1"; }
+function underline { formatText "$(tput smul)" "$(tput rmul)" "$1"; }
+function yellowbg { formatText "$(tput setab 3)" "$(tput sgr0)" "$1"; }
+
+function heading { printf "%s\n" "$(bold "$1") "; }
+
+function subheading { echo "> $1"; }
+
+heading "Booting test Virtual Machine..."
+nix run .#test-microvm
