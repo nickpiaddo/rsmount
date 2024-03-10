@@ -1,0 +1,35 @@
+# Manage and maintain pre-commit hooks
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/doublify/pre-commit-rust
+    rev: v1.0
+    hooks:
+    -   id: fmt
+    -   id: cargo-check
+    -   id: clippy
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+        args: ['--maxkb=10240']
+    -   id: detect-private-key
+-   repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.35.0
+    hooks:
+    -   id: markdownlint-fix
+-   repo: https://github.com/frnmst/md-toc
+    rev: 8.2.0
+    hooks:
+    -   id: md-toc
+        args: [-p, -s, '2', github, -o, '.']
+-   repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
+    hooks:
+    -   id: shellcheck
+    -   id: shfmt
+    -   id: script-must-not-have-extension
