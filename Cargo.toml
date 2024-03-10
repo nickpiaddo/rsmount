@@ -1,0 +1,29 @@
+[package]
+name = "rsmount"
+description = "Safe Rust wrapper around the `util-linux/libmount` C library"
+version = "0.1.0"
+authors = ["Nick Piaddo <nick.piaddo@protonmail.com>"]
+license = "Apache-2.0 OR MIT"
+rust-version = "1.72"
+edition = "2021"
+repository = "https://github.com/nickpiaddo/rsmount"
+homepage = "https://github.com/nickpiaddo/rsmount"
+documentation = "https://docs.rs/rsmount"
+readme = "README.md"
+keywords = ["libmount", "mount", "util-linux", "wrapper"]
+categories = ["api-bindings"]
+exclude = ["web-snapshots/*", "test_harness/*", "scripts/*"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libc = "0.2.153"
+libmount = { package="rsmount-sys", version="0.2.0" }
+log = "0.4.21"
+thiserror = "1.0.57"
+
+[dev-dependencies]
+pretty_assertions = "1.4.0"
+
+[build-dependencies]
+pkg-config = "0.3.30"
