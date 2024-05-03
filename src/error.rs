@@ -1,0 +1,36 @@
+// Copyright (c) 2023 Nick Piaddo
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+
+//! Library-level error module.
+
+// From dependency library
+use thiserror::Error;
+
+// From standard library
+
+// From this library
+
+/// A specialized [`Result`](std::result::Result) type for `rsmount`.
+///
+/// This typedef is generally used at the program-level to avoid writing out [`RsMountError`]
+/// directly, and is, otherwise, a direct mapping to [`Result`](std::result::Result).
+#[allow(dead_code)]
+pub type Result<T> = std::result::Result<T, RsMountError>;
+
+/// Library-level runtime errors.
+///
+/// This enum includes all variants of error types susceptible to occur in the library. Other, more
+/// granular error types, are automatically converted to `RsMountError` when needed.
+///
+/// # Examples
+/// ----
+///
+/// ```
+/// fn main() -> rsmount::Result<()> {
+///
+///     Ok(())
+/// }
+/// ```
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum RsMountError {}

@@ -942,3 +942,7 @@ mod prelude {}
 
 #[allow(unused_imports)]
 use prelude::*;
+
+pub use error::*;
+
+mod error;
