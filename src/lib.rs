@@ -836,24 +836,24 @@
 //!
 //! #### Cache
 //!
-//! | `libmount`                        | `rsmount` |
-//! | ------------------                | --------- |
-//! | [`struct libmnt_cache`][349]      |           |
-//! | [`mnt_new_cache`][350]            |           |
-//! | [`mnt_free_cache`][351]           |           |
-//! | [`mnt_ref_cache`][352]            |           |
-//! | [`mnt_unref_cache`][353]          |           |
-//! | [`mnt_cache_device_has_tag`][354] |           |
-//! | [`mnt_cache_find_tag_value`][355] |           |
-//! | [`mnt_cache_read_tags`][356]      |           |
-//! | [`mnt_cache_set_targets`][357]    |           |
-//! | [`mnt_cache_set_sbprobe`][358]    |           |
-//! | [`mnt_get_fstype`][359]           |           |
-//! | [`mnt_pretty_path`][360]          |           |
-//! | [`mnt_resolve_path`][361]         |           |
-//! | [`mnt_resolve_spec`][362]         |           |
-//! | [`mnt_resolve_tag`][363]          |           |
-//! | [`mnt_resolve_target`][364]       |           |
+//! | `libmount`                        | `rsmount`                                                                                                                                                                                                        |
+//! | ------------------                | ---------                                                                                                                                                                                                        |
+//! | [`struct libmnt_cache`][349]      | [`Cache`](crate::core::cache::Cache)                                                                                                                                                                             |
+//! | [`mnt_new_cache`][350]            | [`Cache::new`](crate::core::cache::Cache::new)                                                                                                                                                                   |
+//! | [`mnt_free_cache`][351]           | [`Cache`](crate::core::cache::Cache) is automatically deallocated when it goes out of scope.                                                                                                                     |
+//! | [`mnt_ref_cache`][352]            | Managed automatically.                                                                                                                                                                                           |
+//! | [`mnt_unref_cache`][353]          | Managed automatically.                                                                                                                                                                                           |
+//! | [`mnt_cache_device_has_tag`][354] | [`Cache::device_has_tag`](crate::core::cache::Cache::device_has_tag)                                                                                                                                             |
+//! | [`mnt_cache_find_tag_value`][355] | [`Cache::find_tag_value`](crate::core::cache::Cache::find_tag_value)                                                                                                                                             |
+//! | [`mnt_cache_read_tags`][356]      | [`Cache::import_tags`](crate::core::cache::Cache::import_tags)                                                                                                                                                   |
+//! | [`mnt_cache_set_targets`][357]    |                                                                                                                                                                                                                  |
+//! | [`mnt_cache_set_sbprobe`][358]    | [`Cache::collect_fs_properties`](crate::core::cache::Cache::collect_fs_properties)                                                                                                                               |
+//! | [`mnt_get_fstype`][359]           | [`Cache::find_file_system_type`](crate::core::cache::Cache::find_file_system_type)<br>[`Cache::find_and_cache_file_system_type`](crate::core::cache::Cache::find_and_cache_file_system_type)                     |
+//! | [`mnt_pretty_path`][360]          | [`Cache::canonicalize`](crate::core::cache::Cache::canonicalize)<br>[`Cache::canonicalize_and_cache`](crate::core::cache::Cache::canonicalize_and_cache)                                                         |
+//! | [`mnt_resolve_path`][361]         | [`Cache::resolve`](crate::core::cache::Cache::resolve)<br>[`Cache::resolve_and_cache`](crate::core::cache::Cache::resolve_and_cache)                                                                             |
+//! | [`mnt_resolve_spec`][362]         | Not implemented. Use the specialized functions corresponding to `mnt_resolve_path` or `mnt_resolve_tag` as applicable.                                                                                           |
+//! | [`mnt_resolve_tag`][363]          | [`Cache::find_first_device_with_tag`](crate::core::cache::Cache::find_first_device_with_tag)<br>[`Cache::find_and_cache_first_device_with_tag`](crate::core::cache::Cache::find_and_cache_first_device_with_tag) |
+//! | [`mnt_resolve_target`][364]       | [`Cache::find_device_mounted_at`](crate::core::cache::Cache::find_device_mounted_at)<br>[`Cache::find_and_cache_device_mounted_at`](crate::core::cache::Cache::find_and_cache_device_mounted_at)                 |
 //!
 //! [349]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Cache.html#libmnt-cache
 //! [350]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Cache.html#mnt-new-cache

@@ -8,3 +8,6 @@
 // From standard library
 
 // From this library
+pub use cache_struct::Cache;
+
+mod cache_struct;

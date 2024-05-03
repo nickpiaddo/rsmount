@@ -9,5 +9,7 @@
 
 // From this library
 pub use file_system_enum::FileSystem;
+pub use fs_type_enum::FsType;
 
 mod file_system_enum;
+mod fs_type_enum;
