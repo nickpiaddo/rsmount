@@ -50,7 +50,7 @@
 //! `/proc/self/mountinfo`, `/proc/swaps`, `/run/mount/utab`).
 //! - `mount`: a module to mount devices on the system's file tree.
 //!
-//! Finally, look to the `debug` module if you need to consult debug messages during development.
+//! Finally, look to the [`debug`] module if you need to consult debug messages during development.
 //!
 //! ## From `libmount` to `rsmount` API
 //!
@@ -828,9 +828,9 @@
 //! ### Misc
 //! #### Library initialization
 //!
-//! | `libmount`              | `rsmount` |
-//! | ------------------      | --------- |
-//! | [`mnt_init_debug`][348] |           |
+//! | `libmount`              | `rsmount`                                                   |
+//! | ------------------      | ---------                                                   |
+//! | [`mnt_init_debug`][348] | [`debug::init_default_debug`]<br>[`debug::init_full_debug`] |
 //!
 //! [348]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Library-initialization.html#mnt-init-debug
 //!
@@ -945,5 +945,6 @@ use prelude::*;
 
 pub use error::*;
 
+pub mod debug;
 mod error;
 pub(crate) mod ffi_utils;
