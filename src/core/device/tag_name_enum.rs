@@ -9,6 +9,7 @@ use std::fmt;
 use std::str::FromStr;
 
 // From this library
+use crate::core::device::Tag;
 use crate::core::errors::ParserError;
 
 /// Tag names supported by `libmount`.
@@ -75,6 +76,21 @@ impl FromStr for TagName {
 
                 Err(ParserError::TagName(err_msg))
             }
+        }
+    }
+}
+
+impl<T> From<T> for TagName
+where
+    T: AsRef<Tag>,
+{
+    fn from(tag: T) -> TagName {
+        match tag.as_ref() {
+            Tag::Label(_) => Self::Label,
+            Tag::Uuid(_) => Self::Uuid,
+            Tag::PartLabel(_) => Self::PartLabel,
+            Tag::PartUuid(_) => Self::PartUuid,
+            Tag::Id(_) => Self::Id,
         }
     }
 }
