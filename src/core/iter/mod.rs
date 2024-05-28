@@ -9,5 +9,7 @@
 
 // From this library
 pub use direction_enum::Direction;
+pub use gen_iterator_struct::GenIterator;
 
 mod direction_enum;
+mod gen_iterator_struct;

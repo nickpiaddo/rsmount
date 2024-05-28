@@ -8,7 +8,7 @@ use num_enum::{IntoPrimitive, TryFromPrimitive};
 
 // From this library
 
-/// A `GenIterator`'s direction of iteration.
+/// A [`GenIterator`](crate::core::iter::GenIterator)'s direction of iteration.
 #[derive(Clone, Copy, Debug, Eq, IntoPrimitive, PartialEq, TryFromPrimitive)]
 #[repr(i32)]
 #[non_exhaustive]

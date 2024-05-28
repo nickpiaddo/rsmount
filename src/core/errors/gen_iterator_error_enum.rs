@@ -8,7 +8,11 @@ use thiserror::Error;
 
 // From this library
 
-/// `GenIterator` runtime errors.
+/// [`GenIterator`](crate::core::iter::GenIterator) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
-pub enum GenIteratorError {}
+pub enum GenIteratorError {
+    /// Error while creating a new [`GenIterator`](crate::core::iter::GenIterator) instance.
+    #[error("{0}")]
+    Creation(String),
+}

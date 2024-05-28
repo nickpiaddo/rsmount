@@ -874,13 +874,13 @@
 //!
 //! #### Iterator
 //!
-//! | `libmount`                      | `rsmount` |
-//! | ------------------              | --------- |
-//! | [`struct libmnt_iter`][365]     |           |
-//! | [`mnt_free_iter`][366]          |           |
-//! | [`mnt_iter_get_direction`][367] |           |
-//! | [`mnt_new_iter`][368]           |           |
-//! | [`mnt_reset_iter`][369]         |           |
+//! | `libmount`                      | `rsmount`                                                                                                                                                                                                                         |
+//! | ------------------              | ---------                                                                                                                                                                                                                         |
+//! | [`struct libmnt_iter`][365]     | [`GenIterator`](crate::core::iter::GenIterator)                                                                                                                                                                                   |
+//! | [`mnt_free_iter`][366]          | [`GenIterator`](crate::core::iter::GenIterator) is automatically deallocated when it goes out of scope.                                                                                                                           |
+//! | [`mnt_iter_get_direction`][367] | [`GenIterator::direction`](crate::core::iter::GenIterator::direction)                                                                                                                                                             |
+//! | [`mnt_new_iter`][368]           | [`GenIterator::new`](crate::core::iter::GenIterator::new)                                                                                                                                                                         |
+//! | [`mnt_reset_iter`][369]         | [`GenIterator::reset`](crate::core::iter::GenIterator::reset)<br>[`GenIterator::reset_forward`](crate::core::iter::GenIterator::reset_forward)<br>[`GenIterator::reset_backward`](crate::core::iter::GenIterator::reset_backward) |
 //!
 //! [365]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Iterator.html#libmnt-iter
 //! [366]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Iterator.html#mnt-free-iter
