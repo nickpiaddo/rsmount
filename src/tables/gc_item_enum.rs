@@ -12,6 +12,7 @@
 pub(crate) enum GcItem {
     Cache(*mut *mut libmount::libmnt_cache),
     TabEntry(*mut *mut libmount::libmnt_fs),
+    Lock(*mut *mut libmount::libmnt_lock),
 }
 
 impl GcItem {
@@ -24,6 +25,9 @@ impl GcItem {
                 let _ = unsafe { Box::from_raw(boxed_ptr) };
             }
             GcItem::TabEntry(boxed_ptr) => {
+                let _ = unsafe { Box::from_raw(boxed_ptr) };
+            }
+            GcItem::Lock(boxed_ptr) => {
                 let _ = unsafe { Box::from_raw(boxed_ptr) };
             }
         }
@@ -39,5 +43,11 @@ impl From<*mut *mut libmount::libmnt_cache> for GcItem {
 impl From<*mut *mut libmount::libmnt_fs> for GcItem {
     fn from(ptr: *mut *mut libmount::libmnt_fs) -> GcItem {
         GcItem::TabEntry(ptr)
+    }
+}
+
+impl From<*mut *mut libmount::libmnt_lock> for GcItem {
+    fn from(ptr: *mut *mut libmount::libmnt_lock) -> GcItem {
+        GcItem::Lock(ptr)
     }
 }

@@ -758,14 +758,14 @@
 //! ### Tables management
 //! #### Locking
 //!
-//! | `libmount`                      | `rsmount` |
-//! | ------------------              | --------- |
-//! | [`struct libmnt_lock`][297]     |           |
-//! | [`mnt_free_lock`][298]          |           |
-//! | [`mnt_lock_file`][299]          |           |
-//! | [`mnt_new_lock`][300]           |           |
-//! | [`mnt_unlock_file`][301]        |           |
-//! | [`mnt_lock_block_signals`][302] |           |
+//! | `libmount`                      | `rsmount`                                                                                                                                            |
+//! | ------------------              | ---------                                                                                                                                            |
+//! | [`struct libmnt_lock`][297]     | [`FileLock`](crate::core::fs::FileLock)                                                                                                              |
+//! | [`mnt_free_lock`][298]          | [`FileLock`](crate::core::fs::FileLock) is automatically deallocated when it goes out of scope.                                                      |
+//! | [`mnt_lock_file`][299]          | [`FileLock::lock`](crate::core::fs::FileLock::lock)                                                                                                  |
+//! | [`mnt_new_lock`][300]           | [`FileLock::new`](crate::core::fs::FileLock::new)                                                                                                    |
+//! | [`mnt_unlock_file`][301]        | [`FileLock::unlock`](crate::core::fs::FileLock::unlock)                                                                                              |
+//! | [`mnt_lock_block_signals`][302] | [`FileLock::block_signals`](crate::core::fs::FileLock::block_signals) <br> [`FileLock::unblock_signals`](crate::core::fs::FileLock::unblock_signals) |
 //!
 //! [297]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Locking.html#libmnt-lock
 //! [298]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Locking.html#mnt-free-lock
