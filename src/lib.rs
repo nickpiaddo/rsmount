@@ -136,7 +136,7 @@
 //! | `libmount`                               | `rsmount`                                                                              |
 //! | ------------------                       | ---------                                                                              |
 //! | [`struct libmnt_context`][1]             | [`Mount`](crate::mount::Mount)                                                         |
-//! | [`struct libmnt_ns`][2]                  |                                                                                        |
+//! | [`struct libmnt_ns`][2]                  | [`MountNamespace`](crate::mount::MountNamespace)                                       |
 //! | [`MNT_ERR_AMBIFS`][3]                    | [`ErrorCode::FsCollision`](crate::mount::ErrorCode::FsCollision)                       |
 //! | [`MNT_ERR_APPLYFLAGS`][4]                | [`ErrorCode::ApplyFlags`](crate::mount::ErrorCode::ApplyFlags)                         |
 //! | [`MNT_ERR_LOOPDEV`][5]                   | [`ErrorCode::LoopDevice`](crate::mount::ErrorCode::LoopDevice)                         |
