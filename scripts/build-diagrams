@@ -1,0 +1,467 @@
+#!/usr/bin/env bash
+
+# Copyright (c) 2023 Nick Piaddo
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+################################################################################
+# Description
+#
+# build-diagrams:
+#   generates SVG/PNG images from D2 diagrams files.
+#
+################################################################################
+
+# Coding convention
+#
+# CAPITAL_SNAKE_CASE: global variable
+# snake_case: local variable
+# camelCase: function
+
+# Script template inspired by
+# https://sharats.me/posts/shell-script-best-practices/
+set -o errexit
+set -o nounset
+set -o pipefail
+shopt -s globstar
+shopt -s nullglob
+
+# Run script `TRACE=1 ./build-diagrams' to enable debug mode
+if [[ "${TRACE-0}" == "1" ]]; then
+  set -o xtrace
+fi
+
+################################################################################
+#                        GLOBAL VARIABLES
+################################################################################
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+BASE_DIR="$(realpath "${DIR}/../")"
+#SCRIPTS_DIR="${BASE_DIR}/scripts"
+FONTS_DIR="${BASE_DIR}/third-party/vendor/fonts/"
+ATKINSON_WEB_FONTS_TTF="${FONTS_DIR}/Atkinson-Hyperlegible-Font-Print-and-Web-2020-0514/Web Fonts/TTF"
+ATKINSON_REGULAR="${ATKINSON_WEB_FONTS_TTF}/Atkinson-Hyperlegible-Regular-102.ttf"
+ATKINSON_ITALIC="${ATKINSON_WEB_FONTS_TTF}/Atkinson-Hyperlegible-Italic-102.ttf"
+ATKINSON_BOLD="${ATKINSON_WEB_FONTS_TTF}/Atkinson-Hyperlegible-Bold-102.ttf"
+
+FILES=""
+OUTPUT_DIR=""
+OUTPUT_TYPE="svg"
+FILE_EXT=".svg"
+
+################################################################################
+#                        HELPER FUNCTIONS
+################################################################################
+
+#### OUTPUT FORMATTING FUNCTIONS
+
+function formatText {
+  # escape character start
+  local on="$1"
+  # escape character end
+  local off="$2"
+  local text="$3"
+
+  echo -ne "${on}${text}${off}"
+}
+
+function bold { formatText "$(tput bold)" "$(tput sgr0)" "$1"; }
+function redbg { formatText "$(tput setab 1)" "$(tput sgr0)" "$1"; }
+function underline { formatText "$(tput smul)" "$(tput rmul)" "$1"; }
+function yellowbg { formatText "$(tput setab 3)" "$(tput sgr0)" "$1"; }
+
+function heading { printf "%s\n" "$(bold "$1") "; }
+
+function subheading { echo "> $1"; }
+
+#### MAIN HELPER FUNCTIONS
+
+######################################################################
+# Print usage.
+# Arguments:
+#   None
+# Outputs:
+#   Usage instructions
+######################################################################
+function printUsage {
+  cat <<-END
+   $(bold USAGE)
+
+       $(basename "$0") [-t TYPE] [-o OUTPUT-DIR] (D2FILE|DIRECTORY)..
+
+       $(basename "$0") --help
+END
+}
+
+######################################################################
+# Print help page.
+# Arguments:
+#   None
+# Outputs:
+#   Usage manual
+######################################################################
+function printHelp {
+  cat <<-END
+   $(bold USAGE)
+
+       $(basename "$0") [-t TYPE] [-o OUTPUT-DIR] (D2FILE|DIRECTORY)..
+
+       $(basename "$0") --help
+
+   $(bold DESCRIPTION)
+
+        Generate SVG/PNG images from D2 diagram files.
+
+   $(bold OPTIONS)
+
+       -h, --help       Display this help and exit.
+       -t, --type TYPE  Specify the type of files to output.
+       -o, --output     Specify the directory to save output files to.
+
+       Command parameters:
+
+       D2FILE      Name of a D2 diagram file.
+       DIRECTORY   Path to a directory of D2 diagram files.
+       TYPE        Type of image file to output: 'svg' or 'png'.
+                   (default: 'svg')
+       OUTPUT-DIR  Path of the directory to save output files to.
+
+END
+}
+
+#### ERROR MANAGEMENT FUNCTIONS
+
+######################################################################
+# Print error message and terminate program.
+# Arguments:
+#   Error message
+# Outputs:
+#   Writes error message to stderr
+# Returns:
+#   Exit code 1
+######################################################################
+function error {
+  echo -e "$(redbg Error:) $*" >&2
+  exit 1
+}
+
+######################################################################
+# Execute an error function if a predicate function returns false.
+# Arguments:
+#   Predicate function
+#   Argument of the predicate function
+#   Error function to execute if assertion is false
+#   Error message
+# Outputs:
+#   Nothing if the predicate is true. The error function's output
+#   otherwise.
+######################################################################
+function assert {
+  local pred_fun="$1"
+  local pred_arg="$2"
+  local error_fun="$3"
+  local error_arg="$4"
+
+  if ! $pred_fun "${pred_arg}"; then
+    $error_fun "${error_arg}"
+  fi
+}
+
+######################################################################
+# Print warning message.
+# Arguments:
+#   Warning message
+# Outputs:
+#   Writes warning message to stderr
+######################################################################
+function warn {
+  echo -e "$(yellowbg WARNING:) $1" >&2
+}
+
+#### CONVERSION FUNCTIONS
+
+######################################################################
+# Convert a short option to its long version.
+# Arguments:
+#   Short option
+# Returns:
+#   Long version of the given short option
+#   Empty string otherwise
+######################################################################
+function toLongOption {
+  local short_option="$1"
+
+  case "${short_option}" in
+  '-h') echo '--help' ;;
+  '-t') echo '--type' ;;
+  '-o') echo '--output' ;;
+  *) echo "" ;;
+  esac
+}
+
+#### PREDICATE FUNCTIONS
+
+######################################################################
+# Test if a path leads to a file.
+# Arguments:
+#   Path
+# Returns:
+#   True if Path is a directory
+#   False otherwise
+######################################################################
+function isFile { [[ -f "$1" ]]; }
+
+######################################################################
+# Test if a path leads to s directory.
+# Arguments:
+#   Path
+# Returns:
+#   True if Path is a directory
+#   False otherwise
+######################################################################
+function isDirectory { [[ -d "$1" ]]; }
+
+######################################################################
+# Test if a path leads to a file or s directory.
+# Arguments:
+#   Path
+# Returns:
+#   True if Path is a directory
+#   False otherwise
+######################################################################
+function isFileOrDirectory { [[ -d "$1" || -f "$1" ]]; }
+
+######################################################################
+# Test if a given string matches 'svg' or 'png'.
+# Arguments:
+#   String
+# Returns:
+#   True if String matches 'svg' or 'png'
+#   False otherwise
+######################################################################
+function isSvgOrPng { [[ "$1" == svg || "$1" == png ]]; }
+
+######################################################################
+# Test if a variable is set.
+# Arguments:
+#   Variable value
+# Returns:
+#   True if variable is set
+#   False otherwise
+######################################################################
+function isSet { [[ -n "$1" ]]; }
+
+#### UTILITY FUNCTIONS
+
+######################################################################
+# Concatenate two strings separated by the given separator character
+# if the two strings are non-empty. Returns an empty string or whichever
+# of the two is non-empty otherwise.
+#
+# Examples:
+#
+#   concat ';' '' ''       --> ''
+#   concat ';' '' 'bar'    --> 'bar'
+#   concat ';' 'foo' ''    --> 'foo'
+#   concat ';' 'foo' 'bar' --> 'foo;bar'
+#
+# Arguments:
+#   Separator character
+#   First string
+#   Second string
+# Returns:
+#   Concatenated strings
+######################################################################
+function concat {
+  # No argument or just the separator
+  if [[ $# -eq 0 || $# -eq 1 ]]; then
+    echo ""
+  # Separator + one string
+  elif [[ $# -eq 2 ]]; then
+    echo -e "$2"
+  # Separator + two strings
+  else
+    local separator="$1"
+    local first="$2"
+    local second="$3"
+
+    # concat ';' '' ''
+    if [[ -z "${first}" && -z "${second}" ]]; then
+      echo ""
+    # concat ';' '' 'bar'
+    elif [[ -z "${first}" && -n "${second}" ]]; then
+      echo -e "${second}"
+    # concat ';' 'foo' ''
+    elif [[ -n "${first}" && -z "${second}" ]]; then
+      echo -e "${first}"
+    # concat ';' 'foo' 'bar'
+    else
+      echo -e "${first}${separator}${second}"
+    fi
+  fi
+}
+
+######################################################################
+# Find the option at the given index in the string.
+# Arguments:
+#   Index
+#   String
+# Returns:
+#   First option at index
+#   Empty string if there is none
+######################################################################
+function findOptionAt {
+  local index="$1"
+  local argument_list="$2"
+  echo "${argument_list}" | cut --delimiter=' ' --fields="${index}"
+}
+
+#### PARSER FUNCTIONS
+
+######################################################################
+# Parses OUTPUT-DIR option value.
+# Arguments:
+#   Directory path
+# Returns:
+#   Normalized directory path
+#   Exit code 1, otherwise
+# Outputs:
+#   Error message if path does not point to a directory.
+######################################################################
+function parseOutputDirectory {
+  local directory_path="$1"
+
+  assert isDirectory "${directory_path}" \
+    error "'${directory_path}' is not a directory."
+
+  realpath "${directory_path}"
+}
+
+######################################################################
+# Parses TYPE option value.
+# Arguments:
+#   Output file type
+# Returns:
+#   svg or png
+#   Exit code 1, otherwise
+# Outputs:
+#   Error message if file type does not match svg or png.
+######################################################################
+function parseOutputType {
+  local file_type="$1"
+
+  assert isSvgOrPng "${file_type}" \
+    error "'unsupported value: ${file_type}'. Expected 'svg' or 'png'."
+
+  echo "${file_type}"
+}
+
+######################################################################
+# Parses D2FILE/DIRECTORY script argument.
+# Arguments:
+#   Input files
+# Returns:
+#   absolute paths to D2 diagram files
+#   Exit code 1, otherwise
+# Outputs:
+#   Error message if input is not a file or directory.
+######################################################################
+function parseArgs {
+  local file_list="$1"
+
+  for file in ${file_list}; do
+    assert isFileOrDirectory "${file}" \
+      error "${file} is neither a file nor a directory."
+
+    if isFile "\n ${file}"; then
+      realpath "${file}"
+    else
+      find "${file}" -name '*.d2' -exec realpath {} \;
+    fi
+  done
+}
+
+################################################################################
+#                        MAIN PROGRAM
+################################################################################
+
+if [[ $# -eq 0 ]]; then
+  printUsage
+  exit 1
+fi
+
+# From https://stackoverflow.com/a/30026641
+# Long option to short option substitution
+for arg in "$@"; do
+  shift
+  case "$arg" in
+  '--help') set -- "$@" '-h' ;;
+  '--type') set -- "$@" '-t' ;;
+  '--output') set -- "$@" '-o' ;;
+  *) set -- "$@" "$arg" ;;
+  esac
+done
+
+# Parse short option value
+OPTIND=1
+while getopts ":ht:o:" short_option; do
+  case "${short_option}" in
+  h)
+    printHelp
+    exit 0
+    ;;
+  t) OUTPUT_TYPE="$(parseOutputType "${OPTARG}")" ;;
+  o) OUTPUT_DIR="$(parseOutputDirectory "${OPTARG}")" ;;
+  :) error "option $(concat ', ' "-${OPTARG}" "$(toLongOption "-${OPTARG}")") requires an argument." ;;
+  ?)
+    case "${OPTARG}" in
+    '-') INDEX=${OPTIND} ;;
+    *) INDEX=$((OPTIND - 1)) ;;
+    esac
+    error "unknown option: $(findOptionAt "${INDEX}" "${*}")"
+    ;;
+  esac
+done
+
+if [[ "${OUTPUT_TYPE}" == png ]]; then
+  FILE_EXT=".png"
+fi
+
+# Check input file(s)
+ARGS="${*:${OPTIND}}"
+
+assert isSet "${ARGS}" \
+  error "'$(basename "$0")' requires argument D2FILE or DIRECTORY. (see help page: $(basename "$0") --help)"
+
+# List D2 files
+FILES="$(parseArgs "${ARGS}")"
+FILES="$(echo "${FILES}" | sort | uniq)"
+
+# Generate diagram images
+if isSet "${OUTPUT_DIR}"; then
+  for file in ${FILES}; do
+    FILE_NAME="$(basename -s '.d2' "${file}")"
+    d2 --center \
+      --dark-theme 200 \
+      --layout=elk \
+      --bundle=true \
+      --font-regular "${ATKINSON_REGULAR}" \
+      --font-italic "${ATKINSON_ITALIC}" \
+      --font-bold "${ATKINSON_BOLD}" \
+      "${file}" \
+      "${OUTPUT_DIR}/${FILE_NAME}${FILE_EXT}"
+  done
+else
+  for file in ${FILES}; do
+    FILE_NAME="$(basename -s '.d2' "${file}")"
+    OUTPUT_DIR="$(dirname "${file}")"
+    d2 --center \
+      --dark-theme 200 \
+      --layout=elk \
+      --bundle=true \
+      --font-regular "${ATKINSON_REGULAR}" \
+      --font-italic "${ATKINSON_ITALIC}" \
+      --font-bold "${ATKINSON_BOLD}" \
+      "${file}" \
+      "${OUTPUT_DIR}/${FILE_NAME}${FILE_EXT}"
+  done
+fi

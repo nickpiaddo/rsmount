@@ -17,6 +17,7 @@ exclude = ["web-snapshots/*", "test_harness/*", "scripts/*"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+embed-doc-image = "0.1.4"
 enum-iterator = "2.1.0"
 libc = "0.2.153"
 libmount = { package="rsmount-sys", version="0.2.0" }
@@ -28,8 +29,10 @@ thiserror = "1.0.57"
 typed-builder = "0.19.1"
 
 [dev-dependencies]
+inside-vm = "0.2.0"
 pretty_assertions = "1.4.0"
 tempfile = "3.10.1"
+xz2 = "0.1.7"
 
 [build-dependencies]
 pkg-config = "0.3.30"

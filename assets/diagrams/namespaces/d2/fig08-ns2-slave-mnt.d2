@@ -1,0 +1,195 @@
+classes: {
+  namespace: {
+    style: {
+      fill: "#f2f2f2"
+      stroke: "#666666"
+      font-color: "#222222"
+      bold: true
+    }
+  }
+
+  edge: {
+    style: {
+      stroke: "#5c5c5c"
+      stroke-width: 4
+    }
+  }
+
+  event-edge: {
+    style: {
+      stroke: "#5c5c5c"
+      stroke-width: 4
+      font-color: "#5c5c5c"
+      animated: true
+    }
+  }
+
+  bind-mount: {
+    shape: circle
+    style: {
+      fill: "#f0f921"
+      stroke: "#9a9f04"
+      stroke-width: 3
+      font-size: 22
+      font-color: "#222222"
+      double-border: true
+    }
+  }
+
+  private: {
+    shape: square
+    style: {
+      fill: "#0d0887"
+      stroke: "#000000"
+      stroke-width: 3
+      font-size: 22
+      font-color: "#f4f4f4"
+    }
+  }
+
+  shared: {
+    shape: circle
+    style: {
+      fill: "#f0f921"
+      stroke: "#9a9f04"
+      stroke-width: 3
+      font-size: 22
+      font-color: "#222222"
+    }
+  }
+
+  slave: {
+    shape: diamond
+    style: {
+      fill: "#d8576b"
+      stroke: "#a12538"
+      stroke-width: 3
+      font-size: 22
+      font-color: "#f4f4f4"
+    }
+  }
+
+  slave-shared: {
+    shape: oval
+    style: {
+      fill: "#fb9f3a"
+      stroke: "#914c03"
+      stroke-width: 3
+      font-size: 22
+      font-color: "#222222"
+    }
+  }
+
+  unbindable: {
+    shape: hexagon
+    style: {
+      fill: "#9c179e"
+      stroke: "#300731"
+      stroke-width: 3
+      font-size: 22
+      font-color: "#f4f4f4"
+    }
+  }
+}
+namespaces: {
+  class: namespace
+  label: "Namespaces"
+
+  ns1: {
+    class: namespace
+    label: "ns1"
+
+    mnt: {
+      class: shared
+      label: "/mnt\n\n21"
+    }
+  }
+
+  ns2: {
+    class: namespace
+    label: "ns2"
+
+    mnt: {
+      class: slave
+      label: "/mnt\n\n22"
+    }
+  }
+
+  ns3: {
+    class: namespace
+    label: "ns3"
+
+    mnt: {
+      class: shared
+      label: "/mnt\n\n23"
+    }
+  }
+}
+
+peer-groups: {
+  class: namespace
+  label: "Namespaces"
+
+  peer-group1: {
+    class: namespace
+    label: "peer group 1"
+
+    mnt-21: {
+      class: shared
+      label: "/mnt\n\n21"
+    }
+
+    mnt-22: {
+      class: slave
+      label: "/mnt\n\n22"
+    }
+
+    mnt-23: {
+      class: shared
+      label: "/mnt\n\n23"
+    }
+
+    mnt-21 -> mnt-22 <- mnt-23: "event" {class: event-edge}
+
+    mnt-21 -> mnt-23: "event" {class: event-edge}
+    mnt-23 -> mnt-21: "event" {class: event-edge}
+  }
+}
+
+legend: {
+  near: bottom-center
+  label: "Mount point propagation types"
+  label.near: bottom-center
+  style: {
+    fill: "#e0e0e0"
+    stroke: "#666666"
+    font-color: "#222222"
+    bold: true
+    shadow: true
+  }
+
+  private: {
+    class: private
+    label: "Private"
+  }
+
+  shared: {
+    class: shared
+    label: "Shared"
+  }
+
+  slave: {
+    class: slave
+    label: "Slave"
+  }
+
+  slave-shared: {
+    class: slave-shared
+    label: "Slave + Shared"
+  }
+
+  unbindable: {
+    class: unbindable
+    label: "Unbindable"
+  }
+}

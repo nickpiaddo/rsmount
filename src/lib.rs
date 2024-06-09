@@ -42,6 +42,35 @@
 //!
 //! ## Examples
 //!
+//! Mount a device on a operating system's file tree.
+//!
+//! ```ignore
+//! use rsmount::core::device::BlockDevice;
+//! use rsmount::core::flags::MountFlag;
+//! use rsmount::core::fs::FileSystem;
+//! use rsmount::mount::Mount;
+//!
+//! fn main() -> rsmount::Result<()> {
+//!     // Configure the `Mount` struct.
+//!     let block_device: BlockDevice = "/dev/vda".parse()?;
+//!     let mut mount = Mount::builder()
+//!         // Device to mount.
+//!         .source(block_device.into())
+//!         // Location of the mount point in the file tree.
+//!         .target("/mnt")
+//!         // Do not allow writing to the file system while it is mounted.
+//!         .mount_flags(vec![MountFlag::ReadOnly])
+//!         // Gives a hint about the file system used by the device (optional).
+//!         .file_system(FileSystem::Ext4)
+//!         .build()?;
+//!
+//!     // Mount `/dev/vda` at `/mnt`.
+//!     mount.mount_device()?;
+//!
+//!     Ok(())
+//! }
+//! ```
+//!
 //! Create an `fstab`.
 //! ```
 //! use std::str::FromStr;
@@ -133,120 +162,120 @@
 //! ### Higher-level API
 //! #### Library high-level context
 //!
-//! | `libmount`                               | `rsmount`                                                                              |
-//! | ------------------                       | ---------                                                                              |
-//! | [`struct libmnt_context`][1]             | [`Mount`](crate::mount::Mount)                                                         |
-//! | [`struct libmnt_ns`][2]                  | [`MountNamespace`](crate::mount::MountNamespace)                                       |
-//! | [`MNT_ERR_AMBIFS`][3]                    | [`ErrorCode::FsCollision`](crate::mount::ErrorCode::FsCollision)                       |
-//! | [`MNT_ERR_APPLYFLAGS`][4]                | [`ErrorCode::ApplyFlags`](crate::mount::ErrorCode::ApplyFlags)                         |
-//! | [`MNT_ERR_LOOPDEV`][5]                   | [`ErrorCode::LoopDevice`](crate::mount::ErrorCode::LoopDevice)                         |
-//! | [`MNT_ERR_MOUNTOPT`][6]                  | [`ErrorCode::UserspaceMountOptions`](crate::mount::ErrorCode::UserspaceMountOptions)   |
-//! | [`MNT_ERR_NOFSTAB`][7]                   | [`ErrorCode::FsTabMissingEntry`](crate::mount::ErrorCode::FsTabMissingEntry)           |
-//! | [`MNT_ERR_NOFSTYPE`][8]                  | [`ErrorCode::NoFsType`](crate::mount::ErrorCode::NoFsType)                             |
-//! | [`MNT_ERR_NOSOURCE`][9]                  | [`ErrorCode::UndefinedMountSource`](crate::mount::ErrorCode::UndefinedMountSource)     |
-//! | [`MNT_ERR_LOOPOVERLAP`][10]              | [`ErrorCode::LoopDeviceOverlap`](crate::mount::ErrorCode::LoopDeviceOverlap)           |
-//! | [`MNT_ERR_LOCK`][11]                     | [`ErrorCode::Lock`](crate::mount::ErrorCode::Lock)                                     |
-//! | [`MNT_ERR_NAMESPACE`][12]                | [`ErrorCode::NamespaceSwitch`](crate::mount::ErrorCode::NamespaceSwitch)               |
-//! | [`MNT_EX_SUCCESS`][13]                   | [`ExitCode::Success`](crate::mount::ExitCode::Success)                                 |
-//! | [`MNT_EX_USAGE`][14]                     | [`ExitCode::InvalidUsage`](crate::mount::ExitCode::InvalidUsage)                       |
-//! | [`MNT_EX_SYSERR`][15]                    | [`ExitCode::SystemError`](crate::mount::ExitCode::SystemError)                         |
-//! | [`MNT_EX_SOFTWARE`][16]                  | [`ExitCode::InternalError`](crate::mount::ExitCode::InternalError)                     |
-//! | [`MNT_EX_USER`][17]                      | [`ExitCode::UserInterrupt`](crate::mount::ExitCode::UserInterrupt)                     |
-//! | [`MNT_EX_FILEIO`][18]                    | [`ExitCode::IoError`](crate::mount::ExitCode::IoError)                                 |
-//! | [`MNT_EX_FAIL`][19]                      | [`ExitCode::Failure`](crate::mount::ExitCode::Failure)                                 |
-//! | [`MNT_EX_SOMEOK`][20]                    | [`ExitCode::PartialSuccess`](crate::mount::ExitCode::PartialSuccess)                   |
-//! | [`mnt_free_context`][21]                 | [`Mount`](crate::mount::Mount) is automatically deallocated when it goes out of scope. |
-//! | [`mnt_new_context`][22]                  |                                                                                        |
-//! | [`mnt_reset_context`][23]                |                                                                                        |
-//! | [`mnt_context_append_options`][24]       |                                                                                        |
-//! | [`mnt_context_apply_fstab`][25]          |                                                                                        |
-//! | [`mnt_context_disable_canonicalize`][26] |                                                                                        |
-//! | [`mnt_context_disable_helpers`][27]      |                                                                                        |
-//! | [`mnt_context_disable_mtab`][28]         |                                                                                        |
-//! | [`mnt_context_disable_swapmatch`][29]    |                                                                                        |
-//! | [`mnt_context_enable_fake`][30]          |                                                                                        |
-//! | [`mnt_context_enable_force`][31]         |                                                                                        |
-//! | [`mnt_context_enable_fork`][32]          |                                                                                        |
-//! | [`mnt_context_enable_lazy`][33]          |                                                                                        |
-//! | [`mnt_context_enable_loopdel`][34]       |                                                                                        |
-//! | [`mnt_context_enable_noautofs`][35]      |                                                                                        |
-//! | [`mnt_context_enable_onlyonce`][36]      |                                                                                        |
-//! | [`mnt_context_enable_rdonly_umount`][37] |                                                                                        |
-//! | [`mnt_context_enable_rwonly_mount`][38]  |                                                                                        |
-//! | [`mnt_context_enable_sloppy`][39]        |                                                                                        |
-//! | [`mnt_context_enable_verbose`][40]       |                                                                                        |
-//! | [`mnt_context_forced_rdonly`][41]        |                                                                                        |
-//! | [`mnt_context_force_unrestricted`][42]   |                                                                                        |
-//! | [`mnt_context_get_cache`][43]            |                                                                                        |
-//! | [`mnt_context_get_excode`][44]           |                                                                                        |
-//! | [`mnt_context_get_fs`][45]               |                                                                                        |
-//! | [`mnt_context_get_fstab`][46]            |                                                                                        |
-//! | [`mnt_context_get_fstab_userdata`][47]   |                                                                                        |
-//! | [`mnt_context_get_fstype`][48]           |                                                                                        |
-//! | [`mnt_context_get_fs_userdata`][49]      |                                                                                        |
-//! | [`mnt_context_get_helper_status`][50]    |                                                                                        |
-//! | [`mnt_context_get_lock`][51]             |                                                                                        |
-//! | [`mnt_context_get_mflags`][52]           |                                                                                        |
-//! | [`mnt_context_get_mtab`][53]             |                                                                                        |
-//! | [`mnt_context_get_mtab_userdata`][54]    |                                                                                        |
-//! | [`mnt_context_get_options`][55]          |                                                                                        |
-//! | [`mnt_context_get_optsmode`][56]         |                                                                                        |
-//! | [`mnt_context_get_origin_ns`][57]        |                                                                                        |
-//! | [`mnt_context_get_source`][58]           |                                                                                        |
-//! | [`mnt_context_get_status`][59]           |                                                                                        |
-//! | [`mnt_context_get_syscall_errno`][60]    |                                                                                        |
-//! | [`mnt_context_get_table`][61]            |                                                                                        |
-//! | [`mnt_context_get_target`][62]           |                                                                                        |
-//! | [`mnt_context_get_target_ns`][63]        |                                                                                        |
-//! | [`mnt_context_get_target_prefix`][64]    |                                                                                        |
-//! | [`mnt_context_get_user_mflags`][65]      |                                                                                        |
-//! | [`mnt_context_helper_executed`][66]      |                                                                                        |
-//! | [`mnt_context_helper_setopt`][67]        |                                                                                        |
-//! | [`mnt_context_init_helper`][68]          |                                                                                        |
-//! | [`mnt_context_is_child`][69]             |                                                                                        |
-//! | [`mnt_context_is_fake`][70]              |                                                                                        |
-//! | [`mnt_context_is_force`][71]             |                                                                                        |
-//! | [`mnt_context_is_fork`][72]              |                                                                                        |
-//! | [`mnt_context_is_fs_mounted`][73]        |                                                                                        |
-//! | [`mnt_context_is_lazy`][74]              |                                                                                        |
-//! | [`mnt_context_is_loopdel`][75]           |                                                                                        |
-//! | [`mnt_context_is_nocanonicalize`][76]    |                                                                                        |
-//! | [`mnt_context_is_nohelpers`][77]         |                                                                                        |
-//! | [`mnt_context_is_nomtab`][78]            |                                                                                        |
-//! | [`mnt_context_is_onlyonce`][79]          |                                                                                        |
-//! | [`mnt_context_is_parent`][80]            |                                                                                        |
-//! | [`mnt_context_is_rdonly_umount`][81]     |                                                                                        |
-//! | [`mnt_context_is_restricted`][82]        |                                                                                        |
-//! | [`mnt_context_is_rwonly_mount`][83]      |                                                                                        |
-//! | [`mnt_context_is_sloppy`][84]            |                                                                                        |
-//! | [`mnt_context_is_swapmatch`][85]         |                                                                                        |
-//! | [`mnt_context_is_verbose`][86]           |                                                                                        |
-//! | [`mnt_context_reset_status`][87]         |                                                                                        |
-//! | [`mnt_context_set_cache`][88]            |                                                                                        |
-//! | [`mnt_context_set_fs`][89]               |                                                                                        |
-//! | [`mnt_context_set_fstab`][90]            |                                                                                        |
-//! | [`mnt_context_set_fstype`][91]           |                                                                                        |
-//! | [`mnt_context_set_fstype_pattern`][92]   |                                                                                        |
-//! | [`mnt_context_set_mflags`][93]           |                                                                                        |
-//! | [`mnt_context_set_mountdata`][94]        |                                                                                        |
-//! | [`mnt_context_set_options`][95]          |                                                                                        |
-//! | [`mnt_context_set_options_pattern`][96]  |                                                                                        |
-//! | [`mnt_context_set_optsmode`][97]         |                                                                                        |
-//! | [`mnt_context_set_passwd_cb`][98]        |                                                                                        |
-//! | [`mnt_context_set_source`][99]           |                                                                                        |
-//! | [`mnt_context_set_syscall_status`][100]  |                                                                                        |
-//! | [`mnt_context_set_tables_errcb`][101]    |                                                                                        |
-//! | [`mnt_context_set_target`][102]          |                                                                                        |
-//! | [`mnt_context_set_target_ns`][103]       |                                                                                        |
-//! | [`mnt_context_set_target_prefix`][104]   |                                                                                        |
-//! | [`mnt_context_set_user_mflags`][105]     |                                                                                        |
-//! | [`mnt_context_strerror`][106]            |                                                                                        |
-//! | [`mnt_context_switch_ns`][107]           |                                                                                        |
-//! | [`mnt_context_switch_origin_ns`][108]    |                                                                                        |
-//! | [`mnt_context_switch_target_ns`][109]    |                                                                                        |
-//! | [`mnt_context_syscall_called`][110]      |                                                                                        |
-//! | [`mnt_context_tab_applied`][111]         |                                                                                        |
-//! | [`mnt_context_wait_for_children`][112]   |                                                                                        |
+//! | `libmount`                               | `rsmount`                                                                                                                                                                           |
+//! | ------------------                       | ---------                                                                                                                                                                           |
+//! | [`struct libmnt_context`][1]             | [`Mount`](crate::mount::Mount)                                                                                                                                                      |
+//! | [`struct libmnt_ns`][2]                  | [`MountNamespace`](crate::mount::MountNamespace)                                                                                                                                    |
+//! | [`MNT_ERR_AMBIFS`][3]                    | [`ErrorCode::FsCollision`](crate::mount::ErrorCode::FsCollision)                                                                                                                    |
+//! | [`MNT_ERR_APPLYFLAGS`][4]                | [`ErrorCode::ApplyFlags`](crate::mount::ErrorCode::ApplyFlags)                                                                                                                      |
+//! | [`MNT_ERR_LOOPDEV`][5]                   | [`ErrorCode::LoopDevice`](crate::mount::ErrorCode::LoopDevice)                                                                                                                      |
+//! | [`MNT_ERR_MOUNTOPT`][6]                  | [`ErrorCode::UserspaceMountOptions`](crate::mount::ErrorCode::UserspaceMountOptions)                                                                                                |
+//! | [`MNT_ERR_NOFSTAB`][7]                   | [`ErrorCode::FsTabMissingEntry`](crate::mount::ErrorCode::FsTabMissingEntry)                                                                                                        |
+//! | [`MNT_ERR_NOFSTYPE`][8]                  | [`ErrorCode::NoFsType`](crate::mount::ErrorCode::NoFsType)                                                                                                                          |
+//! | [`MNT_ERR_NOSOURCE`][9]                  | [`ErrorCode::UndefinedMountSource`](crate::mount::ErrorCode::UndefinedMountSource)                                                                                                  |
+//! | [`MNT_ERR_LOOPOVERLAP`][10]              | [`ErrorCode::LoopDeviceOverlap`](crate::mount::ErrorCode::LoopDeviceOverlap)                                                                                                        |
+//! | [`MNT_ERR_LOCK`][11]                     | [`ErrorCode::Lock`](crate::mount::ErrorCode::Lock)                                                                                                                                  |
+//! | [`MNT_ERR_NAMESPACE`][12]                | [`ErrorCode::NamespaceSwitch`](crate::mount::ErrorCode::NamespaceSwitch)                                                                                                            |
+//! | [`MNT_EX_SUCCESS`][13]                   | [`ExitCode::Success`](crate::mount::ExitCode::Success)                                                                                                                              |
+//! | [`MNT_EX_USAGE`][14]                     | [`ExitCode::InvalidUsage`](crate::mount::ExitCode::InvalidUsage)                                                                                                                    |
+//! | [`MNT_EX_SYSERR`][15]                    | [`ExitCode::SystemError`](crate::mount::ExitCode::SystemError)                                                                                                                      |
+//! | [`MNT_EX_SOFTWARE`][16]                  | [`ExitCode::InternalError`](crate::mount::ExitCode::InternalError)                                                                                                                  |
+//! | [`MNT_EX_USER`][17]                      | [`ExitCode::UserInterrupt`](crate::mount::ExitCode::UserInterrupt)                                                                                                                  |
+//! | [`MNT_EX_FILEIO`][18]                    | [`ExitCode::IoError`](crate::mount::ExitCode::IoError)                                                                                                                              |
+//! | [`MNT_EX_FAIL`][19]                      | [`ExitCode::Failure`](crate::mount::ExitCode::Failure)                                                                                                                              |
+//! | [`MNT_EX_SOMEOK`][20]                    | [`ExitCode::PartialSuccess`](crate::mount::ExitCode::PartialSuccess)                                                                                                                |
+//! | [`mnt_free_context`][21]                 | [`Mount`](crate::mount::Mount) is automatically deallocated when it goes out of scope.                                                                                              |
+//! | [`mnt_new_context`][22]                  | [`Mount::builder`](crate::mount::Mount::builder)                                                                                                                                    |
+//! | [`mnt_reset_context`][23]                | Not implemented.                                                                                                                                                                    |
+//! | [`mnt_context_append_options`][24]       | [`Mount::append_mount_options`](crate::mount::Mount::append_mount_options)                                                                                                          |
+//! | [`mnt_context_apply_fstab`][25]          |                                                                                                                                                                                     |
+//! | [`mnt_context_disable_canonicalize`][26] | [`MountBuilder::disable_path_canonicalization`](crate::mount::MountBuilder::disable_path_canonicalization)                                                                          |
+//! | [`mnt_context_disable_helpers`][27]      | [`MountBuilder::disable_helpers`](crate::mount::MountBuilder::disable_helpers)                                                                                                      |
+//! | [`mnt_context_disable_mtab`][28]         | [`MountBuilder::do_not_update_utab`](crate::mount::MountBuilder::do_not_update_utab)                                                                                                |
+//! | [`mnt_context_disable_swapmatch`][29]    | [`MountBuilder::disable_mount_point_lookup`](crate::mount::MountBuilder::disable_mount_point_lookup)                                                                                |
+//! | [`mnt_context_enable_fake`][30]          | [`MountBuilder::dry_run`](crate::mount::MountBuilder::dry_run)                                                                                                                      |
+//! | [`mnt_context_enable_force`][31]         |                                                                                                                                                                                     |
+//! | [`mnt_context_enable_fork`][32]          | [`MountBuilder::parallel_mount`](crate::mount::MountBuilder::parallel_mount)                                                                                                        |
+//! | [`mnt_context_enable_lazy`][33]          |                                                                                                                                                                                     |
+//! | [`mnt_context_enable_loopdel`][34]       |                                                                                                                                                                                     |
+//! | [`mnt_context_enable_noautofs`][35]      | [`MountBuilder::ignore_autofs`](crate::mount::MountBuilder::ignore_autofs)                                                                                                          |
+//! | [`mnt_context_enable_onlyonce`][36]      | [`MountBuilder::mount_only_once`](crate::mount::MountBuilder::mount_only_once)                                                                                                      |
+//! | [`mnt_context_enable_rdonly_umount`][37] |                                                                                                                                                                                     |
+//! | [`mnt_context_enable_rwonly_mount`][38]  | [`MountBuilder::force_mount_read_write`](crate::mount::MountBuilder::force_mount_read_write)                                                                                        |
+//! | [`mnt_context_enable_sloppy`][39]        | [`MountBuilder::ignore_unsupported_mount_options`](crate::mount::MountBuilder::ignore_unsupported_mount_options)                                                                    |
+//! | [`mnt_context_enable_verbose`][40]       | [`MountBuilder::verbose`](crate::mount::MountBuilder::verbose)                                                                                                                      |
+//! | [`mnt_context_forced_rdonly`][41]        | [`Mount::is_mounted_read_only`](crate::mount::Mount::is_mounted_read_only)                                                                                                          |
+//! | [`mnt_context_force_unrestricted`][42]   | [`MountBuilder::force_user_mount`](crate::mount::MountBuilder::force_user_mount)                                                                                                    |
+//! | [`mnt_context_get_cache`][43]            | [`Mount::cache`](crate::mount::Mount::cache)                                                                                                                                        |
+//! | [`mnt_context_get_excode`][44]           | Not implemented, managed internally.                                                                                                                                                |
+//! | [`mnt_context_get_fs`][45]               | [`Mount::internal_table_entry`](crate::mount::Mount::internal_table_entry)                                                                                                          |
+//! | [`mnt_context_get_fstab`][46]            | [`Mount::fstab`](crate::mount::Mount::fstab)                                                                                                                                        |
+//! | [`mnt_context_get_fstab_userdata`][47]   | [`Mount::fstab_user_data`](crate::mount::Mount::fstab_user_data)                                                                                                                    |
+//! | [`mnt_context_get_fstype`][48]           | [`Mount::file_system_type`](crate::mount::Mount::file_system_type)                                                                                                                  |
+//! | [`mnt_context_get_fs_userdata`][49]      | [`Mount::internal_table_entry_user_data`](crate::mount::Mount::internal_table_entry_user_data)                                                                                      |
+//! | [`mnt_context_get_helper_status`][50]    | [`Mount::mount_helper_exit_status`](crate::mount::Mount::mount_helper_exit_status)                                                                                                  |
+//! | [`mnt_context_get_lock`][51]             | [`Mount::utab_file_lock`](crate::mount::Mount::utab_file_lock)                                                                                                                      |
+//! | [`mnt_context_get_mflags`][52]           | [`Mount::mount_flags`](crate::mount::Mount::mount_flags)                                                                                                                            |
+//! | [`mnt_context_get_mtab`][53]             | [`Mount::mountinfo`](crate::mount::Mount::mountinfo)                                                                                                                                |
+//! | [`mnt_context_get_mtab_userdata`][54]    | [`Mount::mountinfo_user_data`](crate::mount::Mount::mountinfo_user_data)                                                                                                            |
+//! | [`mnt_context_get_options`][55]          | [`Mount::mount_options`](crate::mount::Mount::mount_options)                                                                                                                        |
+//! | [`mnt_context_get_optsmode`][56]         | [`Mount::mount_options_mode`](crate::mount::Mount::mount_options_mode)                                                                                                              |
+//! | [`mnt_context_get_origin_ns`][57]        | [`Mount::original_namespace`](crate::mount::Mount::original_namespace)                                                                                                              |
+//! | [`mnt_context_get_source`][58]           | [`Mount::source`](crate::mount::Mount::source)                                                                                                                                      |
+//! | [`mnt_context_get_status`][59]           | [`Mount::is_mount_successful`](crate::mount::Mount::is_mount_successful)                                                                                                            |
+//! | [`mnt_context_get_syscall_errno`][60]    | [`Mount::mount_syscall_errno`](crate::mount::Mount::mount_syscall_errno)                                                                                                            |
+//! | [`mnt_context_get_table`][61]            | Not implemented. Use [`FsTab::import_file`](crate::tables::FsTab::import_file)                                                                                                      |
+//! | [`mnt_context_get_target`][62]           | [`Mount::target`](crate::mount::Mount::target)                                                                                                                                      |
+//! | [`mnt_context_get_target_ns`][63]        | [`Mount::target_namespace`](crate::mount::Mount::target_namespace)                                                                                                                  |
+//! | [`mnt_context_get_target_prefix`][64]    | [`Mount::target_prefix`](crate::mount::Mount::target_prefix)                                                                                                                        |
+//! | [`mnt_context_get_user_mflags`][65]      | [`Mount::userspace_mount_flags`](crate::mount::Mount::userspace_mount_flags)                                                                                                        |
+//! | [`mnt_context_helper_executed`][66]      | [`Mount::has_run_mount_helper`](crate::mount::Mount::has_run_mount_helper)                                                                                                          |
+//! | [`mnt_context_helper_setopt`][67]        |                                                                                                                                                                                     |
+//! | [`mnt_context_init_helper`][68]          |                                                                                                                                                                                     |
+//! | [`mnt_context_is_child`][69]             | [`Mount::is_child_process`](crate::mount::Mount::is_child_process)                                                                                                                  |
+//! | [`mnt_context_is_fake`][70]              | [`Mount::is_dry_run`](crate::mount::Mount::is_dry_run)                                                                                                                              |
+//! | [`mnt_context_is_force`][71]             |                                                                                                                                                                                     |
+//! | [`mnt_context_is_fork`][72]              | [`Mount::does_parallel_mount`](crate::mount::Mount::does_parallel_mount)                                                                                                            |
+//! | [`mnt_context_is_fs_mounted`][73]        | [`Mount::is_entry_mounted`](crate::mount::Mount::is_entry_mounted)                                                                                                                  |
+//! | [`mnt_context_is_lazy`][74]              |                                                                                                                                                                                     |
+//! | [`mnt_context_is_loopdel`][75]           |                                                                                                                                                                                     |
+//! | [`mnt_context_is_nocanonicalize`][76]    | [`Mount::disabled_path_canonicalization`](crate::mount::Mount::disabled_path_canonicalization)                                                                                      |
+//! | [`mnt_context_is_nohelpers`][77]         | [`Mount::has_disabled_helpers`](crate::mount::Mount::has_disabled_helpers)                                                                                                          |
+//! | [`mnt_context_is_nomtab`][78]            | [`Mount::does_not_update_utab`](crate::mount::Mount::does_not_update_utab)                                                                                                          |
+//! | [`mnt_context_is_onlyonce`][79]          | [`Mount::mounts_only_once`](crate::mount::Mount::mounts_only_once)                                                                                                                  |
+//! | [`mnt_context_is_parent`][80]            | [`Mount::is_parent_process`](crate::mount::Mount::is_parent_process)                                                                                                                |
+//! | [`mnt_context_is_rdonly_umount`][81]     |                                                                                                                                                                                     |
+//! | [`mnt_context_is_restricted`][82]        | [`Mount::is_user_mount`](crate::mount::Mount::is_user_mount)                                                                                                                        |
+//! | [`mnt_context_is_rwonly_mount`][83]      | [`Mount::forces_mount_read_write`](crate::mount::Mount::forces_mount_read_write)                                                                                                    |
+//! | [`mnt_context_is_sloppy`][84]            | [`Mount::ignores_unsupported_mount_options`](crate::mount::Mount::ignores_unsupported_mount_options)                                                                                |
+//! | [`mnt_context_is_swapmatch`][85]         | [`Mount::disabled_mount_point_lookup`](crate::mount::Mount::disabled_mount_point_lookup)                                                                                            |
+//! | [`mnt_context_is_verbose`][86]           | [`Mount::is_verbose`](crate::mount::Mount::is_verbose)                                                                                                                              |
+//! | [`mnt_context_reset_status`][87]         | [`Mount::reset_syscall_exit_status`](crate::mount::Mount::reset_syscall_exit_status)                                                                                                |
+//! | [`mnt_context_set_cache`][88]            | [`MountBuilder::override_cache`](crate::mount::MountBuilder::override_cache)                                                                                                        |
+//! | [`mnt_context_set_fs`][89]               | Not implemented.                                                                                                                                                                    |
+//! | [`mnt_context_set_fstab`][90]            | [`MountBuilder::override_fstab`](crate::mount::MountBuilder::override_fstab)                                                                                                        |
+//! | [`mnt_context_set_fstype`][91]           | [`MountBuilder::file_system`](crate::mount::MountBuilder::file_system)                                                                                                              |
+//! | [`mnt_context_set_fstype_pattern`][92]   | [`MountBuilder::match_file_systems`](crate::mount::MountBuilder::match_file_systems)                                                                                                |
+//! | [`mnt_context_set_mflags`][93]           | [`MountBuilder::mount_flags`](crate::mount::MountBuilder::mount_flags)                                                                                                              |
+//! | [`mnt_context_set_mountdata`][94]        | [`MountBuilder::mount_data`](crate::mount::MountBuilder::mount_data)                                                                                                                |
+//! | [`mnt_context_set_options`][95]          | [`MountBuilder::mount_options`](crate::mount::MountBuilder::mount_options)                                                                                                          |
+//! | [`mnt_context_set_options_pattern`][96]  | [`MountBuilder::match_mount_options`](crate::mount::MountBuilder::match_mount_options)                                                                                              |
+//! | [`mnt_context_set_optsmode`][97]         | [`MountBuilder::mount_options_mode`](crate::mount::MountBuilder::mount_options_mode)                                                                                                |
+//! | [`mnt_context_set_passwd_cb`][98]        | Deprecated.                                                                                                                                                                         |
+//! | [`mnt_context_set_source`][99]           | [`MountBuilder::source`](crate::mount::MountBuilder::source)                                                                                                                        |
+//! | [`mnt_context_set_syscall_status`][100]  | [`Mount::set_syscall_exit_status`](crate::mount::Mount::set_syscall_exit_status)                                                                                                    |
+//! | [`mnt_context_set_tables_errcb`][101]    | Can not implement it without a data pointer in the callback function see [Passing Rust closure to C](http://blog.sagetheprogrammer.com/neat-rust-tricks-passing-rust-closures-to-c) |
+//! | [`mnt_context_set_target`][102]          | [`MountBuilder::target`](crate::mount::MountBuilder::target)                                                                                                                        |
+//! | [`mnt_context_set_target_ns`][103]       | [`MountBuilder::target_namespace`](crate::mount::MountBuilder::target_namespace)                                                                                                    |
+//! | [`mnt_context_set_target_prefix`][104]   | [`MountBuilder::target_prefix`](crate::mount::MountBuilder::target_prefix)                                                                                                          |
+//! | [`mnt_context_set_user_mflags`][105]     | [`MountBuilder::userspace_mount_flags`](crate::mount::MountBuilder::userspace_mount_flags)                                                                                          |
+//! | [`mnt_context_strerror`][106]            | Deprecated.                                                                                                                                                                         |
+//! | [`mnt_context_switch_ns`][107]           | [`Mount::switch_to_namespace`](crate::mount::Mount::switch_to_namespace)                                                                                                            |
+//! | [`mnt_context_switch_origin_ns`][108]    | [`Mount::switch_to_original_namespace`](crate::mount::Mount::switch_to_original_namespace)                                                                                          |
+//! | [`mnt_context_switch_target_ns`][109]    | [`Mount::switch_to_target_namespace`](crate::mount::Mount::switch_to_target_namespace)                                                                                              |
+//! | [`mnt_context_syscall_called`][110]      | [`Mount::has_called_mount_syscall`](crate::mount::Mount::has_called_mount_syscall)                                                                                                  |
+//! | [`mnt_context_tab_applied`][111]         |                                                                                                                                                                                     |
+//! | [`mnt_context_wait_for_children`][112]   | [`Mount::wait_on_children`](crate::mount::Mount::wait_on_children)                                                                                                                  |
 //!
 //! [1]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Library-high-level-context.html#libmnt-context
 //! [2]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Library-high-level-context.html#libmnt-ns
@@ -416,12 +445,12 @@
 //! | [`MS_SYNCHRONOUS`][161]             | [`MountFlag::Synchronous`](crate::core::flags::MountFlag::Synchronous)                                                     |
 //! | [`MS_UNBINDABLE`][162]              | [`MountFlag::Unbindable`](crate::core::flags::MountFlag::Unbindable)                                                       |
 //! | [`MS_LAZYTIME`][163]                | [`MountFlag::LazyTime`](crate::core::flags::MountFlag::LazyTime)                                                           |
-//! | [`mnt_context_do_mount`][164]       |                                                                                                                            |
-//! | [`mnt_context_finalize_mount`][165] |                                                                                                                            |
-//! | [`mnt_context_mount`][166]          |                                                                                                                            |
+//! | [`mnt_context_do_mount`][164]       | [`Mount::call_mount_syscall`](crate::mount::Mount::call_mount_syscall)                                                     |
+//! | [`mnt_context_finalize_mount`][165] | [`Mount::finalize_mount`](crate::mount::Mount::finalize_mount)                                                             |
+//! | [`mnt_context_mount`][166]          | [`Mount::mount_device`](crate::mount::Mount::mount_device)                                                                 |
 //! | [`mnt_context_next_mount`][167]     |                                                                                                                            |
 //! | [`mnt_context_next_remount`][168]   |                                                                                                                            |
-//! | [`mnt_context_prepare_mount`][169]  |                                                                                                                            |
+//! | [`mnt_context_prepare_mount`][169]  | [`Mount::prepare_mount`](crate::mount::Mount::prepare_mount)                                                               |
 //!
 //! [113]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Mount-context.html#MNT-MS-COMMENT:CAPS
 //! [114]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Mount-context.html#MNT-MS-GROUP:CAPS
@@ -483,14 +512,14 @@
 //!
 //! #### Umount context
 //!
-//! | `libmount`                           | `rsmount` |
-//! | ------------------                   | --------- |
-//! | [`mnt_context_find_umount_fs`][170]  |           |
-//! | [`mnt_context_do_umount`][171]       |           |
-//! | [`mnt_context_finalize_umount`][172] |           |
-//! | [`mnt_context_next_umount`][173]     |           |
-//! | [`mnt_context_prepare_umount`][174]  |           |
-//! | [`mnt_context_umount`][175]          |           |
+//! | `libmount`                           | `rsmount`                                                                                                                                                                                                                                                                |
+//! | ------------------                   | ---------                                                                                                                                                                                                                                                                |
+//! | [`mnt_context_find_umount_fs`][170]  | [`Mount::find_entry_matching_source`](crate::mount::Mount::find_entry_matching_source) <br> [`Mount::find_entry_matching_target`](crate::mount::Mount::find_entry_matching_target) <br> [`Mount::find_entry_matching_tag`](crate::mount::Mount::find_entry_matching_tag) |
+//! | [`mnt_context_do_umount`][171]       |                                                                                                                                                                                                                                                                          |
+//! | [`mnt_context_finalize_umount`][172] |                                                                                                                                                                                                                                                                          |
+//! | [`mnt_context_next_umount`][173]     |                                                                                                                                                                                                                                                                          |
+//! | [`mnt_context_prepare_umount`][174]  |                                                                                                                                                                                                                                                                          |
+//! | [`mnt_context_umount`][175]          |                                                                                                                                                                                                                                                                          |
 //!
 //! [170]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Umount-context.html#mnt-context-find-umount-fs
 //! [171]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Umount-context.html#mnt-context-do-umount

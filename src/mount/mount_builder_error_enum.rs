@@ -9,10 +9,18 @@ use thiserror::Error;
 // From this library
 use crate::mount::MountError;
 
-/// `MountBuilder` runtime errors.
+/// [`MountBuilder`](crate::mount::MountBuilder) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum MountBuilderError {
     #[error(transparent)]
     Mount(#[from] MountError),
+
+    /// Error if two mutually exclusive setter functions are called.
+    #[error("{0}")]
+    MutuallyExclusive(String),
+
+    /// Error if required functions were NOT called.
+    #[error("{0}")]
+    Required(String),
 }
