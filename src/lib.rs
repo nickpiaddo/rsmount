@@ -120,7 +120,7 @@
 //! - [`core`]: a module for items in the library's low-level API.
 //! - [`tables`]: a module for manipulating file system descriptions tables (`/etc/fstab`,
 //! `/proc/self/mountinfo`, `/proc/swaps`, `/run/mount/utab`).
-//! - `mount`: a module to mount devices on the system's file tree.
+//! - [`mount`]: a module to mount devices on the system's file tree.
 //!
 //! Finally, look to the [`debug`] module if you need to consult debug messages during development.
 //!
@@ -247,7 +247,6 @@
 //! | [`mnt_context_syscall_called`][110]      |           |
 //! | [`mnt_context_tab_applied`][111]         |           |
 //! | [`mnt_context_wait_for_children`][112]   |           |
-//!
 //!
 //! [1]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Library-high-level-context.html#libmnt-context
 //! [2]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Library-high-level-context.html#libmnt-ns
@@ -1021,4 +1020,5 @@ pub mod core;
 pub mod debug;
 mod error;
 pub(crate) mod ffi_utils;
+pub mod mount;
 pub mod tables;
