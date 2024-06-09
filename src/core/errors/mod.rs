@@ -9,6 +9,7 @@
 
 // From this library
 pub use cache_error_enum::CacheError;
+pub use file_lock_error_enum::FileLockError;
 pub use fs_tab_diff_error_enum::FsTabDiffError;
 pub use fs_tab_diff_iter_error_enum::FsTabDiffIterError;
 pub use fs_tab_entry_builder_error_enum::FsTabEntryBuilderError;
@@ -36,6 +37,7 @@ pub use utab_error_enum::UTabError;
 pub use utab_iter_error_enum::UTabIterError;
 
 mod cache_error_enum;
+mod file_lock_error_enum;
 mod fs_tab_diff_error_enum;
 mod fs_tab_diff_iter_error_enum;
 mod fs_tab_entry_builder_error_enum;
