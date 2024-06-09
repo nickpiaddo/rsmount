@@ -40,6 +40,8 @@ use crate::core::errors::UTabError;
 use crate::core::errors::UTabIterError;
 use crate::core::errors::UtabManagerError;
 
+use crate::mount::MountError;
+
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
 ///
 /// This typedef is generally used at the program-level to avoid writing out [`RsMountError`]
@@ -92,6 +94,9 @@ pub enum RsMountError {
     GenIterator(#[from] GenIteratorError),
 
     #[error(transparent)]
+    Mount(#[from] MountError),
+
+    #[error(transparent)]
     MountInfo(#[from] MountInfoError),
 
     #[error(transparent)]
@@ -109,6 +114,14 @@ pub enum RsMountError {
     #[error(transparent)]
     MountInfoIter(#[from] MountInfoIterError),
 
+    // #[error(transparent)]
+    // MountTable(#[from] MountTableError),
+
+    // #[error(transparent)]
+    // MountTableEntry(#[from] MountTableEntryError),
+
+    // #[error(transparent)]
+    // MountTableEntryBuilder(#[from] MountTableEntryBuilderError),
     #[error(transparent)]
     OptionIter(#[from] OptionIterError),
 
