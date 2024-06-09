@@ -6,6 +6,7 @@
 pub use error_code_enum::ErrorCode;
 pub use exit_code_enum::ExitCode;
 pub use exit_status_struct::ExitStatus;
+pub use mount_builder_error_enum::MountBuilderError;
 pub use mount_error_enum::MountError;
 pub use mount_namespace_struct::MountNamespace;
 pub use mount_options_mode_enum::MountOptionsMode;
@@ -16,6 +17,7 @@ pub use process_exit_status_struct::ProcessExitStatus;
 mod error_code_enum;
 mod exit_code_enum;
 mod exit_status_struct;
+mod mount_builder_error_enum;
 mod mount_error_enum;
 mod mount_namespace_struct;
 mod mount_options_mode_enum;

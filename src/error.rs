@@ -40,6 +40,7 @@ use crate::core::errors::UTabError;
 use crate::core::errors::UTabIterError;
 use crate::core::errors::UtabManagerError;
 
+use crate::mount::MountBuilderError;
 use crate::mount::MountError;
 
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
@@ -95,6 +96,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     Mount(#[from] MountError),
+
+    #[error(transparent)]
+    MountBuilder(#[from] MountBuilderError),
 
     #[error(transparent)]
     MountInfo(#[from] MountInfoError),
