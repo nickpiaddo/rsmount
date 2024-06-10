@@ -16,6 +16,10 @@ pub enum ParserError {
     #[error("{0}")]
     BlockDevice(String),
 
+    /// Error while parsing a string into a [`FileSystem`](crate::core::fs::FileSystem).
+    #[error("{0}")]
+    FileSystem(String),
+
     /// Error while parsing a string into a [`Id`](crate::core::device::Id).
     #[error("{0}")]
     Id(String),

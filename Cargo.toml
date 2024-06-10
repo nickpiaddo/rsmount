@@ -17,6 +17,7 @@ exclude = ["web-snapshots/*", "test_harness/*", "scripts/*"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+enum-iterator = "2.1.0"
 libc = "0.2.153"
 libmount = { package="rsmount-sys", version="0.2.0" }
 log = "0.4.21"

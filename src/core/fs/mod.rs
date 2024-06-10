@@ -8,3 +8,6 @@
 // From standard library
 
 // From this library
+pub use file_system_enum::FileSystem;
+
+mod file_system_enum;
