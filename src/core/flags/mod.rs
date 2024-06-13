@@ -9,5 +9,7 @@
 
 // From this library
 pub use mount_flag_enum::MountFlag;
+pub use userspace_mount_flag_enum::UserspaceMountFlag;
 
 mod mount_flag_enum;
+mod userspace_mount_flag_enum;

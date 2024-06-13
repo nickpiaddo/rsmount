@@ -292,65 +292,65 @@
 //!
 //! #### Mount context
 //!
-//! | `libmount`                          | `rsmount`                                                                                              |
-//! | ------------------                  | ---------                                                                                              |
-//! | [`MNT_MS_COMMENT`][113]             |                                                                                                        |
-//! | [`MNT_MS_GROUP`][114]               |                                                                                                        |
-//! | [`MNT_MS_HELPER`][115]              |                                                                                                        |
-//! | [`MNT_MS_LOOP`][116]                |                                                                                                        |
-//! | [`MNT_MS_NETDEV`][117]              |                                                                                                        |
-//! | [`MNT_MS_NOAUTO`][118]              |                                                                                                        |
-//! | [`MNT_MS_NOFAIL`][119]              |                                                                                                        |
-//! | [`MNT_MS_OFFSET`][120]              |                                                                                                        |
-//! | [`MNT_MS_OWNER`][121]               |                                                                                                        |
-//! | [`MNT_MS_SIZELIMIT`][122]           |                                                                                                        |
-//! | [`MNT_MS_ENCRYPTION`][123]          |                                                                                                        |
-//! | [`MNT_MS_UHELPER`][124]             |                                                                                                        |
-//! | [`MNT_MS_USER`][125]                |                                                                                                        |
-//! | [`MNT_MS_USERS`][126]               |                                                                                                        |
-//! | [`MNT_MS_XCOMMENT`][127]            |                                                                                                        |
-//! | [`MNT_MS_XFSTABCOMM`][128]          |                                                                                                        |
-//! | [`MNT_MS_HASH_DEVICE`][129]         |                                                                                                        |
-//! | [`MNT_MS_ROOT_HASH`][130]           |                                                                                                        |
-//! | [`MNT_MS_HASH_OFFSET`][131]         |                                                                                                        |
-//! | [`MNT_MS_ROOT_HASH_FILE`][132]      |                                                                                                        |
-//! | [`MNT_MS_FEC_DEVICE`][133]          |                                                                                                        |
-//! | [`MNT_MS_FEC_OFFSET`][134]          |                                                                                                        |
-//! | [`MNT_MS_FEC_ROOTS`][135]           |                                                                                                        |
-//! | [`MNT_MS_ROOT_HASH_SIG`][136]       |                                                                                                        |
-//! | [`MS_BIND`][137]                    | [`MountFlag::Bind`](crate::core::flags::MountFlag::Bind)                                               |
-//! | [`MS_DIRSYNC`][138]                 | [`MountFlag::SynchronizeDirectories`](crate::core::flags::MountFlag::SynchronizeDirectories)           |
-//! | [`MS_I_VERSION`][139]               | [`MountFlag::IVersion`](crate::core::flags::MountFlag::IVersion)                                       |
-//! | [`MS_MANDLOCK`][140]                | [`MountFlag::MandatoryLocking`](crate::core::flags::MountFlag::MandatoryLocking)                       |
-//! | [`MS_MGC_MSK`][141]                 | [`MountFlag::MagicMask`](crate::core::flags::MountFlag::MagicMask)                                     |
-//! | [`MS_MGC_VAL`][142]                 | [`MountFlag::MagicValue`](crate::core::flags::MountFlag::MagicValue)                                   |
-//! | [`MS_MOVE`][143]                    | [`MountFlag::Move`](crate::core::flags::MountFlag::Move)                                               |
-//! | [`MS_NOATIME`][144]                 | [`MountFlag::NoUpdateAccessTime`](crate::core::flags::MountFlag::NoUpdateAccessTime)                   |
-//! | [`MS_NODEV`][145]                   | [`MountFlag::NoDeviceAccess`](crate::core::flags::MountFlag::NoDeviceAccess)                           |
-//! | [`MS_NODIRATIME`][146]              | [`MountFlag::NoUpdateDirectoryAccessTime`](crate::core::flags::MountFlag::NoUpdateDirectoryAccessTime) |
-//! | [`MS_NOEXEC`][147]                  | [`MountFlag::NoExecute`](crate::core::flags::MountFlag::NoExecute)                                     |
-//! | [`MS_NOSUID`][148]                  | [`MountFlag::NoSuid`](crate::core::flags::MountFlag::NoSuid)                                           |
-//! | [`MS_OWNERSECURE`][149]             | [`MountFlag::OwnerSecure`](crate::core::flags::MountFlag::OwnerSecure)                                 |
-//! | [`MS_PRIVATE`][150]                 | [`MountFlag::Private`](crate::core::flags::MountFlag::Private)                                         |
-//! | [`MS_PROPAGATION`][151]             | [`MountFlag::Propagation`](crate::core::flags::MountFlag::Propagation)                                 |
-//! | [`MS_RDONLY`][152]                  | [`MountFlag::ReadOnly`](crate::core::flags::MountFlag::ReadOnly)                                       |
-//! | [`MS_REC`][153]                     | [`MountFlag::Recursive`](crate::core::flags::MountFlag::Recursive)                                     |
-//! | [`MS_RELATIME`][154]                | [`MountFlag::RelativeAcessTime`](crate::core::flags::MountFlag::RelativeAcessTime)                     |
-//! | [`MS_REMOUNT`][155]                 | [`MountFlag::Remount`](crate::core::flags::MountFlag::Remount)                                         |
-//! | [`MS_SECURE`][156]                  | [`MountFlag::Secure`](crate::core::flags::MountFlag::Secure)                                           |
-//! | [`MS_SHARED`][157]                  | [`MountFlag::Shared`](crate::core::flags::MountFlag::Shared)                                           |
-//! | [`MS_SILENT`][158]                  | [`MountFlag::Silent`](crate::core::flags::MountFlag::Silent)                                           |
-//! | [`MS_SLAVE`][159]                   | [`MountFlag::Slave`](crate::core::flags::MountFlag::Slave)                                             |
-//! | [`MS_STRICTATIME`][160]             | [`MountFlag::StrictUpdateAccessTime`](crate::core::flags::MountFlag::StrictUpdateAccessTime)           |
-//! | [`MS_SYNCHRONOUS`][161]             | [`MountFlag::Synchronous`](crate::core::flags::MountFlag::Synchronous)                                 |
-//! | [`MS_UNBINDABLE`][162]              | [`MountFlag::Unbindable`](crate::core::flags::MountFlag::Unbindable)                                   |
-//! | [`MS_LAZYTIME`][163]                | [`MountFlag::LazyTime`](crate::core::flags::MountFlag::LazyTime)                                       |
-//! | [`mnt_context_do_mount`][164]       |                                                                                                        |
-//! | [`mnt_context_finalize_mount`][165] |                                                                                                        |
-//! | [`mnt_context_mount`][166]          |                                                                                                        |
-//! | [`mnt_context_next_mount`][167]     |                                                                                                        |
-//! | [`mnt_context_next_remount`][168]   |                                                                                                        |
-//! | [`mnt_context_prepare_mount`][169]  |                                                                                                        |
+//! | `libmount`                          | `rsmount`                                                                                                                  |
+//! | ------------------                  | ---------                                                                                                                  |
+//! | [`MNT_MS_COMMENT`][113]             | [`UserspaceMountFlag::Comment`](crate::core::flags::UserspaceMountFlag::Comment)                                           |
+//! | [`MNT_MS_GROUP`][114]               | [`UserspaceMountFlag::Group`](crate::core::flags::UserspaceMountFlag::Group)                                               |
+//! | [`MNT_MS_HELPER`][115]              | [`UserspaceMountFlag::MountHelper`](crate::core::flags::UserspaceMountFlag::MountHelper)                                   |
+//! | [`MNT_MS_LOOP`][116]                | [`UserspaceMountFlag::LoopDevice`](crate::core::flags::UserspaceMountFlag::LoopDevice)                                     |
+//! | [`MNT_MS_NETDEV`][117]              | [`UserspaceMountFlag::DeviceRequiresNetwork`](crate::core::flags::UserspaceMountFlag::DeviceRequiresNetwork)               |
+//! | [`MNT_MS_NOAUTO`][118]              | [`UserspaceMountFlag::NoAuto`](crate::core::flags::UserspaceMountFlag::NoAuto)                                             |
+//! | [`MNT_MS_NOFAIL`][119]              | [`UserspaceMountFlag::NoFail`](crate::core::flags::UserspaceMountFlag::NoFail)                                             |
+//! | [`MNT_MS_OFFSET`][120]              | [`UserspaceMountFlag::LoopDeviceOffset`](crate::core::flags::UserspaceMountFlag::LoopDeviceOffset)                         |
+//! | [`MNT_MS_OWNER`][121]               | [`UserspaceMountFlag::Owner`](crate::core::flags::UserspaceMountFlag::Owner)                                               |
+//! | [`MNT_MS_SIZELIMIT`][122]           | [`UserspaceMountFlag::LoopDeviceSizeLimit`](crate::core::flags::UserspaceMountFlag::LoopDeviceSizeLimit)                   |
+//! | [`MNT_MS_ENCRYPTION`][123]          | [`UserspaceMountFlag::LoopDeviceEncryption`](crate::core::flags::UserspaceMountFlag::LoopDeviceEncryption)                 |
+//! | [`MNT_MS_UHELPER`][124]             | [`UserspaceMountFlag::UmountHelper`](crate::core::flags::UserspaceMountFlag::UmountHelper)                                 |
+//! | [`MNT_MS_USER`][125]                | [`UserspaceMountFlag::User`](crate::core::flags::UserspaceMountFlag::User)                                                 |
+//! | [`MNT_MS_USERS`][126]               | [`UserspaceMountFlag::Users`](crate::core::flags::UserspaceMountFlag::Users)                                               |
+//! | [`MNT_MS_XCOMMENT`][127]            | [`UserspaceMountFlag::XUTabComment`](crate::core::flags::UserspaceMountFlag::XUTabComment)                                 |
+//! | [`MNT_MS_XFSTABCOMM`][128]          | [`UserspaceMountFlag::XFstabComment`](crate::core::flags::UserspaceMountFlag::XFstabComment)                               |
+//! | [`MNT_MS_HASH_DEVICE`][129]         | [`UserspaceMountFlag::HashDevice`](crate::core::flags::UserspaceMountFlag::HashDevice)                                     |
+//! | [`MNT_MS_ROOT_HASH`][130]           | [`UserspaceMountFlag::RootHash`](crate::core::flags::UserspaceMountFlag::RootHash)                                         |
+//! | [`MNT_MS_HASH_OFFSET`][131]         | [`UserspaceMountFlag::HashOffset`](crate::core::flags::UserspaceMountFlag::HashOffset)                                     |
+//! | [`MNT_MS_ROOT_HASH_FILE`][132]      | [`UserspaceMountFlag::RootHashFile`](crate::core::flags::UserspaceMountFlag::RootHashFile)                                 |
+//! | [`MNT_MS_FEC_DEVICE`][133]          | [`UserspaceMountFlag::ForwardErrorCorrectionDevice`](crate::core::flags::UserspaceMountFlag::ForwardErrorCorrectionDevice) |
+//! | [`MNT_MS_FEC_OFFSET`][134]          | [`UserspaceMountFlag::ForwardErrorCorrectionOffset`](crate::core::flags::UserspaceMountFlag::ForwardErrorCorrectionOffset) |
+//! | [`MNT_MS_FEC_ROOTS`][135]           | [`UserspaceMountFlag::ForwardErrorCorrectionRoots`](crate::core::flags::UserspaceMountFlag::ForwardErrorCorrectionRoots)   |
+//! | [`MNT_MS_ROOT_HASH_SIG`][136]       | [`UserspaceMountFlag::RootHashSignature`](crate::core::flags::UserspaceMountFlag::RootHashSignature)                       |
+//! | [`MS_BIND`][137]                    | [`MountFlag::Bind`](crate::core::flags::MountFlag::Bind)                                                                   |
+//! | [`MS_DIRSYNC`][138]                 | [`MountFlag::SynchronizeDirectories`](crate::core::flags::MountFlag::SynchronizeDirectories)                               |
+//! | [`MS_I_VERSION`][139]               | [`MountFlag::IVersion`](crate::core::flags::MountFlag::IVersion)                                                           |
+//! | [`MS_MANDLOCK`][140]                | [`MountFlag::MandatoryLocking`](crate::core::flags::MountFlag::MandatoryLocking)                                           |
+//! | [`MS_MGC_MSK`][141]                 | [`MountFlag::MagicMask`](crate::core::flags::MountFlag::MagicMask)                                                         |
+//! | [`MS_MGC_VAL`][142]                 | [`MountFlag::MagicValue`](crate::core::flags::MountFlag::MagicValue)                                                       |
+//! | [`MS_MOVE`][143]                    | [`MountFlag::Move`](crate::core::flags::MountFlag::Move)                                                                   |
+//! | [`MS_NOATIME`][144]                 | [`MountFlag::NoUpdateAccessTime`](crate::core::flags::MountFlag::NoUpdateAccessTime)                                       |
+//! | [`MS_NODEV`][145]                   | [`MountFlag::NoDeviceAccess`](crate::core::flags::MountFlag::NoDeviceAccess)                                               |
+//! | [`MS_NODIRATIME`][146]              | [`MountFlag::NoUpdateDirectoryAccessTime`](crate::core::flags::MountFlag::NoUpdateDirectoryAccessTime)                     |
+//! | [`MS_NOEXEC`][147]                  | [`MountFlag::NoExecute`](crate::core::flags::MountFlag::NoExecute)                                                         |
+//! | [`MS_NOSUID`][148]                  | [`MountFlag::NoSuid`](crate::core::flags::MountFlag::NoSuid)                                                               |
+//! | [`MS_OWNERSECURE`][149]             | [`MountFlag::OwnerSecure`](crate::core::flags::MountFlag::OwnerSecure)                                                     |
+//! | [`MS_PRIVATE`][150]                 | [`MountFlag::Private`](crate::core::flags::MountFlag::Private)                                                             |
+//! | [`MS_PROPAGATION`][151]             | [`MountFlag::Propagation`](crate::core::flags::MountFlag::Propagation)                                                     |
+//! | [`MS_RDONLY`][152]                  | [`MountFlag::ReadOnly`](crate::core::flags::MountFlag::ReadOnly)                                                           |
+//! | [`MS_REC`][153]                     | [`MountFlag::Recursive`](crate::core::flags::MountFlag::Recursive)                                                         |
+//! | [`MS_RELATIME`][154]                | [`MountFlag::RelativeAcessTime`](crate::core::flags::MountFlag::RelativeAcessTime)                                         |
+//! | [`MS_REMOUNT`][155]                 | [`MountFlag::Remount`](crate::core::flags::MountFlag::Remount)                                                             |
+//! | [`MS_SECURE`][156]                  | [`MountFlag::Secure`](crate::core::flags::MountFlag::Secure)                                                               |
+//! | [`MS_SHARED`][157]                  | [`MountFlag::Shared`](crate::core::flags::MountFlag::Shared)                                                               |
+//! | [`MS_SILENT`][158]                  | [`MountFlag::Silent`](crate::core::flags::MountFlag::Silent)                                                               |
+//! | [`MS_SLAVE`][159]                   | [`MountFlag::Slave`](crate::core::flags::MountFlag::Slave)                                                                 |
+//! | [`MS_STRICTATIME`][160]             | [`MountFlag::StrictUpdateAccessTime`](crate::core::flags::MountFlag::StrictUpdateAccessTime)                               |
+//! | [`MS_SYNCHRONOUS`][161]             | [`MountFlag::Synchronous`](crate::core::flags::MountFlag::Synchronous)                                                     |
+//! | [`MS_UNBINDABLE`][162]              | [`MountFlag::Unbindable`](crate::core::flags::MountFlag::Unbindable)                                                       |
+//! | [`MS_LAZYTIME`][163]                | [`MountFlag::LazyTime`](crate::core::flags::MountFlag::LazyTime)                                                           |
+//! | [`mnt_context_do_mount`][164]       |                                                                                                                            |
+//! | [`mnt_context_finalize_mount`][165] |                                                                                                                            |
+//! | [`mnt_context_mount`][166]          |                                                                                                                            |
+//! | [`mnt_context_next_mount`][167]     |                                                                                                                            |
+//! | [`mnt_context_next_remount`][168]   |                                                                                                                            |
+//! | [`mnt_context_prepare_mount`][169]  |                                                                                                                            |
 //!
 //! [113]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Mount-context.html#MNT-MS-COMMENT:CAPS
 //! [114]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Mount-context.html#MNT-MS-GROUP:CAPS
