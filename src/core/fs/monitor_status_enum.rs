@@ -7,7 +7,7 @@
 
 // From this library
 
-/// Status of a `MountTableMonitor`.
+/// Status of a [`TableMonitor`](crate::tables::TableMonitor).
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum MonitorStatus {

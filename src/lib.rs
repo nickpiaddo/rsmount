@@ -806,19 +806,19 @@
 //!
 //! #### Monitor
 //!
-//! | `libmount`                            | `rsmount` |
-//! | ------------------                    | --------- |
-//! | [`struct libmnt_monitor`][315]        |           |
-//! | [`mnt_new_monitor`][316]              |           |
-//! | [`mnt_ref_monitor`][317]              |           |
-//! | [`mnt_unref_monitor`][318]            |           |
-//! | [`mnt_monitor_enable_userspace`][319] |           |
-//! | [`mnt_monitor_enable_kernel`][320]    |           |
-//! | [`mnt_monitor_get_fd`][321]           |           |
-//! | [`mnt_monitor_close_fd`][322]         |           |
-//! | [`mnt_monitor_next_change`][323]      |           |
-//! | [`mnt_monitor_event_cleanup`][324]    |           |
-//! | [`mnt_monitor_wait`][325]             |           |
+//! | `libmount`                            | `rsmount`                                                                                                                                                                                                                                               |
+//! | ------------------                    | ---------                                                                                                                                                                                                                                               |
+//! | [`struct libmnt_monitor`][315]        | [`TableMonitor`](crate::tables::TableMonitor)                                                                                                                                                                                                           |
+//! | [`mnt_new_monitor`][316]              | [`TableMonitor::new`](crate::tables::TableMonitor::new)                                                                                                                                                                                                 |
+//! | [`mnt_ref_monitor`][317]              | Managed automatically.                                                                                                                                                                                                                                  |
+//! | [`mnt_unref_monitor`][318]            | Managed automatically.                                                                                                                                                                                                                                  |
+//! | [`mnt_monitor_enable_userspace`][319] | [`TableMonitor::watch_user_space`](crate::tables::TableMonitor::watch_user_space) <br> [`TableMonitor::watch_file`](crate::tables::TableMonitor::watch_file) <br> [`TableMonitor::unwatch_user_space`](crate::tables::TableMonitor::unwatch_user_space) |
+//! | [`mnt_monitor_enable_kernel`][320]    | [`TableMonitor::watch_kernel`](crate::tables::TableMonitor::watch_kernel) <br> [`TableMonitor::unwatch_kernel`](crate::tables::TableMonitor::unwatch_kernel)                                                                                            |
+//! | [`mnt_monitor_get_fd`][321]           | [`TableMonitor::event_notifier_create`](crate::tables::TableMonitor::event_notifier_create)                                                                                                                                                             |
+//! | [`mnt_monitor_close_fd`][322]         | [`TableMonitor::event_notifier_delete`](crate::tables::TableMonitor::event_notifier_delete)                                                                                                                                                             |
+//! | [`mnt_monitor_next_change`][323]      | [`TableMonitor::next_file_change`](crate::tables::TableMonitor::next_file_change)                                                                                                                                                                       |
+//! | [`mnt_monitor_event_cleanup`][324]    | [`TableMonitor::discard_last_event`](crate::tables::TableMonitor::discard_last_event)                                                                                                                                                                   |
+//! | [`mnt_monitor_wait`][325]             | [`TableMonitor::wait_for_next_change`](crate::tables::TableMonitor::wait_for_next_change)                                                                                                                                                               |
 //!
 //! [315]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Monitor.html#libmnt-monitor
 //! [316]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Monitor.html#mnt-new-monitor
