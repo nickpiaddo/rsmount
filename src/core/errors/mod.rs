@@ -35,6 +35,7 @@ pub use utab_entry_builder_error_enum::UTabEntryBuilderError;
 pub use utab_entry_error_enum::UTabEntryError;
 pub use utab_error_enum::UTabError;
 pub use utab_iter_error_enum::UTabIterError;
+pub use utab_manager_error_enum::UtabManagerError;
 
 mod cache_error_enum;
 mod file_lock_error_enum;
@@ -63,3 +64,4 @@ mod utab_entry_builder_error_enum;
 mod utab_entry_error_enum;
 mod utab_error_enum;
 mod utab_iter_error_enum;
+mod utab_manager_error_enum;
