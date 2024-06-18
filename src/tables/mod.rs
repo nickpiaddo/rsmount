@@ -236,6 +236,7 @@ pub use parser_flow_enum::ParserFlow;
 pub use swaps_diff_struct::SwapsDiff;
 pub use swaps_struct::Swaps;
 pub use utab_diff_struct::UTabDiff;
+pub use utab_manager_struct::UtabManager;
 pub use utab_struct::UTab;
 
 mod comparison_enum;
@@ -249,4 +250,5 @@ mod parser_flow_enum;
 mod swaps_diff_struct;
 mod swaps_struct;
 mod utab_diff_struct;
+mod utab_manager_struct;
 mod utab_struct;

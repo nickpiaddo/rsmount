@@ -776,20 +776,20 @@
 //!
 //! #### Tables update
 //!
-//! | `libmount`                       | `rsmount`                                                   |
-//! | ------------------               | ---------                                                   |
-//! | [`struct libmnt_update`][303]    |                                                             |
-//! | [`mnt_free_update`][304]         |                                                             |
-//! | [`mnt_new_update`][305]          |                                                             |
-//! | [`mnt_table_replace_file`][306]  | [`FsTab::write_file`](crate::tables::FsTab::write_file)     |
-//! | [`mnt_table_write_file`][307]    | [`FsTab::write_stream`](crate::tables::FsTab::write_stream) |
-//! | [`mnt_update_force_rdonly`][308] |                                                             |
-//! | [`mnt_update_get_filename`][309] |                                                             |
-//! | [`mnt_update_get_fs`][310]       |                                                             |
-//! | [`mnt_update_get_mflags`][311]   |                                                             |
-//! | [`mnt_update_is_ready`][312]     |                                                             |
-//! | [`mnt_update_set_fs`][313]       |                                                             |
-//! | [`mnt_update_table`][314]        |                                                             |
+//! | `libmount`                       | `rsmount`                                                                                                                                                                                    |
+//! | ------------------               | ---------                                                                                                                                                                                    |
+//! | [`struct libmnt_update`][303]    | [`UtabManager`](crate::tables::UtabManager)                                                                                                                                                  |
+//! | [`mnt_free_update`][304]         | [`UtabManager`](crate::tables::UtabManager) is automatically deallocated when it goes out of scope.                                                                                          |
+//! | [`mnt_new_update`][305]          | [`UtabManager::new`](crate::tables::UtabManager::new)                                                                                                                                        |
+//! | [`mnt_table_replace_file`][306]  | [`FsTab::write_file`](crate::tables::FsTab::write_file)                                                                                                                                      |
+//! | [`mnt_table_write_file`][307]    | [`FsTab::write_stream`](crate::tables::FsTab::write_stream)                                                                                                                                  |
+//! | [`mnt_update_force_rdonly`][308] | [`UtabManager::enable_read_only`](crate::tables::UtabManager::enable_read_only)<br>[`UtabManager::disable_read_only`](crate::tables::UtabManager::disable_read_only)                         |
+//! | [`mnt_update_get_filename`][309] | [`UtabManager::mount_table_file_name`](crate::tables::UtabManager::mount_table_file_name)                                                                                                    |
+//! | [`mnt_update_get_fs`][310]       | [`UtabManager::table_entry`](crate::tables::UtabManager::table_entry)                                                                                                                        |
+//! | [`mnt_update_get_mflags`][311]   | [`UtabManager::mount_flags`](crate::tables::UtabManager::mount_flags)                                                                                                                        |
+//! | [`mnt_update_is_ready`][312]     | [`UtabManager::is_ready_for_update`](crate::tables::UtabManager::is_ready_for_update)                                                                                                        |
+//! | [`mnt_update_set_fs`][313]       | [`UtabManager::set_mount_table_entry`](crate::tables::UtabManager::set_mount_table_entry)<br>[`UtabManager::set_umount_target`](crate::tables::UtabManager::set_umount_target)               |
+//! | [`mnt_update_table`][314]        | [`UtabManager::update_mount_table`](crate::tables::UtabManager::update_mount_table)<br>[`UtabManager::lock_and_update_mount_table`](crate::tables::UtabManager::lock_and_update_mount_table) |
 //!
 //! [303]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Tables-update.html#libmnt-update
 //! [304]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Tables-update.html#mnt-free-update
