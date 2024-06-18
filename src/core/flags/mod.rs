@@ -8,3 +8,6 @@
 // From standard library
 
 // From this library
+pub use mount_flag_enum::MountFlag;
+
+mod mount_flag_enum;
