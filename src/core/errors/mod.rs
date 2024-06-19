@@ -9,7 +9,9 @@
 
 // From this library
 pub use cache_error_enum::CacheError;
+pub use gen_iterator_error_enum::GenIteratorError;
 pub use parser_error_enum::ParserError;
 
 mod cache_error_enum;
+mod gen_iterator_error_enum;
 mod parser_error_enum;
