@@ -7,3 +7,6 @@
 // From standard library
 
 // From this library
+pub use mnt_ent_struct::MntEnt;
+
+mod mnt_ent_struct;

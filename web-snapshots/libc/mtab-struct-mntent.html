@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> <html style><!--
+ Page saved with SingleFile
+ url: https://www.gnu.org/software/libc/manual/html_node/mtab.html
+--><!-- Created by GNU Texinfo 6.8, https://www.gnu.org/software/texinfo/ --><meta charset=utf-8>
+<title>mtab (The GNU C Library)</title>
+<meta name=description content="mtab (The GNU C Library)">
+<meta name=keywords content="mtab (The GNU C Library)">
+<meta name=resource-type content=document>
+<meta name=distribution content=global>
+<meta name=Generator content=makeinfo>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link href=https://www.gnu.org/software/libc/manual/html_node/index.html rel=start title=Top>
+<link href=https://www.gnu.org/software/libc/manual/html_node/Concept-Index.html rel=index title="Concept Index">
+<link href=https://www.gnu.org/software/libc/manual/html_node/index.html#SEC_Contents rel=contents title="Table of Contents">
+<link href=https://www.gnu.org/software/libc/manual/html_node/Mount-Information.html rel=up title="Mount Information">
+<link href=https://www.gnu.org/software/libc/manual/html_node/Other-Mount-Information.html rel=next title="Other Mount Information">
+<link href=https://www.gnu.org/software/libc/manual/html_node/fstab.html rel=prev title=fstab>
+<style><!--a.copiable-anchor{visibility:hidden;text-decoration:none;line-height:0em}span:hover a.copiable-anchor{visibility:visible}--></style>
+<meta name=referrer content=no-referrer><link type=image/x-icon rel="shortcut icon" href=data:image/vnd.microsoft.icon;base64,AAABAAEAEhIAAAEACADYBQAAFgAAACgAAAASAAAAJAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgYGAAkJCQALCwsAExMTACEhIQAkJCQAJycnADMzMwA5OTkAOjo6AD09PQA/Pz8AQEBAAEZGRgBHR0cASkpKAE9PTwBSUlIAW1tbAGFhYQBmZmYAbW1tAHFxcQBzc3MAd3d3AHl5eQB+fn4Af39/AIGBgQCEhIQAh4eHAIyMjACNjY0Aj4+PAJCQkACRkZEAlZWVAJeXlwCampoAm5ubAJycnAChoaEAoqKiAKWlpQCnp6cAqKioAK2trQCvr68AsLCwALGxsQCysrIAs7OzALa2tgC7u7sAvb29AL+/vwDBwcEAwsLCAMPDwwDExMQAxcXFAMbGxgDHx8cAycnJAMrKygDLy8sAzMzMAM3NzQDOzs4A0NDQANHR0QDT09MA1NTUANXV1QDW1tYA19fXANjY2ADZ2dkA2traANzc3ADd3d0A39/fAOHh4QDi4uIA4+PjAOTk5ADm5uYA6OjoAOnp6QDr6+sA7OzsAO3t7QDu7u4A7+/vAPHx8QDz8/MA9PT0APX19QD29vYA9/f3APj4+AD5+fkA+/v7APz8/AD+/v4A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAampqampqampqampqampqampqAABqampqampqalQQAQdmampqamoAAGpqampqamFqFiUaMmpqampqagAAampqampDaDQSaltLampqampqAABqampqUVleImpqQCQxampqamoAAGpqamo5aihgakBEPCpQampqagAAampqajteUWpmR2ppUUFqampqAABqamceHj5gaFhWJ1hqP2pqamoAAGpqajRqRkhdajRIVDY0SVpqagAAampYOlVqLGplX2piKmNITmpqAABqV0MPI2pqWwxKZRE9agY5TGoAAGpPAxUIZFwXajhYH1UiDQQwagAAakAJV0oOGC8uTTk7HBRXLSFqAABqNRNcakMIAAAoNwILVGpKGmoAAGpQBVtqalQjIz0mIFJqaiUjagAAakwZGjlQRVdqampYSkczCkNqAABqak8rHRtCVmpqalxBKSNTZ2oAAGpqampqampqampqampqampqagAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA><link rel=canonical href=https://www.gnu.org/software/libc/manual/html_node/mtab.html><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body lang=en>
+<div class=subsubsection id=mtab>
+<div class=header>
+<p>
+Next: <a href=https://www.gnu.org/software/libc/manual/html_node/Other-Mount-Information.html accesskey=n rel=next>Other (Non-libc) Sources of Mount Information</a>, Previous: <a href=https://www.gnu.org/software/libc/manual/html_node/fstab.html accesskey=p rel=prev>The <samp>fstab</samp> file</a>, Up: <a href=https://www.gnu.org/software/libc/manual/html_node/Mount-Information.html accesskey=u rel=up>Mount Information</a> &nbsp; [<a href=https://www.gnu.org/software/libc/manual/html_node/index.html#SEC_Contents title="Table of contents" rel=contents>Contents</a>][<a href=https://www.gnu.org/software/libc/manual/html_node/Concept-Index.html title=Index rel=index>Index</a>]</p>
+</div>
+<hr>
+<span id=The-mtab-file></span><h4 class=subsubsection>31.3.1.2 The <samp>mtab</samp> file</h4>
+<p>The following functions and data structure access the <samp>mtab</samp> file.
+</p>
+<dl class=def>
+<dt id=index-struct-mntent><span class=category>Data Type: </span><span><strong>struct mntent</strong><a href=#index-struct-mntent class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>This structure is used with the <code>getmntent</code>, <code>getmntent_r</code>,
+<code>addmntent</code>, and <code>hasmntopt</code> functions.
+</p>
+<dl compact>
+<dt><span><code>char *mnt_fsname</code></span></dt>
+<dd><p>This element contains a pointer to a string describing the name of the
+special device from which the filesystem is mounted. It corresponds to
+the <code>fs_spec</code> element in <code>struct fstab</code>.
+</p>
+</dd>
+<dt><span><code>char *mnt_dir</code></span></dt>
+<dd><p>This element points to a string describing the mount point of the
+filesystem. It corresponds to the <code>fs_file</code> element in
+<code>struct fstab</code>.
+</p>
+</dd>
+<dt><span><code>char *mnt_type</code></span></dt>
+<dd><p><code>mnt_type</code> describes the filesystem type and is therefore
+equivalent to <code>fs_vfstype</code> in <code>struct fstab</code>. <samp>mntent.h</samp>
+defines a few symbolic names for some of the values this string can have.
+But since the kernel can support arbitrary filesystems it does not
+make much sense to give them symbolic names. If one knows the symbol
+name one also knows the filesystem name. Nevertheless here follows the
+list of the symbols provided in <samp>mntent.h</samp>.
+</p>
+<dl compact>
+<dt id=index-MNTTYPE_005fIGNORE><span><code>MNTTYPE_IGNORE</code><a href=#index-MNTTYPE_005fIGNORE class=copiable-anchor> ¶</a></span></dt>
+<dd><p>This symbol expands to <code>"ignore"</code>. The value is sometimes used in
+<samp>fstab</samp> files to make sure entries are not used without removing them.
+</p></dd>
+<dt id=index-MNTTYPE_005fNFS><span><code>MNTTYPE_NFS</code><a href=#index-MNTTYPE_005fNFS class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"nfs"</code>. Using this macro sometimes could make sense
+since it names the default NFS implementation, in case both version 2
+and 3 are supported.
+</p></dd>
+<dt id=index-MNTTYPE_005fSWAP><span><code>MNTTYPE_SWAP</code><a href=#index-MNTTYPE_005fSWAP class=copiable-anchor> ¶</a></span></dt>
+<dd><p>This symbol expands to <code>"swap"</code>. It names the special <samp>fstab</samp>
+entry which names one of the possibly multiple swap partitions.
+</p></dd>
+</dl>
+</dd>
+<dt><span><code>char *mnt_opts</code></span></dt>
+<dd><p>The element contains a string describing the options used while mounting
+the filesystem. As for the equivalent element <code>fs_mntops</code> of
+<code>struct fstab</code> it is best to use the function <code>getsubopt</code>
+(see <a href=https://www.gnu.org/software/libc/manual/html_node/Suboptions.html>Parsing of Suboptions</a>) to access the parts of this string.
+</p>
+<p>The <samp>mntent.h</samp> file defines a number of macros with string values
+which correspond to some of the options understood by the kernel. There
+might be many more options which are possible so it doesn’t make much sense
+to rely on these macros but to be consistent here is the list:
+</p>
+<dl compact>
+<dt id=index-MNTOPT_005fDEFAULTS><span><code>MNTOPT_DEFAULTS</code><a href=#index-MNTOPT_005fDEFAULTS class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"defaults"</code>. This option should be used alone since it
+indicates all values for the customizable values are chosen to be the
+default.
+</p></dd>
+<dt id=index-MNTOPT_005fRO><span><code>MNTOPT_RO</code><a href=#index-MNTOPT_005fRO class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"ro"</code>. See the <code>FSTAB_RO</code> value, it means the
+filesystem is mounted read-only.
+</p></dd>
+<dt id=index-MNTOPT_005fRW><span><code>MNTOPT_RW</code><a href=#index-MNTOPT_005fRW class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"rw"</code>. See the <code>FSTAB_RW</code> value, it means the
+filesystem is mounted with read and write permissions.
+</p></dd>
+<dt id=index-MNTOPT_005fSUID><span><code>MNTOPT_SUID</code><a href=#index-MNTOPT_005fSUID class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"suid"</code>. This means that the SUID bit (see <a href=https://www.gnu.org/software/libc/manual/html_node/How-Change-Persona.html>How an Application Can Change Persona</a>) is respected when a program from the filesystem is
+started.
+</p></dd>
+<dt id=index-MNTOPT_005fNOSUID><span><code>MNTOPT_NOSUID</code><a href=#index-MNTOPT_005fNOSUID class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"nosuid"</code>. This is the opposite of <code>MNTOPT_SUID</code>,
+the SUID bit for all files from the filesystem is ignored.
+</p></dd>
+<dt id=index-MNTOPT_005fNOAUTO><span><code>MNTOPT_NOAUTO</code><a href=#index-MNTOPT_005fNOAUTO class=copiable-anchor> ¶</a></span></dt>
+<dd><p>Expands to <code>"noauto"</code>. At startup time the <code>mount</code> program
+will ignore this entry if it is started with the <code>-a</code> option to
+mount all filesystems mentioned in the <samp>fstab</samp> file.
+</p></dd>
+</dl>
+<p>As for the <code>FSTAB_*</code> entries introduced above it is important to
+use <code>strcmp</code> to check for equality.
+</p>
+</dd>
+<dt><span><code>mnt_freq</code></span></dt>
+<dd><p>This elements corresponds to <code>fs_freq</code> and also specifies the
+frequency in days in which dumps are made.
+</p>
+</dd>
+<dt><span><code>mnt_passno</code></span></dt>
+<dd><p>This element is equivalent to <code>fs_passno</code> with the same meaning
+which is uninteresting for all programs beside <code>dump</code>.
+</p></dd>
+</dl>
+</dl>
+<p>For accessing the <samp>mtab</samp> file there is again a set of three
+functions to access all entries in a row. Unlike the functions to
+handle <samp>fstab</samp> these functions do not access a fixed file and there
+is even a thread safe variant of the get function. Besides this the GNU C Library
+contains functions to alter the file and test for specific options.
+</p>
+<dl class=def>
+<dt id=index-setmntent><span class=category>Function: </span><span><em>FILE *</em> <strong>setmntent</strong> <em>(const char *<var>file</var>, const char *<var>mode</var>)</em><a href=#index-setmntent class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>Preliminary:
+| MT-Safe
+| AS-Unsafe heap lock
+| AC-Unsafe mem fd lock
+| See <a href=https://www.gnu.org/software/libc/manual/html_node/POSIX-Safety-Concepts.html>POSIX Safety Concepts</a>.
+</p>
+<p>The <code>setmntent</code> function prepares the file named <var>FILE</var> which
+must be in the format of a <samp>fstab</samp> and <samp>mtab</samp> file for the
+upcoming processing through the other functions of the family. The
+<var>mode</var> parameter can be chosen in the way the <var>opentype</var>
+parameter for <code>fopen</code> (see <a href=https://www.gnu.org/software/libc/manual/html_node/Opening-Streams.html>Opening Streams</a>) can be chosen. If
+the file is opened for writing the file is also allowed to be empty.
+</p>
+<p>If the file was successfully opened <code>setmntent</code> returns a file
+handle for future use. Otherwise the return value is <code>NULL</code>
+and <code>errno</code> is set accordingly.
+</p></dl>
+<dl class=def>
+<dt id=index-endmntent><span class=category>Function: </span><span><em>int</em> <strong>endmntent</strong> <em>(FILE *<var>stream</var>)</em><a href=#index-endmntent class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>Preliminary:
+| MT-Safe
+| AS-Unsafe heap lock
+| AC-Unsafe lock mem fd
+| See <a href=https://www.gnu.org/software/libc/manual/html_node/POSIX-Safety-Concepts.html>POSIX Safety Concepts</a>.
+</p>
+<p>This function takes for the <var>stream</var> parameter a file handle which
+previously was returned from the <code>setmntent</code> call.
+<code>endmntent</code> closes the stream and frees all resources.
+</p>
+<p>The return value is <em class=math>1</em> unless an error occurred in which case it
+is <em class=math>0</em>.
+</p></dl>
+<dl class=def>
+<dt id=index-getmntent><span class=category>Function: </span><span><em>struct mntent *</em> <strong>getmntent</strong> <em>(FILE *<var>stream</var>)</em><a href=#index-getmntent class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>Preliminary:
+| MT-Unsafe race:mntentbuf locale
+| AS-Unsafe corrupt heap init
+| AC-Unsafe init corrupt lock mem
+| See <a href=https://www.gnu.org/software/libc/manual/html_node/POSIX-Safety-Concepts.html>POSIX Safety Concepts</a>.
+</p>
+<p>The <code>getmntent</code> function takes as the parameter a file handle
+previously returned by a successful call to <code>setmntent</code>. It returns
+a pointer to a static variable of type <code>struct mntent</code> which is
+filled with the information from the next entry from the file currently
+read.
+</p>
+<p>The file format used prescribes the use of spaces or tab characters to
+separate the fields. This makes it harder to use names containing one
+of these characters (e.g., mount points using spaces). Therefore
+these characters are encoded in the files and the <code>getmntent</code>
+function takes care of the decoding while reading the entries back in.
+<code>'\040'</code> is used to encode a space character, <code>'\011'</code> to
+encode a tab character, <code>'\012'</code> to encode a newline character,
+and <code>'\\'</code> to encode a backslash.
+</p>
+<p>If there was an error or the end of the file is reached the return value
+is <code>NULL</code>.
+</p>
+<p>This function is not thread-safe since all calls to this function return
+a pointer to the same static variable. <code>getmntent_r</code> should be
+used in situations where multiple threads access the file.
+</p></dl>
+<dl class=def>
+<dt id=index-getmntent_005fr><span class=category>Function: </span><span><em>struct mntent *</em> <strong>getmntent_r</strong> <em>(FILE *<var>stream</var>, struct mntent *<var>result</var>, char *<var>buffer</var>, int <var>bufsize</var>)</em><a href=#index-getmntent_005fr class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>Preliminary:
+| MT-Safe locale
+| AS-Unsafe corrupt heap
+| AC-Unsafe corrupt lock mem
+| See <a href=https://www.gnu.org/software/libc/manual/html_node/POSIX-Safety-Concepts.html>POSIX Safety Concepts</a>.
+</p>
+<p>The <code>getmntent_r</code> function is the reentrant variant of
+<code>getmntent</code>. It also returns the next entry from the file and
+returns a pointer. The actual variable the values are stored in is not
+static, though. Instead the function stores the values in the variable
+pointed to by the <var>result</var> parameter. Additional information (e.g.,
+the strings pointed to by the elements of the result) are kept in the
+buffer of size <var>bufsize</var> pointed to by <var>buffer</var>.
+</p>
+<p>Escaped characters (space, tab, backslash) are converted back in the
+same way as it happens for <code>getmentent</code>.
+</p>
+<p>The function returns a <code>NULL</code> pointer in error cases. Errors could be:
+<ul>
+<li> error while reading the file,
+<li> end of file reached,
+<li> <var>bufsize</var> is too small for reading a complete new entry.
+</ul>
+</dl>
+<dl class=def>
+<dt id=index-addmntent><span class=category>Function: </span><span><em>int</em> <strong>addmntent</strong> <em>(FILE *<var>stream</var>, const struct mntent *<var>mnt</var>)</em><a href=#index-addmntent class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>Preliminary:
+| MT-Safe race:stream locale
+| AS-Unsafe corrupt
+| AC-Unsafe corrupt
+| See <a href=https://www.gnu.org/software/libc/manual/html_node/POSIX-Safety-Concepts.html>POSIX Safety Concepts</a>.
+</p>
+<p>The <code>addmntent</code> function allows adding a new entry to the file
+previously opened with <code>setmntent</code>. The new entries are always
+appended. I.e., even if the position of the file descriptor is not at
+the end of the file this function does not overwrite an existing entry
+following the current position.
+</p>
+<p>The implication of this is that to remove an entry from a file one has
+to create a new file while leaving out the entry to be removed and after
+closing the file remove the old one and rename the new file to the
+chosen name.
+</p>
+<p>This function takes care of spaces and tab characters in the names to be
+written to the file. It converts them and the backslash character into
+the format described in the <code>getmntent</code> description above.
+</p>
+<p>This function returns <em class=math>0</em> in case the operation was successful.
+Otherwise the return value is <em class=math>1</em> and <code>errno</code> is set
+appropriately.
+</p></dl>
+<dl class=def>
+<dt id=index-hasmntopt><span class=category>Function: </span><span><em>char *</em> <strong>hasmntopt</strong> <em>(const struct mntent *<var>mnt</var>, const char *<var>opt</var>)</em><a href=#index-hasmntopt class=copiable-anchor> ¶</a></span></dt>
+<dd>
+<p>Preliminary:
+| MT-Safe
+| AS-Safe
+| AC-Safe
+| See <a href=https://www.gnu.org/software/libc/manual/html_node/POSIX-Safety-Concepts.html>POSIX Safety Concepts</a>.
+</p>
+<p>This function can be used to check whether the string pointed to by the
+<code>mnt_opts</code> element of the variable pointed to by <var>mnt</var> contains
+the option <var>opt</var>. If this is true a pointer to the beginning of the
+option in the <code>mnt_opts</code> element is returned. If no such option
+exists the function returns <code>NULL</code>.
+</p>
+<p>This function is useful to test whether a specific option is present but
+when all options have to be processed one is better off with using the
+<code>getsubopt</code> function to iterate over all options in the string.
+</p></dl>
+</div>
+<hr>
+<div class=header>
+<p>
+Next: <a href=https://www.gnu.org/software/libc/manual/html_node/Other-Mount-Information.html>Other (Non-libc) Sources of Mount Information</a>, Previous: <a href=https://www.gnu.org/software/libc/manual/html_node/fstab.html>The <samp>fstab</samp> file</a>, Up: <a href=https://www.gnu.org/software/libc/manual/html_node/Mount-Information.html>Mount Information</a> &nbsp; [<a href=https://www.gnu.org/software/libc/manual/html_node/index.html#SEC_Contents title="Table of contents" rel=contents>Contents</a>][<a href=https://www.gnu.org/software/libc/manual/html_node/Concept-Index.html title=Index rel=index>Index</a>]</p>
+</div>
