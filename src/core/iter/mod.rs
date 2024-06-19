@@ -8,3 +8,6 @@
 // From standard library
 
 // From this library
+pub use direction_enum::Direction;
+
+mod direction_enum;
