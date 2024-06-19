@@ -9,6 +9,7 @@ use thiserror::Error;
 // From standard library
 
 // From this library
+use crate::core::errors::CacheError;
 use crate::core::errors::ParserError;
 
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
@@ -35,6 +36,9 @@ pub type Result<T> = std::result::Result<T, RsMountError>;
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum RsMountError {
+    #[error(transparent)]
+    Cache(#[from] CacheError),
+
     #[error(transparent)]
     Parser(#[from] ParserError),
 }

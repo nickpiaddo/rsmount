@@ -1,15 +1,14 @@
 // Copyright (c) 2023 Nick Piaddo
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Runtime errors.
-
 // From dependency library
+use thiserror::Error;
 
 // From standard library
 
 // From this library
-pub use cache_error_enum::CacheError;
-pub use parser_error_enum::ParserError;
 
-mod cache_error_enum;
-mod parser_error_enum;
+/// `Cache` runtime error.
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum CacheError {}
