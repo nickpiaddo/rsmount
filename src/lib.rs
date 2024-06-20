@@ -890,20 +890,20 @@
 //!
 //! #### Utils
 //!
-//! | `libmount`                      | `rsmount` |
-//! | ------------------              | --------- |
-//! | [`mnt_fstype_is_netfs`][370]    |           |
-//! | [`mnt_fstype_is_pseudofs`][371] |           |
-//! | [`mnt_get_fstab_path`][372]     |           |
-//! | [`mnt_get_mountpoint`][373]     |           |
-//! | [`mnt_get_mtab_path`][374]      |           |
-//! | [`mnt_get_swaps_path`][375]     |           |
-//! | [`mnt_guess_system_root`][376]  |           |
-//! | [`mnt_has_regular_mtab`][377]   |           |
-//! | [`mnt_mangle`][378]             |           |
-//! | [`mnt_match_fstype`][379]       |           |
-//! | [`mnt_tag_is_valid`][380]       |           |
-//! | [`mnt_unmangle`][381]           |           |
+//! | `libmount`                      | `rsmount`                                                                                             |
+//! | ------------------              | ---------                                                                                             |
+//! | [`mnt_fstype_is_netfs`][370]    | [`core::utils::is_network_fs`]                                                                        |
+//! | [`mnt_fstype_is_pseudofs`][371] | [`core::utils::is_pseudo_fs`]                                                                         |
+//! | [`mnt_get_fstab_path`][372]     | [`core::utils::path_to_fstab`]                                                                        |
+//! | [`mnt_get_mountpoint`][373]     | [`core::utils::find_device_mountpoint`]                                                               |
+//! | [`mnt_get_mtab_path`][374]      | Deprecated.                                                                                           |
+//! | [`mnt_get_swaps_path`][375]     | [`core::utils::path_to_swaps`]                                                                        |
+//! | [`mnt_guess_system_root`][376]  | [`core::utils::device_number_to_device_name`]<br>[`core::utils::device_number_to_cached_device_name`] |
+//! | [`mnt_has_regular_mtab`][377]   | Deprecated.                                                                                           |
+//! | [`mnt_mangle`][378]             | [`core::utils::fstab_encode`]                                                                         |
+//! | [`mnt_match_fstype`][379]       | [`core::utils::matches_fs_type`]                                                                      |
+//! | [`mnt_tag_is_valid`][380]       | Not implemented. [`Tag`](crate::core::device::Tag)s are valid by definition.                          |
+//! | [`mnt_unmangle`][381]           | [`core::utils::fstab_decode`]                                                                         |
 //!
 //! [370]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Utils.html#mnt-fstype-is-netfs
 //! [371]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Utils.html#mnt-fstype-is-pseudofs
