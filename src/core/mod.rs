@@ -18,3 +18,4 @@ pub mod iter;
 pub(crate) mod macros;
 pub mod optstring;
 pub mod utils;
+pub mod version;

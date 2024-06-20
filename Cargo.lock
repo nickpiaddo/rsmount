@@ -416,6 +416,7 @@ dependencies = [
  "libc",
  "log",
  "num_enum",
+ "once_cell",
  "paste",
  "pkg-config",
  "pretty_assertions",

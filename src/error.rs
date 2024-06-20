@@ -40,6 +40,8 @@ use crate::core::errors::UTabError;
 use crate::core::errors::UTabIterError;
 use crate::core::errors::UtabManagerError;
 
+use crate::core::version::VersionError;
+
 use crate::mount::MountBuilderError;
 use crate::mount::MountError;
 use crate::mount::MountIterError;
@@ -190,4 +192,7 @@ pub enum RsMountError {
 
     #[error(transparent)]
     UtabManager(#[from] UtabManagerError),
+
+    #[error(transparent)]
+    Version(#[from] VersionError),
 }

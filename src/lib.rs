@@ -1020,15 +1020,15 @@
 //!
 //! #### Version functions
 //!
-//! | `libmount`                        | `rsmount` |
-//! | ------------------                | --------- |
-//! | [`LIBMOUNT_MAJOR_VERSION`][382]   |           |
-//! | [`LIBMOUNT_MINOR_VERSION`][383]   |           |
-//! | [`LIBMOUNT_PATCH_VERSION`][384]   |           |
-//! | [`LIBMOUNT_VERSION`][385]         |           |
-//! | [`mnt_parse_version_string`][386] |           |
-//! | [`mnt_get_library_version`][387]  |           |
-//! | [`mnt_get_library_features`][388] |           |
+//! | `libmount`                        | `rsmount`                                         |
+//! | ------------------                | ---------                                         |
+//! | [`LIBMOUNT_MAJOR_VERSION`][382]   | [`core::version::VERSION_NUMBER_MAJOR`]           |
+//! | [`LIBMOUNT_MINOR_VERSION`][383]   | [`core::version::VERSION_NUMBER_MINOR`]           |
+//! | [`LIBMOUNT_PATCH_VERSION`][384]   | [`core::version::VERSION_NUMBER_PATCH`]           |
+//! | [`LIBMOUNT_VERSION`][385]         | [`core::version::VERSION_STRING`]                 |
+//! | [`mnt_parse_version_string`][386] | [`core::version::version_string_to_release_code`] |
+//! | [`mnt_get_library_version`][387]  | [`core::version::VERSION_STRING`]                 |
+//! | [`mnt_get_library_features`][388] | [`core::version::library_features`]               |
 //!
 //! [382]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Version-functions.html#LIBMOUNT-MAJOR-VERSION:CAPS
 //! [383]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Version-functions.html#LIBMOUNT-MINOR-VERSION:CAPS
