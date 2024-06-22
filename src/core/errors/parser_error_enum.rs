@@ -20,6 +20,10 @@ pub enum ParserError {
     #[error("{0}")]
     Label(String),
 
+    /// Error while parsing a string into a [`TagName`](crate::core::device::TagName).
+    #[error("{0}")]
+    TagName(String),
+
     /// Error while parsing a string into a [`Uuid`](crate::core::device::Uuid).
     #[error("{0}")]
     Uuid(String),

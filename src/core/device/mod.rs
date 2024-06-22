@@ -10,8 +10,10 @@
 // From this library
 pub use id_struct::Id;
 pub use label_struct::Label;
+pub use tag_name_enum::TagName;
 pub use uuid_struct::Uuid;
 
 mod id_struct;
 mod label_struct;
+mod tag_name_enum;
 mod uuid_struct;
