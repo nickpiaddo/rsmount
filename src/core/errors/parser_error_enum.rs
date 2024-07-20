@@ -1,13 +1,14 @@
 // Copyright (c) 2023 Nick Piaddo
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Runtime errors.
-
 // From dependency library
+use thiserror::Error;
 
 // From standard library
 
 // From this library
-pub use parser_error_enum::ParserError;
 
-mod parser_error_enum;
+/// String parser runtime errors.
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum ParserError {}
