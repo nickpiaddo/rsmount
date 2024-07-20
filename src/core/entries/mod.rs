@@ -1,17 +1,9 @@
 // Copyright (c) 2023 Nick Piaddo
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! `rsmount` low-level API.
-
+//! Collection of data structures representing lines in file system description files.
 // From dependency library
 
 // From standard library
 
 // From this library
-pub mod cache;
-pub mod device;
-pub mod entries;
-pub mod errors;
-pub mod flags;
-pub mod fs;
-pub mod iter;
