@@ -46,7 +46,7 @@
 //!
 //! `rsmount`'s API is roughly divided into three main modules:
 //! - [`core`]: a module for items in the library's low-level API.
-//! - `tables`: a module for manipulating file system descriptions tables (`/etc/fstab`,
+//! - [`tables`]: a module for manipulating file system descriptions tables (`/etc/fstab`,
 //! `/proc/self/mountinfo`, `/proc/swaps`, `/run/mount/utab`).
 //! - `mount`: a module to mount devices on the system's file tree.
 //!
@@ -949,3 +949,4 @@ pub mod core;
 pub mod debug;
 mod error;
 pub(crate) mod ffi_utils;
+pub mod tables;
