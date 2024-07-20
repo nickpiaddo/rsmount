@@ -20,7 +20,9 @@ exclude = ["web-snapshots/*", "test_harness/*", "scripts/*"]
 libc = "0.2.153"
 libmount = { package="rsmount-sys", version="0.2.0" }
 log = "0.4.21"
+num_enum = "0.7.3"
 thiserror = "1.0.57"
+typed-builder = "0.19.1"
 
 [dev-dependencies]
 pretty_assertions = "1.4.0"
