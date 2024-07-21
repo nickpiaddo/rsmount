@@ -10,6 +10,7 @@ use thiserror::Error;
 
 // From this library
 use crate::core::errors::CacheError;
+use crate::core::errors::FsTabEntryError;
 use crate::core::errors::GenIteratorError;
 use crate::core::errors::ParserError;
 
@@ -39,6 +40,9 @@ pub type Result<T> = std::result::Result<T, RsMountError>;
 pub enum RsMountError {
     #[error(transparent)]
     Cache(#[from] CacheError),
+
+    #[error(transparent)]
+    FsTabEntry(#[from] FsTabEntryError),
 
     #[error(transparent)]
     GenIterator(#[from] GenIteratorError),
