@@ -7,6 +7,8 @@
 // From standard library
 
 // From this library
+pub use fs_tab_entry_struct::FsTabEntry;
 pub use mnt_ent_struct::MntEnt;
 
+mod fs_tab_entry_struct;
 mod mnt_ent_struct;
