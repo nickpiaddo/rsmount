@@ -563,7 +563,7 @@
 //! | [`mnt_fs_get_id`][245]              |                                                                                                                                        |
 //! | [`mnt_fs_get_option`][246]          | [`FsTabEntry::option_value`](crate::core::entries::FsTabEntry::option_value)                                                           |
 //! | [`mnt_fs_get_optional_fields`][247] |                                                                                                                                        |
-//! | [`mnt_fs_get_options`][248]         |                                                                                                                                        |
+//! | [`mnt_fs_get_options`][248]         | [`FsTabEntry::mount_options`](crate::core::entries::FsTabEntry::mount_options)                                                         |
 //! | [`mnt_fs_get_parent_id`][249]       |                                                                                                                                        |
 //! | [`mnt_fs_get_passno`][250]          | [`FsTabEntry::fsck_checking_order`](crate::core::entries::FsTabEntry::fsck_checking_order)                                             |
 //! | [`mnt_fs_get_priority`][251]        |                                                                                                                                        |
@@ -610,7 +610,7 @@
 //! | [`mnt_fs_streq_srcpath`][292]       | [`FsTabEntry::is_exact_source`](crate::core::entries::FsTabEntry::is_exact_source)                                                     |
 //! | [`mnt_fs_streq_target`][293]        | [`FsTabEntry::is_exact_target`](crate::core::entries::FsTabEntry::is_exact_target)                                                     |
 //! | [`mnt_fs_to_mntent`][294]           |                                                                                                                                        |
-//! | [`mnt_new_fs`][295]                 |                                                                                                                                        |
+//! | [`mnt_new_fs`][295]                 | [`FsTabEntry::builder`](crate::core::entries::FsTabEntry::builder)                                                                     |
 //! | [`mnt_reset_fs`][296]               | Not supported.                                                                                                                         |
 //!
 //! [228]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Filesystem.html#libmnt-fs

@@ -7,8 +7,12 @@ use thiserror::Error;
 // From standard library
 
 // From this library
+use crate::core::errors::FsTabEntryError;
 
-/// `FsTabEntryBuilder` runtime errors.
+/// [`FsTabEntryBuilder`](crate::core::entries::FsTabEntryBuilder) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
-pub enum FsTabEntryBuilderError {}
+pub enum FsTabEntryBuilderError {
+    #[error(transparent)]
+    FsTabEntry(#[from] FsTabEntryError),
+}
