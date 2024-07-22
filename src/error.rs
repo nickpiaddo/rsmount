@@ -15,6 +15,7 @@ use crate::core::errors::FsTabEntryError;
 use crate::core::errors::GenIteratorError;
 use crate::core::errors::MountInfoEntryError;
 use crate::core::errors::ParserError;
+use crate::core::errors::SwapsEntryError;
 
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
 ///
@@ -57,4 +58,7 @@ pub enum RsMountError {
 
     #[error(transparent)]
     Parser(#[from] ParserError),
+
+    #[error(transparent)]
+    SwapsEntry(#[from] SwapsEntryError),
 }
