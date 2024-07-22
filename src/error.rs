@@ -13,6 +13,7 @@ use crate::core::errors::CacheError;
 use crate::core::errors::FsTabEntryBuilderError;
 use crate::core::errors::FsTabEntryError;
 use crate::core::errors::GenIteratorError;
+use crate::core::errors::MountInfoEntryError;
 use crate::core::errors::ParserError;
 
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
@@ -50,6 +51,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     GenIterator(#[from] GenIteratorError),
+
+    #[error(transparent)]
+    MountInfoEntry(#[from] MountInfoEntryError),
 
     #[error(transparent)]
     Parser(#[from] ParserError),
