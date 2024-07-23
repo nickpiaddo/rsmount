@@ -1,0 +1,1055 @@
+<!DOCTYPE html> <html lang=en style><!--
+ Page saved with SingleFile
+ url: https://lwn.net/Articles/532748/
+--><meta charset=utf-8><title>Namespaces in operation, part 4: more on PID namespaces [LWN.net]</title>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel=alternate type=application/rss+xml title="LWN.net headlines" href=https://lwn.net/headlines/rss>
+<link rel=alternate type=application/rss+xml title="Comments posted to this article" href=https://lwn.net/headlines/532748/>
+<style>body{color:black;background-color:#ffffff;padding:0px}h1{margin:0px 0px 5px 0px;padding:0px;color:black}h3{margin:0px 0px 5px 0px;padding:0px}a{text-decoration:underline}a:link{color:DarkBlue}a:visited{color:#444}a:hover{color:DarkBlue;background-color:#eeeeee}a:visited:hover{color:#444}DIV.PageHeadline{text-align:center;max-width:65em;margin-top:1em;margin-bottom:2em}DIV.PageHeadline H1{margin-bottom:0.2em}DETAILS.CommentBox{border-style:none none none solid;border-width:thin;max-width:65em;margin-top:1em;background-color:inherit;padding-left:8px}DETAILS.CommentBox>SUMMARY>H3.CommentTitle{background-color:#ffcc99}DETAILS.CommentBox{border-color:#ffcc99}H3.CommentTitle{display:inline-block;width:100%;padding-left:3px}DETAILS[open]>SUMMARY{list-style-type:none;opacity:1.0;cursor:zoom-out}DETAILS>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[+]"}DETAILS[open]>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[–]"}DETAILS>SUMMARY::MARKER,DETAILS>SUMMARY::-webkit-details-marker{display:none}P.CommentPoster{margin-top:0px}div.CommentReplyButton{display:block;text-align:right;padding:4px}TABLE.IndexEntries{background-color:#eeeeee;padding:3px;margin:5px;float:right}TABLE.IndexEntries TD:first-child{padding:1px 5px 1px 1px}SPAN.ReallySmall{font-size:x-small}DIV.FeatureByline{max-width:20em;float:left;background-color:#eeeeee;margin:2px 5px 2px 0px;padding-bottom:5px;padding-right:25px;padding-left:5px}DIV.ArticleText{margin:0px 0px 0px 0px;padding:0px 2px 0px 0px;max-width:65em}input{font-family:inherit;font-size:inherit}FONT.QuotedText{color:#990099}#menu{width:100%;position:fixed;top:0;left:0;right:0;background-color:#eeeeee;padding:0 0.2em 0 0.2em;overflow-y:visible;display:block;z-index:20;height:42px}DIV.navmenu-container{margin-left:0.5em;margin-top:0.5em;min-width:70%;border-radius:0.8em;padding:0.1em;display:inline-block}ul.navmenu{list-style:none;position:relative;display:inline-table;padding:0;margin:0}.navmenu li{display:inline-block;margin-right:0.4em}.navmenu ul{display:none;position:absolute;top:100%;width:15em;list-style:none;z-index:10;background:#eeeeee;padding-left:0;margin-left:0;border-style:solid}.navmenu ul li{display:block;margin-top:0.2em;margin-left:0.2em;line-height:1.4}.navmenu ul li:first-child{margin-top:1.2em}.navmenu li:hover>ul{display:block}a.navmenu{color:black}.navmenu a{text-decoration:none}.navmenu a:hover{text-decoration:underline}.navmenu a:visited,.topnav-container a:visited{color:DarkBlue}a.navmenu::after{content:" ▶"}span.logo,span.logobl,img.logo{display:none}DIV.topnav-container{margin-left:0.5em;margin-top:45px;margin-right:0.5em;background:#eeeeee;border-radius:0.8em;padding:0.3em}div.flexcol{display:flex;flex-direction:column}div.middlecolumn{flex:5}div.rightcol{padding-top:5em;flex:0 1 content}@media screen and (min-width:48em){.rightcol{flex:0;min-width:120px}}@media screen and (min-width:120em){.rightcol{max-width:400px}}@media screen and (min-width:48em){div.maincolumn{padding-left:10em}div.flexcol{flex-direction:row}#menu{display:block;width:9.6em;height:100%;bottom:0;overflow-y:visible}#menu:hover{overflow-y:auto}div.navmenu-container{display:block;margin-top:120px;margin-left:0;padding:0}.navmenu ul{display:block;position:static;width:9.6em;border-style:none;top:0}.navmenu li{margin:0.5em 0 0 0.1em;width:100%}.navmenu ul li{margin:0.1em 0 0 0.5em;text-indent:-0.4em;padding-right:0;width:auto;line-height:1.2}.navmenu ul li:first-child{margin-top:0}a.navmenu::after{content:""}DIV.topnav-container{margin-left:10.5em;margin-top:0.5em}img.logo{padding-right:0.2em;display:inline;float:left;position:absolute;top:3px;left:3px}span.logo{font-weight:bold;color:green;display:inline;font-size:180%;text-align:right;float:left;padding-left:60px;font-family:sans-serif;line-height:0.8;padding-top:0.3em}span.logobl{color:green;display:inline;font-size:80%;text-align:center;position:absolute;top:85px;left:5px;font-family:sans-serif}}@media screen and (min-width:80em){}@media (max-width:48em){.not-handset{display:none}}@media (min-width:48em){.not-handset{display:inline-block}}DIV.ArticleText{padding-left:0.5em}TABLE{border-collapse:separate;border-spacing:5px 0px}PRE{white-space:pre;overflow:visible}H3.CommentTitle{border-radius:0 2em 2em 0}html{font-family:inherit}input{background-color:#ffffff;color:black;padding:3px;border-radius:0.5em}input:focus{border-color:DarkBlue}input[type="submit"]{background-color:#eeeeee}input[type="submit"]:hover{background-color:#ccc}form.loginform{display:inline}TT{white-space:nowrap}</style>
+<meta name=referrer content=no-referrer><link rel=icon href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAlwSFlzAAAN1wAADdcBQiibeAAAAAd0SU1FB9oMHRALH2oogOQAAAdtSURBVFjDvZd7cFT1Fcc/v9+9d3N3N9nNxg3ZhCS8CYgpQnjYqaZQpaI1QMTxAbb2ga0dZ7T4oNOhY9FxHKtjp1Y7lo6tODqOtk5hSgdHBJwq1ALDIITwSgIhPEISNmRDdrP3+esfCxkYCE1G2t/MnfuY8zvne875nvM7F4a/JgKvAkeA7vP3PwAV/B/WNCANqAuXGQyqhx9brqqqq21g5nAVymHKvwSELv5gmiYBzWBEcYkBvAfk/a+814D+i70f5Fo8XKVDXWHgmSUPPsT462/g8P5G4vE4r61+m0hRjERlJS2HDgL0AX8fqlJ9qII/euGDqXF1mrr588hmLTZ9vJHNX+yl9WgLP37kcTZt2czmf6xH6sY4x+rnmgMYMarq7m9PqGbdhk/At3ngZ89jux6/fullZn7jZuoXP8j2A6fp6Tge2/7RO9ceQJ4RPLrm/b+pWyYrMSJ0homjjnFwdzMvrxhNe7KX/qzF1rWrSaeSwyKWGI7wfbUlmTUvRoIBQyC0SqAPIYt478NWbpkpqFzYCGDdf/8Px9bX181y3Uzr0qVLv7xmAF54aMK564oK8pc90I/v+rz5vuBcWjHteo1wvs57B2+nYmQZNdNr7IL8cMDzXP9sT8+WbqG+993589u/MoBJU6p7nr8nHD2b7sWxFWNHa3x9us2h4zNwJz5JqifJdfE4BxobaWs7Rn393QCcPHXqj7fPu+0nX7UR3blo8b3RW5dvJDFmJpPGhdHDU8i7aR+h6SuRQqFrGmv+/Cdc16WhoYFAIIBpmhRGo9OGTMINGzbkZbPecj1PnyZ8lcpY1sePPfrU5x0dLW+sfPoJ8vND3LzkNSzLpqgoyr7GRnRdZ+tn/6SpqYmOzg5mzZQkEgm6u7uJx+MoIdSQAKxa9anueNmPRlYk5oZDIRSQzdoPv/3Oaid5NmVc0FNYWIDjuOzZ0wD4rFu3llmzZrNj5w7C4TAliQR1dQtI9fTQfuokpeUVQyvDaTXZlWVlJXMjBQVIKfE8j7xIHoXRiFHuODTsO4AZDFJZMZJDTU3s27+fb9XW0tvbi5XNUlNTw8JF9TQ2NGBZ2RzJhGDbtn9FgFKg/aocKIrHRkQjEVzXxbIspJQIIVBKoUtJLBbF0DXajjTjWf3EzTZaPnuO9vac3u/cVYenFKZpEo8XM2HCRLZs+ZS33nqrqnRkxaP/NQLKsVfZtv19XddDAEqpAS8uvGuaxJIaBXkdzB77CVogQNms15FCIoRC+Yqx48blvBOCxsZGlK9ELB4vbT95/OpVUFtb2+U47l8uNujYNplMBt/3UUrh+z5SN4j1bkHhczDvdXRNglAIIdCkAKWQQuD7Pr999XdMqhrftX/P7meH1AfGTZrUKly3ctmyZaJuwUK6u7vxPI+CggjBoJkzomlomQ4ssxgJeJ6Hrml4/gWyK5RSCCmRCE53nN4755u1U4fUB0ZXjm3r7OoSe/fuxfc8zvWl6T3Xx8lTp+hLZwbkXNdH+j7K95FS4rhuzqjI+SV1PZc6IQgEAtkhT0SbN25YMLK8Yv+TT61ANwzKSkuIRiNomkY2m8X3fVzXJUOQsMzgK1AKpJRImQuoPJ+GHBSFrhvucE7Dnmd/9czXKs8stZOqXsqy+ygqLKSkuBiVIwYK8NBAOblc4yOFBAVSk/i+j57ezxj35yAVnzfXTRvWYZT9YqIfMEcJVIbDJ6L4E15BiJzigY1CI+h0kdaL8F2Xzs5Okskz3DD1RiSCUWfuwsyvAsB3jrJrl55qbmGO8DMnlrxy+MygEdi+uropECgUiBCIEOMTh2jrP0S/WYVhGKAUnu8jpcDL+qTOneXEieN4nneefwrfasIMhgcmPqmXM316S3RGjbFbKUFponr13KcbHrkkAsfWVjvxuKXrhsIwJwLGeYUWdn8zLbH1aEKi8AGBJiU4faS6kzSf6CISjVIcL+ZUZ5I5+Y8TKRwNBAeq4qL4cqDxtDVl6R7zkgiUlwtd6FXkaHxRZkSAgDmS0vZ6tBnbyWQypNNp+vv70aRJNBajJjGKolgM0wyxYdPvufNWHwgMkmmX0oQVuCwFrp/FEPIKtBAgo0QLujj2758yZt67ADiOQzLZTZ5ZSqwwCkBfX4Zx1hvoRslVBu4QBfmeGKQM1aBcFXqCsvydZFKnATAMg0SiZMB4Nmtxxx3zqb9NBxkaRI8LXs9Aa78EQO7Bu+j/4rKxFE1T7HrnDizLwbZtspZFT6qXD9euJxg02bVjG7oOKOcKhjuw+w/Tk+qkqSnkXJYCXymwm5BCIGQQRCG5SjiPUaWwHRAKTDNwRf8WzB6BbQmMQC9Ci+Qc8rvpS5/laGuIk23B1o6m1OQfrDmUvQzA5i35I8DbHApRZQYxCsIpES/uJBTKNRvbFhw/kc+BI9le4JfAGSAJ58sCxjS29dUebS1dWl6exgwexnOhvT1EU7PZmtnz5fh7/4o3rKH03Sem35Qf9d4MBf3JAiVSfcbWe57bXXu1PR/84sYVRYXei3lBIfrOkbGTeZMW/Wbn8cHk/wNEUBaFSM2AYgAAAABJRU5ErkJggg==" type=image/png><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://lwn.net/Articles/532748/><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+ <body>
+ <a name=t></a>
+<div id=menu><a href=https://lwn.net/><img src=data:image/png;base64,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 class=logo border=0 alt="LWN.net Logo">
+ <span class=logo>LWN<br>.net</span>
+ <span class=logobl>News from the source</span></a>
+ <a href=https://lwn.net/><img src=data:, class="sslogo sf-hidden" border=0 alt=LWN></a><div class=navmenu-container>
+ <ul class=navmenu>
+ <li><a class=navmenu href=#t><b>Content</b></a><ul><li><a href=https://lwn.net/current/>Weekly Edition</a><li><a href=https://lwn.net/Archives/>Archives</a><li><a href=https://lwn.net/Search/>Search</a><li><a href=https://lwn.net/Kernel/>Kernel</a><li><a href=https://lwn.net/Security/>Security</a><li><a href=https://lwn.net/Calendar/>Events calendar</a><li><a href=https://lwn.net/Comments/unread>Unread comments</a><li><hr><li><a href=https://lwn.net/op/FAQ.lwn>LWN FAQ</a><li><a href=https://lwn.net/op/AuthorGuide.lwn>Write for us</a></ul></li>
+<li><a class=navmenu href=#t><b>Edition</b></a><ul><li><a href=https://lwn.net/Articles/533540/>Return to the Development page</a></ul></li>
+</ul></div>
+</div>
+<div class=not-handset style=margin-left:10.5em;display:block>
+ <div class=not-print> <div id=azk13321_leaderboard></div> </div>
+ </div>
+ <div class=topnav-container>
+<div class=not-handset><form action=https://lwn.net/Login/ method=post name=loginform class=loginform>
+ <label><b>User:</b> <input type=text name=Username value size=8 id=uc></label>
+ <label><b>Password:</b> <input type=password name=Password size=8 id=pc value></label> <input type=submit name=submit value="Log in"></form> |
+ <form action=https://lwn.net/subscribe/ method=post class=loginform>
+ <input type=submit name=submit value=Subscribe>
+ </form> |
+ <form action=https://lwn.net/Login/newaccount method=post class=loginform>
+ <input type=submit name=submit value=Register>
+ </form>
+ </div>
+ <div class="handset-only sf-hidden">
+ /
+ /
+
+ </div>
+ </div><div class="maincolumn flexcol">
+<div class=middlecolumn>
+<div class=PageHeadline>
+<h1>Namespaces in operation, part 4: more on PID namespaces</h1>
+</div>
+<div class=ArticleText>
+<div class=FeatureByline>
+ By <b>Michael Kerrisk</b><br>January 23, 2013
+ </div>
+<p> In this article, we continue <a href=https://lwn.net/Articles/532271/>last week's
+discussion</a> of PID namespaces (and extend our ongoing <a href=https://lwn.net/Articles/531114/#series_index>series</a> on namespaces). One use of
+PID namespaces is to implement a package of processes (a container) that
+behaves like a self-contained Linux system. A key part of a traditional
+system—and likewise a PID namespace container—is the
+<tt>init</tt> process. Thus, we'll look at the special role of the
+<tt>init</tt> process and note one or two areas where it differs from the
+traditional <tt>init</tt> process. In addition, we'll look at some other
+details of the namespaces API as it applies to PID namespaces.
+<h4>The PID namespace <tt>init</tt> process</h4>
+<p> The first process created inside a PID namespace gets a process ID of 1
+within the namespace. This process has a similar role to the <tt>init</tt>
+process on traditional Linux systems. In particular, the <tt>init</tt>
+process can perform initializations required for the PID namespace as whole
+(e.g., perhaps starting other processes that should be a standard part of
+the namespace) and becomes the parent for processes in the namespace that
+become orphaned.
+<p> In order to explain the operation of PID namespaces, we'll make use of
+a few purpose-built example programs. The first of these programs,
+<a href=https://lwn.net/Articles/533492/><tt>ns_child_exec.c</tt></a>, has the following command-line syntax:
+<pre>    <b>ns_child_exec [options] command [arguments]</b>
+</pre>
+<p> The <tt>ns_child_exec</tt> program uses the <tt>clone()</tt> system
+call to create a child process; the child then executes the given
+<tt>command</tt> with the optional <tt>arguments</tt>. The main purpose of
+the <tt>options</tt> is to specify new namespaces that should be created as
+part of the <tt>clone()</tt> call. For example, the <tt>-p</tt> option
+causes the child to be created in a new PID namespace, as in the following
+example:
+<pre>    $ <b>su</b>                  # Need privilege to create a PID namespace
+    Password:
+    # <b>./ns_child_exec -p sh -c 'echo $$'</b>
+    1
+</pre>
+<p> That command line creates a child in a new PID namespace to execute a
+shell <tt>echo</tt> command that displays the shell's PID. With a PID of 1,
+the shell was the <tt>init</tt> process for the PID namespace that
+(briefly) existed while the shell was running.
+<p> Our next example program, <a href=https://lwn.net/Articles/533493/><tt>simple_init.c</tt></a>, is a program that
+we'll execute as the <tt>init</tt> process of a PID namespace. This program
+is designed to allow us to demonstrate some features of PID namespaces and
+the <tt>init</tt> process.
+<p> The <tt>simple_init</tt> program performs the two main functions of
+<tt>init</tt>. One of these functions is "system initialization". Most
+<tt>init</tt> systems are more complex programs that take a table-driven
+approach to system initialization. Our (much simpler) <tt>simple_init</tt>
+program provides a simple shell facility that allows the user to manually
+execute any shell commands that might be needed to initialize the
+namespace; this approach also allows us to freely execute shell commands in
+order to conduct experiments in the namespace. The other function
+performed by <tt>simple_init</tt> is to reap the status of its terminated
+children using <tt>waitpid()</tt>.
+<p> Thus, for example, we can use the <tt>ns_child_exec</tt> program in
+conjunction with <tt>simple_init</tt> to fire up an <tt>init</tt> process
+that runs in a new PID namespace:
+<pre>    # <b>./ns_child_exec -p ./simple_init</b>
+    init$
+</pre>
+<p> The <tt>init$</tt> prompt indicates that the <tt>simple_init</tt>
+program is ready to read and execute a shell command.
+<p> We'll now use the two programs we've presented so far in conjunction
+with another small program, <a href=https://lwn.net/Articles/533494/><tt>orphan.c</tt></a>, to demonstrate that
+processes that become orphaned inside a PID namespace are adopted by the
+PID namespace <tt>init</tt> process, rather than the system-wide
+<tt>init</tt> process.
+<p> The <tt>orphan</tt> program performs a <tt>fork()</tt> to create a
+child process. The parent process then exits while the child continues to
+run; when the parent exits, the child becomes an orphan. The child
+executes a loop that continues until it becomes an orphan (i.e.,
+<tt>getppid()</tt> returns 1); once the child becomes an orphan, it
+terminates. The parent and the child print messages so that we can see
+when the two processes terminate and when the child becomes an orphan.
+<p> In order to see what that our <tt>simple_init</tt> program reaps the
+orphaned child process, we'll employ that program's <tt>-v</tt> option, which
+causes it to produce verbose messages about the children
+that it creates and the terminated children whose status it reaps:
+<pre>    # <b>./ns_child_exec -p ./simple_init -v</b>
+            init: my PID is 1
+    init$ <b>./orphan</b>
+            init: created child 2
+    Parent (PID=2) created child with PID 3
+    Parent (PID=2; PPID=1) terminating
+            init: SIGCHLD handler: PID 2 terminated
+    init$                   <i># simple_init prompt interleaved with output from child</i>
+    Child  (PID=3) now an orphan (parent PID=1)
+    Child  (PID=3) terminating
+            init: SIGCHLD handler: PID 3 terminated
+</pre>
+<p> In the above output, the indented messages prefixed with <tt>init:</tt>
+are printed by the <tt>simple_init</tt> program's verbose mode. All of the
+other messages (other than the <tt>init$</tt> prompts) are produced by the
+<tt>orphan</tt> program. From the output, we can see that the child process
+(PID 3) becomes an orphan when its parent (PID 2) terminates.
+At that point, the child is adopted by the PID namespace <tt>init</tt>
+process (PID 1), which reaps the child when it terminates.
+<h4>Signals and the <tt>init</tt> process</h4>
+<p> The traditional Linux <tt>init</tt> process is treated specially with
+respect to signals. The only signals that can be delivered to <tt>init</tt>
+are those for which the process has established a signal handler; all other
+signals are ignored. This prevents the <tt>init</tt> process—whose
+presence is essential for the stable operation of the system—from
+being accidentally killed, even by the superuser.
+<p> PID namespaces implement some analogous behavior for the
+namespace-specific <tt>init</tt> process. Other processes in the
+namespace (even privileged processes) can send only those signals for which
+the <tt>init</tt> process has established a handler. This prevents
+members of the namespace from inadvertently killing a process that has
+an essential role in the namespace. Note, however, that (as for the
+traditional <tt>init</tt> process) the kernel can still generate signals
+for the PID namespace <tt>init</tt> process in all of the usual circumstances (e.g.,
+hardware exceptions, terminal-generated signals such as <tt>SIGTTOU</tt>,
+and expiration of a timer).
+<p> Signals can also (subject to <a href=http://man7.org/linux/man-pages/man2/kill.2.html#DESCRIPTION>the
+usual permission checks</a>) be sent to the PID namespace <tt>init</tt>
+process by processes in ancestor PID namespaces. Again, only the signals
+for which the <tt>init</tt> process has established a handler can be sent,
+with two exceptions: <tt>SIGKILL</tt> and <tt>SIGSTOP</tt>. When a process in
+an ancestor PID namespace sends these two signals to the <tt>init</tt>
+process, they are forcibly delivered (and can't be caught). The
+<tt>SIGSTOP</tt> signal stops the <tt>init</tt> process; <tt>SIGKILL</tt>
+terminates it. Since the <tt>init</tt> process is essential to the
+functioning of the PID namespace, if the <tt>init</tt> process is
+terminated by <tt>SIGKILL</tt> (or it terminates for any other reason), the
+kernel terminates all other processes in the namespace by sending them a
+<tt>SIGKILL</tt> signal.
+<p> Normally, a PID namespace will also be destroyed when its <tt>init</tt>
+process terminates. However, there is an unusual corner case: the
+namespace won't be destroyed as long as a
+<tt>/proc/</tt><i>PID</i><tt>/ns/pid</tt> file for one of the processes in
+that namespaces is bind mounted or held open. However, it is not possible to
+create new processes in the namespace (via <tt>setns()</tt> plus
+<tt>fork()</tt>): the lack of an <tt>init</tt> process is detected
+during the <tt>fork()</tt> call, which fails with an <tt>ENOMEM</tt>
+error (the traditional error indicating that a PID cannot be allocated). In
+other words, the PID namespace continues to exist, but is no longer usable.
+<h4>Mounting a procfs filesystem (revisited)</h4>
+<p> In the previous article in this series, the <tt>/proc</tt> filesystems
+(procfs) for the PID namespaces were mounted at various locations other
+than the traditional <tt>/proc</tt> mount point. This allowed us to use
+shell commands to look at the contents of the <tt>/proc/</tt><i>PID</i>
+directories that corresponded to each of the new PID namespace while at the
+same time using the <tt>ps</tt> command to look at the processes visible in
+the root PID namespace.
+<p> However, tools such as <tt>ps</tt> rely on the contents of the procfs
+mounted at <tt>/proc</tt> to obtain the information that they
+require. Therefore, if we want <tt>ps</tt> to operate correctly inside a
+PID namespace, we need to mount a procfs for that namespace. Since the
+<tt>simple_init</tt> program permits us to execute shell commands, we can
+perform this task from the command line, using the <tt>mount</tt> command:
+<pre>    # <b>./ns_child_exec -p -m ./simple_init</b>
+    init$ <b>mount -t proc proc /proc</b>
+    init$ <b>ps a</b>
+      PID TTY      STAT   TIME COMMAND
+        1 pts/8    S      0:00 ./simple_init
+        3 pts/8    R+     0:00 ps a
+</pre>
+<p>
+The <tt>ps&nbsp;a</tt> command lists all processes accessible via
+<tt>/proc</tt>. In this case, we see only two processes, reflecting the fact
+that there are only two processes running in the namespace.
+<p> When running the <tt>ns_child_exec</tt> command above, we employed that
+program's <tt>-m</tt> option, which places the child that it creates (i.e.,
+the process running <tt>simple_init</tt>) inside a separate <i>mount</i>
+namespace. As a consequence, the <tt>mount</tt> command does not affect the
+<tt>/proc</tt> mount seen by processes outside the namespace.
+<h4><tt>unshare()</tt> and <tt>setns()</tt></h4>
+<p> In <a href=https://lwn.net/Articles/531381/>the second article</a> in this series,
+we described two system calls that are part of the namespaces API:
+<tt>unshare()</tt> and <tt>setns()</tt>. Since Linux 3.8, these system
+calls can be employed with PID namespaces, but they have some
+idiosyncrasies when used with those namespaces.
+<p> Specifying the <tt>CLONE_NEWPID</tt> flag in a call to <a href=http://man7.org/linux/man-pages/man2/unshare.2.html><tt>unshare()</tt></a>
+creates a new PID namespace, but does <i>not</i> place the caller in the
+new namespace. Rather, any children created by the caller will be placed in
+the new namespace; the first such child will become the <tt>init</tt>
+process for the namespace.
+<p> The <a href=http://man7.org/linux/man-pages/man2/setns.2.html><tt>setns()</tt></a>
+system call now supports PID namespaces:
+<pre>    setns(fd, 0);   /* Second argument can be CLONE_NEWPID to force a
+                       check that 'fd' refers to a PID namespace */
+</pre>
+<p> The <tt>fd</tt> argument is a file descriptor that identifies a PID
+namespace that is a descendant of the PID namespace of the caller; that
+file descriptor is obtained by opening the
+<tt>/proc/</tt><i>PID</i><tt>/ns/pid</tt> file for one of the processes in
+the target namespace. As with <tt>unshare()</tt>, <tt>setns()</tt> does
+<i>not</i> move the caller to the PID namespace; instead, children that are
+subsequently created by the caller will be placed in the namespace.
+<p> We can use an enhanced version of the <a href=https://lwn.net/Articles/531271/><tt>ns_exec.c</tt></a> program that we presented
+in the second article in this series to demonstrate some aspects of using
+<tt>setns()</tt> with PID namespaces that appear surprising until we
+understand what is going on. The new program, <a href=https://lwn.net/Articles/533495/><tt>ns_run.c</tt></a>, has the following syntax:
+<pre>    <b>ns_run [-f] [-n /proc/PID/ns/FILE]... command [arguments]</b>
+</pre>
+<p> The program uses <tt>setns()</tt> to join the namespaces specified by
+the <tt>/proc/</tt><i>PID</i><tt>/ns</tt> files contained within
+<tt>-n</tt> options. It then goes on to execute the given <tt>command</tt>
+with optional <tt>arguments</tt>. If the <tt>-f</tt> option is specified,
+it uses <tt>fork()</tt> to create a child process that is used to execute
+the command.
+<p> Suppose that, in one terminal window, we fire up our
+<tt>simple_init</tt> program in a new PID namespace in the usual manner,
+with verbose logging so that we are informed when it reaps child processes:
+<pre>    # <b>./ns_child_exec -p ./simple_init -v</b>
+            init: my PID is 1
+    init$
+</pre>
+<p> Then we switch to a second terminal window where we use the
+<tt>ns_run</tt> program to execute our <tt>orphan</tt> program. This
+will have the effect of creating two processes in the PID namespace
+governed by <tt>simple_init</tt>:
+<pre>    # <b>ps -C sleep -C simple_init</b>
+      PID TTY          TIME CMD
+     9147 pts/8    00:00:00 simple_init
+     # <b>./ns_run -f -n /proc/9147/ns/pid ./orphan</b>
+     Parent (PID=2) created child with PID 3
+     Parent (PID=2; PPID=0) terminating
+     #
+     Child  (PID=3) now an orphan (parent PID=1)
+     Child  (PID=3) terminating
+</pre>
+<p> Looking at the output from the "Parent" process (PID 2) created when
+the <tt>orphan</tt> program is executed, we see that its parent process ID
+is 0. This reflects the fact that the process that started the
+<tt>orphan</tt> process (<tt>ns_run</tt>) is in a different
+namespace—one whose members are invisible to the "Parent" process. As <a href=https://lwn.net/Articles/531419/#getppid_0>already noted in the previous
+article</a>, <tt>getppid()</tt> returns 0 in this case.
+<p>
+The following
+diagram shows the relationships of the various processes before the
+<tt>orphan</tt> "Parent" process terminates. The arrows indicate
+parent-child relationships between processes.
+<blockquote>
+<img src=data:image/png;base64,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 alt="[Relationship of
+    processes inside PID namespaces]">
+</blockquote>
+<p> Returning to the window running the <tt>simple_init</tt> program, we
+see the following output:
+<pre>    init: SIGCHLD handler: PID 3 terminated
+</pre>
+<p> The "Child" process (PID 3) created by the <tt>orphan</tt> program was
+reaped by <tt>simple_init</tt>, but the "Parent" process (PID 2) was
+not. This is because the "Parent" process was reaped by its parent
+(<tt>ns_run</tt>) in a different namespace. The following diagram shows the
+processes and their relationships after the <tt>orphan</tt> "Parent" process
+has terminated and before the "Child" terminates.
+<blockquote>
+<img src="data:image/png;base64,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" alt="[Relationship of
+    processes inside PID namespaces]">
+</blockquote>
+<p> It's worth emphasizing that <tt>setns()</tt> and <tt>unshare()</tt>
+treat PID namespaces specially. For other types of namespaces, these system
+calls <i>do</i> change the namespace of the caller. The reason that these
+system calls do not change the PID namespace of the calling process is
+because becoming a member of another PID namespace would cause the
+process's idea of its own PID to change, since <tt>getpid()</tt> reports
+the process's PID with respect to the PID namespace in which the process
+resides. Many user-space programs and libraries rely on the assumption that
+a process's PID (as reported by <tt>getpid()</tt>) is constant (in fact,
+the GNU C library <tt>getpid()</tt> wrapper function <a href="http://thread.gmane.org/gmane.linux.kernel/209103/focus=209130"><i>caches</i></a>
+the PID); those programs would break if a process's PID changed. To put
+things another way: a process's PID namespace membership is determined when
+the process is created, and (unlike other types of namespace membership)
+cannot be changed thereafter.
+<h4>Concluding remarks</h4>
+<p> In this article we've looked at the special role of the PID namespace
+<tt>init</tt> process, shown how to mount a procfs for a PID namespace so
+that it can be used by tools such as <tt>ps</tt>, and looked at some of the
+peculiarities of <tt>unshare()</tt> and <tt>setns()</tt> when employed with
+PID namespaces. This completes our discussion of PID namespaces; in the
+next article, we'll turn to look at user namespaces.<br clear=all><table class=IndexEntries>
+ <tbody><tr><th colspan=2>Index entries for this article</tr>
+ <tr><td><a href=https://lwn.net/Kernel/Index>Kernel</a><td><a href=https://lwn.net/Kernel/Index#Namespaces-PID_namespaces>Namespaces/PID namespaces</a></tr>
+ </table><br clear=all>
+<hr width=60% align=left>
+ (<a href="https://lwn.net/Login/?target=/Articles/532748/">Log in</a> to post comments)
+ <p>
+
+</p></div>
+<p><a name=Comments></a>
+<a name=CommAnchor533762></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 23, 2013 19:09 UTC (Wed)
+ by <b>luto</b> (guest, #39314)
+ [<a href=https://lwn.net/Articles/533762/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I wrote a little tool awhile ago to play with this stuff. It's here:<br>
+<p>
+<a href=http://web.mit.edu/luto/www/linux/nnp/newns.c>http://web.mit.edu/luto/www/linux/nnp/newns.c</a><br>
+<p>
+Have fun! If any of you find it useful, let me know -- I can probably polish it a bit and send it to util-linux or something.<br>
+<p>
+Also, on very new kernels (3.8+), a lot of this stuff can be done without privilege if you're willing to accept a few restrictions.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/533762/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor533942></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 24, 2013 16:56 UTC (Thu)
+ by <b>dashesy</b> (guest, #74652)
+ [<a href=https://lwn.net/Articles/533942/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Integrating these nice utilities in the util-linux is an excellent idea. A few different simple utilities, along with some simple SysV-init scripts (that go in /etc/init.d of ns for convenience) and a generic init suitable for namespace(polished simple_init.c) is all needed to experiment with ns.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/533942/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534044></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 25, 2013 16:44 UTC (Fri)
+ by <b>fishface60</b> (subscriber, #88700)
+ [<a href=https://lwn.net/Articles/534044/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Util-Linux already has such tools in git, unshare works with all the name spaces and nsenter let's you create a new process in an existing namespace.<br>
+<p>
+I'm quite looking forward to being able to launch a container in shell. <br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534044/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+<a name=CommAnchor533806></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 23, 2013 21:44 UTC (Wed)
+ by <b>dashesy</b> (guest, #74652)
+ [<a href=https://lwn.net/Articles/533806/>Link</a>] (6 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Thanks, I have become quite fond of these excellent series! <br>
+<p>
+Is there a way I can bookmark the entire series rather than individual articles?<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/533806/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor533809></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Bookmarkig the series</h3>
+ <p class=CommentPoster> Posted Jan 23, 2013 21:50 UTC (Wed)
+ by <b>corbet</b> (editor, #1)
+ [<a href=https://lwn.net/Articles/533809/>Link</a>] (5 responses)
+ </p></summary>
+ The <a rel=nofollow href=https://lwn.net/Articles/531114/#series_index>initial article</a> is gaining links to the rest as we go along. The <a rel=nofollow href=https://lwn.net/Kernel/Index/#Namespaces>namespaces section in the Kernel Index</a> might also prove useful.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/533809/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor533824></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Bookmarkig the series</h3>
+ <p class=CommentPoster> Posted Jan 23, 2013 23:31 UTC (Wed)
+ by <b>dashesy</b> (guest, #74652)
+ [<a href=https://lwn.net/Articles/533824/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Thanks, yes the index is better than I could imagine.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/533824/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor533842></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Bookmarkig the series</h3>
+ <p class=CommentPoster> Posted Jan 24, 2013 4:44 UTC (Thu)
+ by <b>xxiao</b> (guest, #9631)
+ [<a href=https://lwn.net/Articles/533842/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I was thinking about the same question today, it will be _great_ if I can somehow bookmark interesting lwn articles that associates with my account for future references, how hard is it to implement that?<br>
+<p>
+Thanks!<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/533842/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534019></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Bookmarkig the series</h3>
+ <p class=CommentPoster> Posted Jan 25, 2013 15:03 UTC (Fri)
+ by <b>nix</b> (subscriber, #2304)
+ [<a href=https://lwn.net/Articles/534019/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+You've already got it. A web browser with sync support (FF or Chrome) and, um, ordinary bookmarks.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534019/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534212></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Bookmarkig the series</h3>
+ <p class=CommentPoster> Posted Jan 27, 2013 0:23 UTC (Sun)
+ by <b>xxiao</b> (guest, #9631)
+ [<a href=https://lwn.net/Articles/534212/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+that's not very useful when I'm on the go, even with xmarks' help.<br>
+it's much better to login to lwn then see all my favourite links booked on this site.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534212/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534377></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Bookmarkig the series</h3>
+ <p class=CommentPoster> Posted Jan 27, 2013 18:06 UTC (Sun)
+ by <b>nix</b> (subscriber, #2304)
+ [<a href=https://lwn.net/Articles/534377/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+So... you want every single website you use to implement its own implementation of bookmarks (all different), because you have web browsers that don't implement syncing? (What web browser would that be? Chrome does it, Firefox does it... Epiphany, perhaps?)<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534377/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+</details>
+</details>
+<a name=CommAnchor534001></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 25, 2013 10:00 UTC (Fri)
+ by <b>sorokin</b> (guest, #88478)
+ [<a href=https://lwn.net/Articles/534001/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+"The only signals that can be delivered to init are those for which the process has established a signal handler; all other signals are ignored"<br>
+<p>
+Looks like some dirty hack. Why init process can not disable signals itself?<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534001/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534005></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 25, 2013 10:27 UTC (Fri)
+ by <b>andresfreund</b> (subscriber, #69562)
+ [<a href=https://lwn.net/Articles/534005/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I can think of three reasons, the first being that establishing the signal handlers takes some time. the second is that the list of signals you know might not be exhaustive, especially some time later. The third I am not sure about and I am too lazy to check the code right now but does that perhaps include signal handlers you can't block yourself?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534005/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534008></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 25, 2013 10:35 UTC (Fri)
+ by <b>mpr22</b> (subscriber, #60784)
+ [<a href=https://lwn.net/Articles/534008/>Link</a>] (1 responses)
+ </p></summary>
+ I would hope so. (The easy way to check is to sit in front of a machine you don't mind having crash, and try sending SIGKILL to PID 1.)
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534008/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor534061></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 25, 2013 18:07 UTC (Fri)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/534061/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Yes SIGKILL and SIGSTOP are the biggies.<br>
+<p>
+The reason for ignoring the others is that is the way things have worked for "init" processes as far back in the linux history as I have looked, and maintaining backwards compatibility is important.<br>
+<p>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/534061/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+<a name=CommAnchor535430></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jan 31, 2013 16:26 UTC (Thu)
+ by <b>alex2</b> (guest, #73934)
+ [<a href=https://lwn.net/Articles/535430/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Can the network namespace be used to restrict a program so it can't phone home? Sometimes I'd like to test some commercial demo version but I really don't want it to report an unknown amount information back to the company.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/535430/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor536207></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 5, 2013 12:50 UTC (Tue)
+ by <b>Lennie</b> (subscriber, #49641)
+ [<a href=https://lwn.net/Articles/536207/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+You can setup iptables inside the network namespace, if you trust the program not to change it, you'll be fine.<br>
+<p>
+This is because I'm not sure how well you can control what packets can and can not be send from the network namespace from the parent namespace.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/536207/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor536244></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 5, 2013 16:18 UTC (Tue)
+ by <b>bjencks</b> (subscriber, #80303)
+ [<a href=https://lwn.net/Articles/536244/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+A fresh network namespace only has a loopback interface. If you don't add any other interfaces, it's totally isolated network-wise.<br>
+<p>
+(Note that you can still connect to filesystem-namespace unix sockets if you can access them as files -- you need to chroot or use mount namespaces if you want to hide them as well. I believe abstract namespace unix sockets are isolated per-namespace.)<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/536244/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor556625></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Jun 27, 2013 20:00 UTC (Thu)
+ by <b>Urhixidur</b> (guest, #91620)
+ [<a href=https://lwn.net/Articles/556625/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Creating a mount namespace at the same time that a PID namespace is created is an elegant solution, but seems fallible. Noting prevents new processes from being created into the new PID namespace without simultaneously joining the mount namespace. This seems error-prone. Or am I missing something?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/556625/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor635550></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Mar 5, 2015 2:04 UTC (Thu)
+ by <b>apollock</b> (subscriber, #14629)
+ [<a href=https://lwn.net/Articles/635550/>Link</a>] (6 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Hi, I'm messing around with your utilities, as well as unshare and the first commentator's newns, and I can't seem to get mount namespaces to work as I'd expect.<br>
+<p>
+I'm creating a new everything, i.e.<br>
+sudo unshare --mount --uts --net --pid --fork --mount-proc /bin/bash<br>
+sudo /tmp/newns --uts --mount --pid --init --net /bin/bash<br>
+sudo /tmp/ns_child_exec -p -m /tmp/simple_init<br>
+<p>
+and then unmounting a filesystem from that shell, and it's getting unmounted in another shell that hasn't been interacting with the namespace, which isn't what I would have expected? Similarly, if I mount /proc in the last two example invocations above, it clobbers the systemwide /proc mount with what's going on inside my new PID namespace. Also not what I would have expected?<br>
+<p>
+I'm using 3.19.0<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635550/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor635563></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Mar 5, 2015 9:25 UTC (Thu)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/635563/>Link</a>] (5 responses)
+ </p></summary>
+ @apollock: yes, I recently <a href=https://lwn.net/Articles/635251/>commented on this</a> in another article in this series. Basically, some distros (e.g., Fedora) these days enable mount propagation by default, which means that when you mount <tt>/proc</tt> in the new mount namespace, you do indeed clobber <tt>/proc</tt> in the initial mount namespace.
+<p>
+So, in the new namespace, you need to disable propagation of mount events on <tt>/</tt>, either by making it a private mount (prevents propagation in both directions) or by making it a slave mount (allows propagation of mounts events under <tt>/</tt> into the new namespace, but doesn't propagate events outside the new namespace. So, for example, in the shell session under the heading <strong>Mounting a procfs filesystem (revisited)</strong>, we should add one further shell command:
+<pre># <strong>./ns_child_exec -p -m ./simple_init</strong>
+init$ <font color=red><strong>mount --make-slave /</strong></font>            # &lt;== NEW
+init$ <strong>mount -t proc proc /proc</strong>
+init$ <strong>ps a</strong>
+</pre>
+<p>
+For more info about mount propagation, see the kernel source file <tt>Documentation/filesystems/sharedsubtree.txt</tt> and the <a href=http://man7.org/linux/man-pages/man8/mount.8.html>mount(8) man page</a>.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635563/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor635660></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Mar 5, 2015 23:55 UTC (Thu)
+ by <b>apollock</b> (subscriber, #14629)
+ [<a href=https://lwn.net/Articles/635660/>Link</a>] (4 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Thanks for the quick response. <br>
+<p>
+It looks like I have to do the same thing to /proc prior to mounting it<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635660/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor635676></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Mar 6, 2015 9:19 UTC (Fri)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/635676/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; Thanks for the quick response.</font><br>
+<p>
+Actually, it was quite by chance. I happened to be checking some details in these articles myself.<br>
+<p>
+<font class=QuotedText>&gt; It looks like I have to do the same thing to /proc prior to mounting it</font><br>
+<p>
+I don't believe that should be necessary. What makes you think that it is?<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635676/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor635818></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Mar 7, 2015 7:53 UTC (Sat)
+ by <b>apollock</b> (subscriber, #14629)
+ [<a href=https://lwn.net/Articles/635818/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Because /proc was still getting clobbered outside of my namespace without it when I mounted it inside my namespace.<br>
+<p>
+I was basically testing two scenarios:<br>
+<p>
+1) Unmounting a filesystem that was mounted inside and outside the new namespace. Expected behaviour: it was only unmounted inside the new namespace<br>
+<p>
+2) Mounting /proc inside the new namespace. Expected behaviour: only seeing the process entries for processes inside the new namespace inside the namespace, and there being no impact outside this namespace<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635818/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor635825></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Mar 7, 2015 10:04 UTC (Sat)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/635825/>Link</a>] (1 responses)
+ </p></summary>
+ So, going back to your earlier comment:
+<p>
+&gt; It looks like I have to do the same thing to /proc prior to mounting it
+<p>
+Yes, you're right. I was getting confused with another case, where if we mount a procfs at a location other than the usual <tt>/proc</tt>, then we need to make <tt>/</tt> a private or slave mount in order not to have that mount appear in the initial mount namespace.
+<p>
+So, in fact all that's needed if we're mounting at /proc inside the <tt>simple_init</tt> program is
+<pre># <strong>./ns_child_exec -p -m ./simple_init</strong>
+init$ <strong><font color=red>mount --make-slave /proc</font></strong>            # &lt;== NEW
+init$ <strong>mount -t proc proc /proc</strong>
+init$ <strong>ps a</strong>
+</pre>
+Nothing needs to be done to <tt>/</tt>, as far as I can tell.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635825/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor735918></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Can't get mount namespaces to behave as expected</h3>
+ <p class=CommentPoster> Posted Oct 10, 2017 1:54 UTC (Tue)
+ by <b>marcosps</b> (subscriber, #115562)
+ [<a href=https://lwn.net/Articles/735918/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Hello Michael,<br>
+<p>
+what do you think about changing the article adding the --make-slave parameter mount? It made me turn off my computer twice, as the system gets unstable (at least n my fedora 26)...<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/735918/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+</details>
+</details>
+</details>
+<a name=CommAnchor709231></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Dec 15, 2016 2:26 UTC (Thu)
+ by <b>orbisvicis</b> (guest, #113024)
+ [<a href=https://lwn.net/Articles/709231/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+The final example isn't working properly. Orphan's child does nothing after the parent successfully exits - no "Child ..." lines. Also, orphan's child is rarely reparented to ns_child_exec: the line "init: SIGCHLD handler: PID ... terminated" rarely happens.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/709231/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor779642></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 13, 2019 9:48 UTC (Wed)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/779642/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+I just noticed this comment now. I've just retested this example, using the code supplied with article, and I consistently see the "init: SIGCHLD handler: PID xxx terminated" messages. Maybe you missed a step/option somewhere along the way while performing the experiment?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779642/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor779508></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 12, 2019 6:30 UTC (Tue)
+ by <b>ywchang</b> (guest, #130070)
+ [<a href=https://lwn.net/Articles/779508/>Link</a>] (4 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I can get expected results from codes and commands covered in the post.<br>
+<p>
+However, for the last part, I am thinking, it probably also should work if there is no `-f` option for the `ns_run` command.<br>
+<p>
+If there is no `-f`, that means, the `ns_run` process itself will first update pid namespace, and then run the `./orphan` itself. Then the forked child will show up in the new pid namespace, while `ns_run` will die. The forked child process should also be reaped by the init process in the new pid namespace, right?<br>
+<p>
+I tried and it didn't work as I described. Anyone shed some light please? Thanks in advance. <br>
+<p>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779508/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor779643></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 13, 2019 10:02 UTC (Wed)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/779643/>Link</a>] (3 responses)
+ </p></summary>
+ <p>As described in the article, the <em>setns()</em> and <em>unshare()</em> system calls treat PID namespaces specially. For other types of namespaces, these system calls do change the namespace of the caller. For PID namespaces, these system calls do not change the PID namespace of the calling process. Instead, any subsequently created children of the caller will be created in the target/new namespace.</p>
+<p>
+If the <em>-f</em> option was omitted, the <em>ns_run</em> command would execute the <em>orphan</em> program in the PID namespace where <em>ns_run</em> resides, rather than the namespace specified by the <em>-n</em> option.</p>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779643/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor779775></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 14, 2019 9:58 UTC (Thu)
+ by <b>ywchang</b> (guest, #130070)
+ [<a href=https://lwn.net/Articles/779775/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Thanks so much for your reply.<br>
+<p>
+I get your point that PID namespace is special, that using `setns()` the calling process itself will not join the new namespace, while the children forked will be joining the new namespace.<br>
+<p>
+I raised the question that if we can drop the `-f`, is because if looking at the implementation of `orphan` codes, the orphan process is actually forked out from the `ns_run`, which has called `setns()` before. That means if `ns_run` serve as the parent, fork the orphan, and then exit. Then the orphan process should in theory be in the new namespace.<br>
+<p>
+I did the experiment, drop the `-f` option, and then I found the orphan did show up in the new namespace. Because I use the readlink against the orphan process outside PID namespace, same with PID namespace `init` process.<br>
+<p>
+I mounted the proc to /proc2, and run `ls -d /proc2/[1-9]*`<br>
+<p>
+The results is like <br>
+<p>
+/proc2/1 /proc2/2<br>
+<p>
+And I run this command to explore /proc2/2, `cat /proc2/2/status | egrep '^(Name|PP*id)'`<br>
+<p>
+it shows me this,<br>
+<p>
+Name: orphan<br>
+Pid: 2<br>
+PPid: 0<br>
+<p>
+At this moment, I'm confused. Why the orphan process is not reaped by `init` process? And why the PPid is becoming 0? <br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779775/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor779881></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 15, 2019 7:59 UTC (Fri)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/779881/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; Why the orphan process is not reaped by `init` process? </font><br>
+<font class=QuotedText>&gt; And why the PPid is becoming 0?</font><br>
+<p>
+When a process becomes orphaned it is reparented to the init process *in the PID namespace of its parent*. <br>
+<p>
+When you run the 'orphan' program without the '-f' option, then the child is in the new PID namespace, but its parent is still in the initial PID NS. Thus the orphan gets reparented to init in the initial PID namespace.<br>
+<p>
+PPid == 0 is the system's way of telling the child process that it has no visible parent (because the parent is in another PID namespace).<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779881/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor779974></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 4: more on PID namespaces</h3>
+ <p class=CommentPoster> Posted Feb 16, 2019 7:04 UTC (Sat)
+ by <b>ywchang</b> (guest, #130070)
+ [<a href=https://lwn.net/Articles/779974/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+This clears my doubt! Thanks so much for your explanation!<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779974/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+</details>
+</div>
+<div class="rightcol not-print">
+<div id=azk93271_right_zone></div>
+</div>
+</div>
+ <br clear=all>
+ <center>
+ <p>
+ <span class=ReallySmall>
+ Copyright © 2013, Eklektix, Inc.<br>
+ This article may be redistributed under the terms of the
+ <a href=http://creativecommons.org/licenses/by-sa/4.0/>Creative
+ Commons CC BY-SA 4.0</a> license<br>
+ Comments and public postings are copyrighted by their creators.<br>
+ Linux is a registered trademark of Linus Torvalds<br>
+ </span>
+ </p></center>
+
+
+<script data-template-shadow-root>(()=>{document.currentScript.remove();processNode(document);function processNode(node){node.querySelectorAll("template[shadowrootmode]").forEach(element=>{let shadowRoot = element.parentElement.shadowRoot;if (!shadowRoot) {try {shadowRoot=element.parentElement.attachShadow({mode:element.getAttribute("shadowrootmode")});shadowRoot.innerHTML=element.innerHTML;element.remove()} catch (error) {} if (shadowRoot) {processNode(shadowRoot)}}})}})()</script>

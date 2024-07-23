@@ -1,0 +1,716 @@
+<!DOCTYPE html> <html lang=en style><!--
+ Page saved with SingleFile
+ url: https://lwn.net/Articles/531114/
+--><meta charset=utf-8><title>Namespaces in operation, part 1: namespaces overview [LWN.net]</title>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel=alternate type=application/rss+xml title="LWN.net headlines" href=https://lwn.net/headlines/rss>
+<link rel=alternate type=application/rss+xml title="Comments posted to this article" href=https://lwn.net/headlines/531114/>
+<style>body{color:black;background-color:#ffffff;padding:0px}h1{margin:0px 0px 5px 0px;padding:0px;color:black}h3{margin:0px 0px 5px 0px;padding:0px}a{text-decoration:underline}a:link{color:DarkBlue}a:visited{color:#444}a:hover{color:DarkBlue;background-color:#eeeeee}a:visited:hover{color:#444}DIV.PageHeadline{text-align:center;max-width:65em;margin-top:1em;margin-bottom:2em}DIV.PageHeadline H1{margin-bottom:0.2em}DETAILS.CommentBox{border-style:none none none solid;border-width:thin;max-width:65em;margin-top:1em;background-color:inherit;padding-left:8px}DETAILS.CommentBox>SUMMARY>H3.CommentTitle{background-color:#ffcc99}DETAILS.CommentBox{border-color:#ffcc99}H3.CommentTitle{display:inline-block;width:100%;padding-left:3px}DETAILS[open]>SUMMARY{list-style-type:none;opacity:1.0;cursor:zoom-out}DETAILS>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[+]"}DETAILS[open]>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[–]"}DETAILS>SUMMARY::MARKER,DETAILS>SUMMARY::-webkit-details-marker{display:none}P.CommentPoster{margin-top:0px}div.CommentReplyButton{display:block;text-align:right;padding:4px}.Form{background-color:#eeeeee;padding:3px}TABLE.IndexEntries{background-color:#eeeeee;padding:3px;margin:5px;float:right}TABLE.IndexEntries TD:first-child{padding:1px 5px 1px 1px}SPAN.ReallySmall{font-size:x-small}.spacylist LI{margin-bottom:0.5em}DIV.FeatureByline{max-width:20em;float:left;background-color:#eeeeee;margin:2px 5px 2px 0px;padding-bottom:5px;padding-right:25px;padding-left:5px}DIV.ArticleText{margin:0px 0px 0px 0px;padding:0px 2px 0px 0px;max-width:65em}input{font-family:inherit;font-size:inherit}FONT.QuotedText{color:#990099}#menu{width:100%;position:fixed;top:0;left:0;right:0;background-color:#eeeeee;padding:0 0.2em 0 0.2em;overflow-y:visible;display:block;z-index:20;height:42px}DIV.navmenu-container{margin-left:0.5em;margin-top:0.5em;min-width:70%;border-radius:0.8em;padding:0.1em;display:inline-block}ul.navmenu{list-style:none;position:relative;display:inline-table;padding:0;margin:0}.navmenu li{display:inline-block;margin-right:0.4em}.navmenu ul{display:none;position:absolute;top:100%;width:15em;list-style:none;z-index:10;background:#eeeeee;padding-left:0;margin-left:0;border-style:solid}.navmenu ul li{display:block;margin-top:0.2em;margin-left:0.2em;line-height:1.4}.navmenu ul li:first-child{margin-top:1.2em}.navmenu li:hover>ul{display:block}a.navmenu{color:black}.navmenu a{text-decoration:none}.navmenu a:hover{text-decoration:underline}.navmenu a:visited,.topnav-container a:visited{color:DarkBlue}a.navmenu::after{content:" ▶"}span.logo,span.logobl,img.logo{display:none}DIV.topnav-container{margin-left:0.5em;margin-top:45px;margin-right:0.5em;background:#eeeeee;border-radius:0.8em;padding:0.3em}div.flexcol{display:flex;flex-direction:column}div.middlecolumn{flex:5}div.rightcol{padding-top:5em;flex:0 1 content}@media screen and (min-width:48em){.rightcol{flex:0;min-width:120px}}@media screen and (min-width:120em){.rightcol{max-width:400px}}@media screen and (min-width:48em){div.maincolumn{padding-left:10em}div.flexcol{flex-direction:row}#menu{display:block;width:9.6em;height:100%;bottom:0;overflow-y:visible}#menu:hover{overflow-y:auto}div.navmenu-container{display:block;margin-top:120px;margin-left:0;padding:0}.navmenu ul{display:block;position:static;width:9.6em;border-style:none;top:0}.navmenu li{margin:0.5em 0 0 0.1em;width:100%}.navmenu ul li{margin:0.1em 0 0 0.5em;text-indent:-0.4em;padding-right:0;width:auto;line-height:1.2}.navmenu ul li:first-child{margin-top:0}a.navmenu::after{content:""}DIV.topnav-container{margin-left:10.5em;margin-top:0.5em}img.logo{padding-right:0.2em;display:inline;float:left;position:absolute;top:3px;left:3px}span.logo{font-weight:bold;color:green;display:inline;font-size:180%;text-align:right;float:left;padding-left:60px;font-family:sans-serif;line-height:0.8;padding-top:0.3em}span.logobl{color:green;display:inline;font-size:80%;text-align:center;position:absolute;top:85px;left:5px;font-family:sans-serif}}@media screen and (min-width:80em){}@media (max-width:48em){.not-handset{display:none}}@media (min-width:48em){.not-handset{display:inline-block}}DIV.ArticleText{padding-left:0.5em}TABLE.Form TD{padding:2px 5px 2px 5px}TABLE{border-collapse:separate;border-spacing:5px 0px}H3.CommentTitle{border-radius:0 2em 2em 0}html{font-family:inherit}input{background-color:#ffffff;color:black;padding:3px;border-radius:0.5em}input:focus{border-color:DarkBlue}input[type="submit"]{background-color:#eeeeee}input[type="submit"]:hover{background-color:#ccc}form.loginform{display:inline}TT{white-space:nowrap}</style>
+<meta name=referrer content=no-referrer><link rel=icon href="data:image/png;base64,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" type=image/png><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://lwn.net/Articles/531114/><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+ <body>
+ <a name=t></a>
+<div id=menu><a href=https://lwn.net/><img src=data:image/png;base64,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 class=logo border=0 alt="LWN.net Logo">
+ <span class=logo>LWN<br>.net</span>
+ <span class=logobl>News from the source</span></a>
+ <a href=https://lwn.net/><img src=data:, class="sslogo sf-hidden" border=0 alt=LWN></a><div class=navmenu-container>
+ <ul class=navmenu>
+ <li><a class=navmenu href=#t><b>Content</b></a><ul><li><a href=https://lwn.net/current/>Weekly Edition</a><li><a href=https://lwn.net/Archives/>Archives</a><li><a href=https://lwn.net/Search/>Search</a><li><a href=https://lwn.net/Kernel/>Kernel</a><li><a href=https://lwn.net/Security/>Security</a><li><a href=https://lwn.net/Calendar/>Events calendar</a><li><a href=https://lwn.net/Comments/unread>Unread comments</a><li><hr><li><a href=https://lwn.net/op/FAQ.lwn>LWN FAQ</a><li><a href=https://lwn.net/op/AuthorGuide.lwn>Write for us</a></ul></li>
+<li><a class=navmenu href=#t><b>Edition</b></a><ul><li><a href=https://lwn.net/Articles/530215/>Return to the Kernel page</a></ul></li>
+</ul></div>
+</div>
+<div class=not-handset style=margin-left:10.5em;display:block>
+ <div class=not-print> <div id=azk13321_leaderboard></div> </div>
+ </div>
+ <div class=topnav-container>
+<div class=not-handset><form action=https://lwn.net/Login/ method=post name=loginform class=loginform>
+ <label><b>User:</b> <input type=text name=Username value size=8 id=uc></label>
+ <label><b>Password:</b> <input type=password name=Password size=8 id=pc value></label> <input type=submit name=submit value="Log in"></form> |
+ <form action=https://lwn.net/subscribe/ method=post class=loginform>
+ <input type=submit name=submit value=Subscribe>
+ </form> |
+ <form action=https://lwn.net/Login/newaccount method=post class=loginform>
+ <input type=submit name=submit value=Register>
+ </form>
+ </div>
+ <div class="handset-only sf-hidden">
+ /
+ /
+
+ </div>
+ </div><div class="maincolumn flexcol">
+<div class=middlecolumn>
+<div class=PageHeadline>
+<h1>Namespaces in operation, part 1: namespaces overview</h1>
+</div>
+<div class=ArticleText>
+<center>
+ <table class=Form width=60%>
+ <tbody><tr><td><b>This article brought to you by LWN subscribers</b><p>Subscribers to LWN.net made this article — and everything that
+ surrounds it — possible. If you appreciate our content, please
+ <a href=https://lwn.net/subscribe/>buy a subscription</a> and make the next
+ set of articles possible.</p></tr>
+ </table>
+ </center>
+ <p>
+ <div class=FeatureByline>
+ By <b>Michael Kerrisk</b><br>January 4, 2013
+ </div>
+<p> The Linux 3.8 merge window saw the acceptance of Eric Biederman's
+sizeable series of <a href=https://lwn.net/Articles/528078/>user namespace and related
+patches</a>. Although there remain some details to finish—for
+example, a number of Linux filesystems are not yet user-namespace
+aware—the implementation of user namespaces is now functionally
+complete.
+<p> The completion of the user namespaces work is something of a milestone,
+for a number of reasons. First, this work represents the completion of
+one of the most complex namespace implementations to date, as evidenced by the fact
+that it has been around five years since the first steps in the
+implementation of user namespaces (in Linux 2.6.23). Second, the namespace
+work is currently at something of a "stable point", with the implementation
+of most of the existing namespaces being more or less complete. This does
+not mean that work on namespaces has finished: other namespaces may be
+added in the future, and there will probably be further extensions to
+existing namespaces, such as the addition of <a href=https://lwn.net/Articles/527342/>namespace isolation for the kernel log</a>.
+Finally, the recent changes in the implementation of user namespaces are
+something of a game changer in terms of how namespaces can be used:
+starting with Linux 3.8, unprivileged processes can create user namespaces
+in which they have full privileges, which in turn allows any other type of
+namespace to be created inside a user namespace.
+<p> Thus, the present moment seems a good point to take an overview of
+namespaces and a practical look at the namespace API. This is the first of
+a series of articles that does so: in this article, we provide an overview
+of the currently available namespaces; in the follow-on articles, we'll
+show how the namespace APIs can be used in programs.
+<h4>The namespaces</h4>
+<p> Currently, Linux implements six different types of namespaces. The purpose of each
+namespace is to wrap a particular global system resource in an abstraction
+that makes it appear to the processes within the namespace that they have
+their own isolated instance of the global resource. One of the overall
+goals of namespaces is to support the implementation of <a href=https://lwn.net/Articles/524952/>containers</a>, a tool for lightweight
+virtualization (as well as other purposes) that provides a group of
+processes with the illusion that they are the only processes on the
+system.
+<p> In the discussion below, we present the namespaces in the order that
+they were implemented (or at least, the order in which the implementations
+were completed). The <tt>CLONE_NEW*</tt> identifiers listed in parentheses
+are the names of the constants used to identify namespace types when
+employing the namespace-related APIs (<tt>clone()</tt>, <tt>unshare()</tt>,
+and <tt>setns()</tt>) that we will describe in our follow-on articles.
+<p>
+<a href=http://lwn.net/2001/0301/a/namespaces.php3>Mount
+namespaces</a> (<tt>CLONE_NEWNS</tt>, Linux 2.4.19) isolate the set of filesystem mount points seen by a group of
+processes. Thus, processes in different mount namespaces can have different
+views of the filesystem hierarchy. With the addition of mount namespaces,
+the <a href=http://man7.org/linux/man-pages/man2/mount.2.html><tt>mount()</tt></a>
+and <a href=http://man7.org/linux/man-pages/man2/umount.2.html><tt>umount()</tt></a>
+system calls ceased operating on a global set of mount points visible to
+all processes on the system and instead performed operations that affected
+just the mount namespace associated with the calling process.
+<p> One use of mount namespaces is to create environments that are similar
+to chroot jails. However, by contrast with
+the use of the <tt>chroot()</tt> system call, mount namespaces are a more
+secure and flexible tool for this task. Other <a href=http://www.ibm.com/developerworks/linux/library/l-mount-namespaces/index.html>more
+sophisticated uses</a> of mount namespaces are also possible. For example,
+separate mount namespaces can be set up in a master-slave relationship, so
+that the mount events are automatically propagated from one namespace to
+another; this allows, for example, an optical disk device that is mounted
+in one namespace to automatically appear in other namespaces.
+<p> Mount namespaces were the first type of namespace to be implemented on
+Linux, appearing in 2002. This fact accounts for the rather generic "NEWNS"
+moniker (short for "new namespace"): at that time no one seems to have been
+thinking that other, different types of namespace might be needed in the
+future.
+<p> <a href=https://lwn.net/Articles/179345/>UTS namespaces</a> (<tt>CLONE_NEWUTS</tt>,
+Linux 2.6.19) isolate two system identifiers—<tt>nodename</tt> and
+<tt>domainname</tt>—returned by the <a href=http://man7.org/linux/man-pages/man2/uname.2.html><tt>uname()</tt></a>
+system call; the names are set using the <tt>sethostname()</tt> and
+<tt>setdomainname()</tt> system calls.
+In the context of containers, the UTS namespaces feature allows each
+container to have its own hostname and NIS domain name. This can be useful
+for initialization and configuration scripts that tailor their actions
+based on these names.
+The term "UTS" derives from the name of the structure passed to the
+<tt>uname()</tt> system call: <tt>struct utsname</tt>. The name of that
+structure in turn derives from "UNIX Time-sharing System".
+<p> <a href=https://lwn.net/Articles/187274/>IPC namespaces</a> (<tt>CLONE_NEWIPC</tt>,
+Linux 2.6.19) isolate certain interprocess communication (IPC) resources,
+namely, <a href=http://www.kernel.org/doc/man-pages/online/pages/man7/svipc.7.html>System
+V IPC</a> objects and (since Linux 2.6.30) <a href=http://www.kernel.org/doc/man-pages/online/pages/man7/mq_overview.7.html>POSIX
+message queues</a>. The common characteristic of these IPC mechanisms is
+that IPC objects are identified by mechanisms other than filesystem
+pathnames. Each IPC namespace has its own set of System V IPC identifiers
+and its own POSIX message queue filesystem.
+<p> <a href=https://lwn.net/Articles/259217/>PID namespaces</a> (<tt>CLONE_NEWPID</tt>,
+Linux 2.6.24) isolate the process ID number space. In other words,
+processes in different PID namespaces can have the same PID. One of the
+main benefits of PID namespaces is that containers can be migrated
+between hosts while keeping the same process IDs for the processes inside
+the container. PID namespaces also allow each container to have its own
+<tt>init</tt> (PID 1), the "ancestor of all processes" that manages various
+system initialization tasks and reaps orphaned child processes when they
+terminate.
+<p> From the point of view of a particular PID namespace instance, a
+process has two PIDs: the PID inside the namespace, and the PID outside the
+namespace on the host system. PID namespaces can be nested: a process will
+have one PID for each of the layers of the hierarchy starting from the PID
+namespace in which it resides through to the root PID namespace. A process
+can see (e.g., <strike>view via <tt>/proc/</tt><i>PID</i> and</strike> send
+signals with <tt>kill()</tt>) only processes contained in its own PID
+namespace and the namespaces nested below that PID namespace.
+<p> <a href=https://lwn.net/Articles/219794/>Network namespaces</a>
+(<tt>CLONE_NEWNET</tt>, started in Linux <strike>2.4.19</strike> 2.6.24 and largely completed by
+about Linux 2.6.29) provide isolation of the system resources associated
+with networking. Thus, each network namespace has its own network devices, IP
+addresses, IP routing tables, <tt>/proc/net</tt> directory, port numbers,
+and so on.
+<p>Network namespaces make containers useful from a networking perspective:
+each container can have its own (virtual) network device and its own
+applications that bind to the per-namespace port number space; suitable
+routing rules in the host system can direct network packets to the network
+device associated with a specific container. Thus, for example, it is
+possible to have multiple containerized web servers on the same host
+system, with each server bound to port 80 in its (per-container) network
+namespace.
+<p> <a href=https://lwn.net/Articles/528078/>User namespaces</a>
+(<tt>CLONE_NEWUSER</tt>, started in Linux 2.6.23 and completed in Linux
+3.8) isolate the user and group ID number spaces. In other words, a
+process's user and group IDs can be different inside and outside a user
+namespace. The most interesting case here is that a process can have a
+normal unprivileged user ID outside a user namespace while at the same time
+having a user ID of 0 inside the namespace. This means that the process has
+full root privileges for operations inside the user namespace, but is
+unprivileged for operations outside the namespace.
+<p> Starting in Linux 3.8, unprivileged processes can
+create user namespaces, which opens up a raft of interesting new
+possibilities for applications: since an otherwise unprivileged process can
+hold root privileges inside the user namespace, unprivileged applications
+now have access to functionality that was formerly limited to
+root. Eric Biederman has put a lot of effort into making the user
+namespaces implementation safe and correct. However, the changes wrought by
+this work are subtle and wide ranging. Thus, it may happen that user
+namespaces have some as-yet unknown security issues that remain to be found
+and fixed in the future.
+<h4>Concluding remarks</h4>
+<p> It's now around a decade since the implementation of the first Linux
+namespace. Since that time, the namespace concept has expanded into a more
+general framework for isolating a range of global resources whose scope was
+formerly system-wide. As a result, namespaces now provide the basis for a
+complete lightweight virtualization system, in the form of containers. As
+the namespace concept has expanded, the associated API has grown—from
+a single system call (<tt>clone()</tt>) and one or two <tt>/proc</tt>
+files—to include a number of other system calls and many more files
+under <tt>/proc</tt>. The details of that API will form the subject of the
+follow-ups to this article.
+<a name=series_index></a>
+<h4>Series index</h4>
+<p> The following list shows later articles in this series, along with
+their example programs:
+<ul class=spacylist>
+<li>
+<a href=https://lwn.net/Articles/531381/>Part 2: the namespaces API</a>
+<ul>
+<li> <a href=https://lwn.net/Articles/531245/><tt>demo_uts_namespaces.c</tt></a>:
+demonstrate the use of UTS namespaces
+<li> <a href=https://lwn.net/Articles/531271/><tt>ns_exec.c</tt></a>: join a namespace
+using <tt>setns()</tt> and execute a command
+<li> <a href=https://lwn.net/Articles/531826/><tt>unshare.c</tt></a>: unshare namespaces
+and execute a command; similar in concept to <tt>unshare(1)</tt>
+</ul>
+<li> <a href=https://lwn.net/Articles/531419/>Part 3: PID namespaces</a>
+<ul>
+<li> <a href=https://lwn.net/Articles/532741/><tt>pidns_init_sleep.c</tt></a>:
+demonstrate PID namespaces
+<li> <a href=https://lwn.net/Articles/532745/><tt>multi_pidns.c</tt></a>: create a
+series of child processes in nested PID namespaces
+</ul>
+<li> <a href=https://lwn.net/Articles/532748/>Part 4: more on PID namespaces</a>
+<ul> <li> <a href=https://lwn.net/Articles/533492/><tt>ns_child_exec.c</tt></a>: create
+a child process that executes a shell command in new namespace(s)
+<li> <a href=https://lwn.net/Articles/533493/><tt>simple_init.c</tt></a>: a simple
+<tt>init(1)</tt>-style program to be used as the <tt>init</tt> program in a
+PID namespace
+<li> <a href=https://lwn.net/Articles/533494/><tt>orphan.c</tt></a>: demonstrate that a
+child becomes orphaned and is adopted by the <tt>init</tt> process when its
+parent exits
+<li> <a href=https://lwn.net/Articles/533495/><tt>ns_run.c</tt></a>: join one or more
+namespaces using <tt>setns()</tt> and execute a command in those
+namespaces, possibly inside a child process; similar in concept to
+<tt>nsenter(1)</tt>
+</ul>
+<li> <a href=https://lwn.net/Articles/532593/>Part 5: user namespaces</a>
+<ul>
+<li><a href=https://lwn.net/Articles/539941/><tt>demo_userns.c</tt></a>: simple program
+to create a user namespace and display process credentials and capabilities
+<li> <a href=https://lwn.net/Articles/539940/><tt>userns_child_exec.c</tt></a>: create a
+child process that executes a shell command in new namespace(s); similar to
+<tt>ns_child_exec.c</tt>, but with additional options for use with user
+namespaces
+</ul>
+<li> <a href=https://lwn.net/Articles/540087/>Part 6: more on user namespaces</a>
+<ul>
+<li><a href=https://lwn.net/Articles/541230/><tt>userns_setns_test.c</tt></a>: test the
+operation of <tt>setns()</tt> from two different user namespaces.
+</ul>
+<li> <a href=https://lwn.net/Articles/580893/>Part 7: network namespaces</a>
+<li> <a href=https://lwn.net/Articles/689856/>Mount namespaces and shared subtrees</a>
+<li><a href=https://lwn.net/Articles/690679/>Mount namespaces, mount propagation, and unbindable mounts</a>
+</ul>
+<br clear=all><table class=IndexEntries>
+ <tbody><tr><th colspan=2>Index entries for this article</tr>
+ <tr><td><a href=https://lwn.net/Kernel/Index>Kernel</a><td><a href=https://lwn.net/Kernel/Index#Containers>Containers</a></tr>
+ <tr><td><a href=https://lwn.net/Kernel/Index>Kernel</a><td><a href=https://lwn.net/Kernel/Index#Namespaces>Namespaces</a></tr>
+ </table><br clear=all>
+<hr width=60% align=left>
+ (<a href="https://lwn.net/Login/?target=/Articles/531114/">Log in</a> to post comments)
+ <p>
+
+</p></div>
+<p><a name=Comments></a>
+<a name=CommAnchor531427></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 4:10 UTC (Fri)
+ by <b>Cyberax</b> (<b>✭ supporter ✭</b>, #52523)
+ [<a href=https://lwn.net/Articles/531427/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+How do they interact with cgroups? Is it possible to have, for example, a child container with its own memory control cgroup?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531427/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531562></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 20:47 UTC (Fri)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/531562/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+namespaces and cgroups are orthogonal by design.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531562/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531580></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 22:58 UTC (Fri)
+ by <b>Cyberax</b> (<b>✭ supporter ✭</b>, #52523)
+ [<a href=https://lwn.net/Articles/531580/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+So how do they interact? Can I export a limited view of cgroups to a container?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531580/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531592></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 5, 2013 6:39 UTC (Sat)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/531592/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+I though you were asking about how the controls interact with the namespaces at the implementation level of objects, and at that level they are orgothogonal.<br>
+<p>
+As for taking a slice of a control group hierarchy and making it visible in a container the best practical solution I have heard is to do a "mount --bind" of a slice of that hierarchy into a container. Something better was promised at the time control groups were merged but that has never appeared.<br>
+<p>
+The design mistake of embedding a view of the system packed with global identifiers and silly unwarranted assumptions into a filesystem seems to be an easy mistake to make and is very annoying to deal with.<br>
+<p>
+From what little time I have had to look at the control group interface to user space, and the control group model of controlling resources, and the direction all of that is evolving I really don't like the result. Still today control groups are the best solution we have in linux today to the recursive resource limiting problem.<br>
+<p>
+I encourage people who care to help by looking at control groups, reporting bugs and usability problems, and even better writing and submitting patches.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531592/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+<a name=CommAnchor531441></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Thanks</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 9:21 UTC (Fri)
+ by <b>ncm</b> (guest, #165)
+ [<a href=https://lwn.net/Articles/531441/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Articles like this keep me renewing my LWN subscription.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531441/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor531464></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 11:53 UTC (Fri)
+ by <b>Fats</b> (guest, #14882)
+ [<a href=https://lwn.net/Articles/531464/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+What is not clear to me is if the network namespaces also abstracts the firewall; e.g. is it possible to have separate firewall rules in each of the network namespaces or is OpenVZ still needed for that ?<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531464/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531502></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 15:16 UTC (Fri)
+ by <b>dskoll</b> (subscriber, #1630)
+ [<a href=https://lwn.net/Articles/531502/>Link</a>]
+ </p></summary>
+ <p>I believe you can have separate iptables rules in each namespace. I'm running an LXC container and it has it's own view of iptables separate from the host system.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531502/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor531543></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 18:56 UTC (Fri)
+ by <b>luto</b> (guest, #39314)
+ [<a href=https://lwn.net/Articles/531543/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Doing this for a firewall would get messy -- a firewall thinks about packets, not endpoints.<br>
+<p>
+If the kernel had programmable policy for what tasks could listen, accept, and connect on which sockets to which endpoints, on the other hand, firewalls could (on non-routers, anyway) go away and everything would get simpler and faster.<br>
+<p>
+And no, selinux doesn't count in my book. Try actually programming the policy.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531543/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor531563></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 20:56 UTC (Fri)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/531563/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Each network namespace is a logically a separate networking stack, with separate addresses, separate firewall rules, separate qos policies etc.<br>
+<p>
+Network devices and sockets belong to a particular network namespace and everything else figures out which network namespace you are talking about from the socket or network device.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531563/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor531484></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 4, 2013 14:26 UTC (Fri)
+ by <b>dwmw2</b> (subscriber, #2063)
+ [<a href=https://lwn.net/Articles/531484/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Network namespaces are sometimes useful for VPNs too. Instead of playing with 'split tunnelling' and having DNS tricks to look up certain domains on the VPN and others normally, you can put the VPN connection entirely into a namespace of its own. A trivial way of doing this (for which a vpnc-script already exists for use with vpnc and openconnect) is to make the namespace, put the vpn interface in it, run a new instance of sshd in that namespace and then connect to it with 'ssh -D 1080' to open a SOCKS proxy. Then you have full access to the VPN via SOCKS.<br>
+<p>
+W.r.t. user namespaces, it should be pointed out that uid 0 doesn't necessarily mean that you have "full root privileges". Those were separated out by capabilities long ago...<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531484/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531907></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 8, 2013 21:06 UTC (Tue)
+ by <b>BenHutchings</b> (subscriber, #37955)
+ [<a href=https://lwn.net/Articles/531907/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Running a suid-root program still gives you all capabilities (normally). And this is still true inside a user namespace, although the capabilities are restricted to that namespace.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531907/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor531588></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 5, 2013 4:51 UTC (Sat)
+ by <b>dw</b> (subscriber, #12017)
+ [<a href=https://lwn.net/Articles/531588/>Link</a>] (4 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I remember being very excited by the possibilities when reading about namespaces back in 2003 or so, but with the addition of per-container UIDs I can't help feel nothing but a case of extreme heebie-geebies about local security for the coming years.<br>
+<p>
+Considering it wasn't until relatively recently that kernel code would routinely directly compare the UID field to determine root privilege, and given that it's already quite difficult to maintain a mental model of how the UID/PID namespaces work, I suspect strong apprehension is a legitimate response toward any kernel config that has these features enabled at least for the immediate future.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531588/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531591></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 5, 2013 6:10 UTC (Sat)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/531591/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Internal to the kernel the mental model is quite simple, you use kuids and kgids. The programming model is nice as simple as it has always been.<br>
+<p>
+Right on the edges of user space kuids and kgids are translated to/from uids and gids, and you must use the translation functions because they are type incompatible.<br>
+<p>
+As for the the kernel directly comparing the uid field to determine root privilege suid() and it's kin was replaced by capable calls internal to the kernel a decade or so ago.<br>
+<p>
+Like any thing new there are reasons to be cautious, but getting the data types wrong is not one of those reasons. Similarly for system administrators there shouldn't really be any more challenge than using fake-root.<br>
+<p>
+But please if you aren't comfortable with user namespaces please disable them in your kernel builds that is what the config option is for.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531591/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531645></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation - root privileges</h3>
+ <p class=CommentPoster> Posted Jan 6, 2013 1:50 UTC (Sun)
+ by <b>giraffedata</b> (guest, #1954)
+ [<a href=https://lwn.net/Articles/531645/>Link</a>] (2 responses)
+ </p></summary>
+ <p>
+I'm bewildered by the mention in the article of user name spaces allowing one to have root privileges. "Root privileges" is a way of saying, "all the capabilities" and has almost nothing to do with uids. So how does this work? Does the uid name space feature really allow a process to hold a capability whose power is somehow limited to a subset of the system?
+<p>
+Described like this, I can certainly see it taking a lot of work to convince people there's nothing to be afraid of in this feature.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531645/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531821></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation - root privileges</h3>
+ <p class=CommentPoster> Posted Jan 8, 2013 8:53 UTC (Tue)
+ by <b>error27</b> (subscriber, #8346)
+ [<a href=https://lwn.net/Articles/531821/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+These days there root doesn't have all capabilities because of, for example, se-linux. We're sort of working to a goal where people can't load non-vendor modules or firmware without reconfiguring secure boot in the UEFI firmware. So there are all kinds of things which root will be restricted from doing by default.<br>
+<p>
+One use of new namespace work would be to set up a chroot where people could install mysql and set up a webserver etc. It's cheaper than using KVM for virtualization.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531821/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor531958></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation - root privileges</h3>
+ <p class=CommentPoster> Posted Jan 9, 2013 0:57 UTC (Wed)
+ by <b>hallyn</b> (subscriber, #22558)
+ [<a href=https://lwn.net/Articles/531958/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; So how does this work? Does the uid name space feature really allow a process to hold a capability whose power is somehow limited to a subset of the system?</font><br>
+<p>
+Yes. In the past, we simply had the 'capable()' call, which checked whether the current task had, say, CAP_SYS_ADMIN. Now capabilities are targeted toward a particular user namespace, and the function to check for that ns_capable(). Importantly, any existing unconverted capable() call becomes a check targeted at the initial user namespace. Therefore if we haven't specifically said "that capability is ok to be allowed in a non-init userns", then it won't be allowed. Then, resources (say a network interface) belong to a namespace (a network ns, for the network interface), and each network namespace is owned by a user namespace, namely the userns from which the netns was created. So we to check CAP_NET_ADMIN for an action on a nic, we can check for permission to the user namespace which owns the netns which owns the nic.<br>
+<p>
+(If you're asking more generally about the relation of root to capabilities, that has not changed - see the capabilities(7) man page, specifically searching for 'secbit'.)<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531958/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+<a name=CommAnchor531597></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 5, 2013 10:42 UTC (Sat)
+ by <b>lab</b> (guest, #51153)
+ [<a href=https://lwn.net/Articles/531597/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Excellent overview, thanks. I now feel I actually have a bit of a handle on this, enough to follow the coming episodes, which I look greatly forward to.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531597/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor531890></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 8, 2013 19:36 UTC (Tue)
+ by <b>robbiew</b> (guest, #57380)
+ [<a href=https://lwn.net/Articles/531890/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Great LWN article and fantastic work Eric...happy we could help you with this effort.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531890/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor531964></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 9, 2013 1:17 UTC (Wed)
+ by <b>hallyn</b> (subscriber, #22558)
+ [<a href=https://lwn.net/Articles/531964/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Hi Michael, thanks for the great writeup. Wanted to point out one thing. I'm sure this will be expanded upon in a later article, but<br>
+<p>
+<font class=QuotedText>&gt; A process can see (e.g., view via /proc/PID and send signals with kill()) only processes contained in its own PID namespace and the namespaces nested below that PID namespace.</font><br>
+<p>
+That's true in the process' own (newly mounted) procfs. But the contents of a procfs mount are determined by the superblock, which is determined by the pidns in which it was mounted. The contents of a procfs mount are not determined by the pidns of the reader.<br>
+<p>
+Therefore, if I unshare a new pidns (and don't mount a new proc), I can look under the old /proc and see information on the tasks my the parent pidns. Or for that matter mount -t proc proc /mnt, and see the old proc under /proc and new proc under /mnt. (Note that one thing we don't (yet) have is an easy way to determine which tasks are the same.)<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531964/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor531967></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 1: namespaces overview</h3>
+ <p class=CommentPoster> Posted Jan 9, 2013 1:44 UTC (Wed)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/531967/>Link</a>]
+ </p></summary>
+ <blockquote>
+<font color=purple>
+Therefore, if I unshare a new pidns (and don't mount a new proc), I can look under the old /proc and see information on the tasks my the parent pidns. Or for that matter mount -t proc proc /mnt, and see the old proc under /proc and new proc under /mnt. (Note that one thing we don't (yet) have is an easy way to determine which tasks are the same.)
+</font>
+</blockquote>
+<p>
+Oops, yes of course! I knew this, but somehow forgot as I wrote that piece. Thanks for the correction, Serge. I've added a small strikethrough in the article.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/531967/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</div>
+<div class="rightcol not-print">
+<div id=azk93271_right_zone></div>
+</div>
+</div>
+ <br clear=all>
+ <center>
+ <p>
+ <span class=ReallySmall>
+ Copyright © 2013, Eklektix, Inc.<br>
+ This article may be redistributed under the terms of the
+ <a href=http://creativecommons.org/licenses/by-sa/4.0/>Creative
+ Commons CC BY-SA 4.0</a> license<br>
+ Comments and public postings are copyrighted by their creators.<br>
+ Linux is a registered trademark of Linus Torvalds<br>
+ </span>
+ </p></center>
+
+
+<script data-template-shadow-root>(()=>{document.currentScript.remove();processNode(document);function processNode(node){node.querySelectorAll("template[shadowrootmode]").forEach(element=>{let shadowRoot = element.parentElement.shadowRoot;if (!shadowRoot) {try {shadowRoot=element.parentElement.attachShadow({mode:element.getAttribute("shadowrootmode")});shadowRoot.innerHTML=element.innerHTML;element.remove()} catch (error) {} if (shadowRoot) {processNode(shadowRoot)}}})}})()</script>

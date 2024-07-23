@@ -1,0 +1,897 @@
+<!DOCTYPE html> <html lang=en style><!--
+ Page saved with SingleFile
+ url: https://lwn.net/Articles/540087/
+--><meta charset=utf-8><title>Namespaces in operation, part 6: more on user namespaces [LWN.net]</title>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel=alternate type=application/rss+xml title="LWN.net headlines" href=https://lwn.net/headlines/rss>
+<link rel=alternate type=application/rss+xml title="Comments posted to this article" href=https://lwn.net/headlines/540087/>
+<style>body{color:black;background-color:#ffffff;padding:0px}h1{margin:0px 0px 5px 0px;padding:0px;color:black}h3{margin:0px 0px 5px 0px;padding:0px}a{text-decoration:underline}a:link{color:DarkBlue}a:visited{color:#444}a:hover{color:DarkBlue;background-color:#eeeeee}a:visited:hover{color:#444}DIV.PageHeadline{text-align:center;max-width:65em;margin-top:1em;margin-bottom:2em}DIV.PageHeadline H1{margin-bottom:0.2em}DETAILS.CommentBox{border-style:none none none solid;border-width:thin;max-width:65em;margin-top:1em;background-color:inherit;padding-left:8px}DETAILS.CommentBox>SUMMARY>H3.CommentTitle{background-color:#ffcc99}DETAILS.CommentBox{border-color:#ffcc99}H3.CommentTitle{display:inline-block;width:100%;padding-left:3px}DETAILS[open]>SUMMARY{list-style-type:none;opacity:1.0;cursor:zoom-out}DETAILS>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[+]"}DETAILS[open]>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[–]"}DETAILS>SUMMARY::MARKER,DETAILS>SUMMARY::-webkit-details-marker{display:none}P.CommentPoster{margin-top:0px}div.CommentReplyButton{display:block;text-align:right;padding:4px}TABLE.IndexEntries{background-color:#eeeeee;padding:3px;margin:5px;float:right}TABLE.IndexEntries TD:first-child{padding:1px 5px 1px 1px}SPAN.ReallySmall{font-size:x-small}DIV.FeatureByline{max-width:20em;float:left;background-color:#eeeeee;margin:2px 5px 2px 0px;padding-bottom:5px;padding-right:25px;padding-left:5px}DIV.ArticleText{margin:0px 0px 0px 0px;padding:0px 2px 0px 0px;max-width:65em}input{font-family:inherit;font-size:inherit}FONT.QuotedText{color:#990099}#menu{width:100%;position:fixed;top:0;left:0;right:0;background-color:#eeeeee;padding:0 0.2em 0 0.2em;overflow-y:visible;display:block;z-index:20;height:42px}DIV.navmenu-container{margin-left:0.5em;margin-top:0.5em;min-width:70%;border-radius:0.8em;padding:0.1em;display:inline-block}ul.navmenu{list-style:none;position:relative;display:inline-table;padding:0;margin:0}.navmenu li{display:inline-block;margin-right:0.4em}.navmenu ul{display:none;position:absolute;top:100%;width:15em;list-style:none;z-index:10;background:#eeeeee;padding-left:0;margin-left:0;border-style:solid}.navmenu ul li{display:block;margin-top:0.2em;margin-left:0.2em;line-height:1.4}.navmenu ul li:first-child{margin-top:1.2em}.navmenu li:hover>ul{display:block}a.navmenu{color:black}.navmenu a{text-decoration:none}.navmenu a:hover{text-decoration:underline}.navmenu a:visited,.topnav-container a:visited{color:DarkBlue}a.navmenu::after{content:" ▶"}span.logo,span.logobl,img.logo{display:none}DIV.topnav-container{margin-left:0.5em;margin-top:45px;margin-right:0.5em;background:#eeeeee;border-radius:0.8em;padding:0.3em}div.flexcol{display:flex;flex-direction:column}div.middlecolumn{flex:5}div.rightcol{padding-top:5em;flex:0 1 content}@media screen and (min-width:48em){.rightcol{flex:0;min-width:120px}}@media screen and (min-width:120em){.rightcol{max-width:400px}}@media screen and (min-width:48em){div.maincolumn{padding-left:10em}div.flexcol{flex-direction:row}#menu{display:block;width:9.6em;height:100%;bottom:0;overflow-y:visible}#menu:hover{overflow-y:auto}div.navmenu-container{display:block;margin-top:120px;margin-left:0;padding:0}.navmenu ul{display:block;position:static;width:9.6em;border-style:none;top:0}.navmenu li{margin:0.5em 0 0 0.1em;width:100%}.navmenu ul li{margin:0.1em 0 0 0.5em;text-indent:-0.4em;padding-right:0;width:auto;line-height:1.2}.navmenu ul li:first-child{margin-top:0}a.navmenu::after{content:""}DIV.topnav-container{margin-left:10.5em;margin-top:0.5em}img.logo{padding-right:0.2em;display:inline;float:left;position:absolute;top:3px;left:3px}span.logo{font-weight:bold;color:green;display:inline;font-size:180%;text-align:right;float:left;padding-left:60px;font-family:sans-serif;line-height:0.8;padding-top:0.3em}span.logobl{color:green;display:inline;font-size:80%;text-align:center;position:absolute;top:85px;left:5px;font-family:sans-serif}}@media screen and (min-width:80em){}@media (max-width:48em){.not-handset{display:none}}@media (min-width:48em){.not-handset{display:inline-block}}DIV.ArticleText{padding-left:0.5em}TABLE{border-collapse:separate;border-spacing:5px 0px}PRE{white-space:pre;overflow:visible}H3.CommentTitle{border-radius:0 2em 2em 0}html{font-family:inherit}input{background-color:#ffffff;color:black;padding:3px;border-radius:0.5em}input:focus{border-color:DarkBlue}input[type="submit"]{background-color:#eeeeee}input[type="submit"]:hover{background-color:#ccc}form.loginform{display:inline}TT{white-space:nowrap}</style>
+<meta name=referrer content=no-referrer><link rel=icon href="data:image/png;base64,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" type=image/png><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://lwn.net/Articles/540087/><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+ <body>
+ <a name=t></a>
+<div id=menu><a href=https://lwn.net/><img src=data:image/png;base64,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 class=logo border=0 alt="LWN.net Logo">
+ <span class=logo>LWN<br>.net</span>
+ <span class=logobl>News from the source</span></a>
+ <a href=https://lwn.net/><img src=data:, class="sslogo sf-hidden" border=0 alt=LWN></a><div class=navmenu-container>
+ <ul class=navmenu>
+ <li><a class=navmenu href=#t><b>Content</b></a><ul><li><a href=https://lwn.net/current/>Weekly Edition</a><li><a href=https://lwn.net/Archives/>Archives</a><li><a href=https://lwn.net/Search/>Search</a><li><a href=https://lwn.net/Kernel/>Kernel</a><li><a href=https://lwn.net/Security/>Security</a><li><a href=https://lwn.net/Calendar/>Events calendar</a><li><a href=https://lwn.net/Comments/unread>Unread comments</a><li><hr><li><a href=https://lwn.net/op/FAQ.lwn>LWN FAQ</a><li><a href=https://lwn.net/op/AuthorGuide.lwn>Write for us</a></ul></li>
+<li><a class=navmenu href=#t><b>Edition</b></a><ul><li><a href=https://lwn.net/Articles/540427/>Return to the Kernel page</a></ul></li>
+</ul></div>
+</div>
+<div class=not-handset style=margin-left:10.5em;display:block>
+ <div class=not-print> <div id=azk13321_leaderboard></div> </div>
+ </div>
+ <div class=topnav-container>
+<div class=not-handset><form action=https://lwn.net/Login/ method=post name=loginform class=loginform>
+ <label><b>User:</b> <input type=text name=Username value size=8 id=uc></label>
+ <label><b>Password:</b> <input type=password name=Password size=8 id=pc value></label> <input type=submit name=submit value="Log in"></form> |
+ <form action=https://lwn.net/subscribe/ method=post class=loginform>
+ <input type=submit name=submit value=Subscribe>
+ </form> |
+ <form action=https://lwn.net/Login/newaccount method=post class=loginform>
+ <input type=submit name=submit value=Register>
+ </form>
+ </div>
+ <div class="handset-only sf-hidden">
+ /
+ /
+
+ </div>
+ </div><div class="maincolumn flexcol">
+<div class=middlecolumn>
+<div class=PageHeadline>
+<h1>Namespaces in operation, part 6: more on user namespaces</h1>
+</div>
+<div class=ArticleText>
+<div class=FeatureByline>
+ By <b>Michael Kerrisk</b><br>March 6, 2013
+ </div>
+<p> In this article, we continue <a href=https://lwn.net/Articles/532593/>last week's
+discussion</a> of user namespaces. In particular, we look in more detail
+at the interaction of user namespaces and capabilities as well as the
+combination of user namespaces with other types of namespaces. For the
+moment at least, this article will conclude our <a href=https://lwn.net/Articles/531114/#series_index>series</a> on namespaces.
+<h4>User namespaces and capabilities</h4>
+<p> Each process is associated with a particular user namespace. A process
+created by a call to <tt>fork()</tt> or a call to <tt>clone()</tt> without
+the <tt>CLONE_NEWUSER</tt> flag is placed in the same user namespace as its
+parent process. A process can change its user-namespace membership using
+<tt>setns()</tt>, if it has the <tt>CAP_SYS_ADMIN</tt> capability in the
+target namespace; in that case, it obtains a full set of capabilities upon
+entering the target namespace.
+<p>
+On the other hand, a <tt>clone(CLONE_NEWUSER)</tt> call creates a new user
+namespace and places the new child process in that namespace. This
+call also establishes a parental relationship between the two
+namespaces: each user namespace (other than the initial namespace) has a
+parent—the user namespace of the process that created it using
+<tt>clone(CLONE_NEWUSER)</tt>. A parental relationship between user namespaces
+is also established when a process calls
+<tt>unshare(CLONE_NEWUSER)</tt>. The difference is that <tt>unshare()</tt>
+places the caller in the new user namespace, and the parent of that
+namespace is the caller's previous user namespace. As we'll see in a
+moment, the parental relationship between user
+namespaces is important because it defines the capabilities that a process
+may have in a child namespace.
+<p> Each process also has three associated sets of capabilities: permitted,
+effective, and inheritable. The <a href=http://man7.org/linux/man-pages/man7/capabilities.7.html>capabilities(7)</a>
+manual page describes these three sets in some detail. In this article, it
+is mainly the effective capability set that is of interest to us. This set
+determines a process's ability to perform privileged operations.
+<p> User namespaces change the way in which (effective) capabilities are
+interpreted. First, having a capability inside a particular user namespace
+allows a process to perform operations only on resources governed by that
+namespace; we say more on this point below, when we talk about the
+interaction of user namespaces with other types of namespaces. In
+addition, whether or not a process has capabilities in a particular
+user namespace depends on its namespace membership and the parental relationship
+between user namespaces. The rules are as follows:
+<ol>
+<li>
+A process has a capability inside a user namespace if it is a member
+of the namespace and that capability is present in its effective capability
+set. A process may obtain capabilities in its effective set in a number
+of ways. The most common reasons are that it executed a program that
+conferred capabilities (a set-user-ID program or a program that has
+associated file capabilities) or it is the child of a call to
+<tt>clone(CLONE_NEWUSER)</tt>, which automatically obtains a full set of
+capabilities.
+</li>
+<p>
+</p><li>
+If a process has a capability in a user namespace, then it has that
+capability in all child (and further removed descendant) namespaces as
+well. Put another way: creating a new user namespace does not isolate the
+members of that namespace from the effects of privileged processes in a
+parent namespace.
+</li>
+<p>
+</p><li>
+When a user namespace is created, the kernel records the
+effective user ID of the creating process as being the "owner" of the
+namespace. A process whose effective user ID matches that of the owner of
+a user namespace and which is a member of the parent namespace has all
+capabilities in the namespace. By virtue of the previous rule, those
+capabilities propagate down into all descendant namespaces as well. This
+means that after creation of a new user namespace, other processes owned by
+the same user in the parent namespace have all capabilities in the new
+namespace.
+</li>
+</ol>
+<p> We can demonstrate the third rule with the help of a small program, <a href=https://lwn.net/Articles/541230/><tt>userns_setns_test.c</tt></a>. This program
+takes one command-line argument: the pathname of a <a href=https://lwn.net/Articles/531381/#proc_pid_ns><tt>/proc/PID/ns/user</tt></a> file
+that identifies a user namespace. It creates a child in a new user
+namespace and then both the parent (which remains in the same user
+namespace as the shell that was used to invoke the program) and the child
+attempt to join the namespace specified on the command line using
+<tt>setns()</tt>; as noted above, <tt>setns()</tt> requires that the caller
+have the <tt>CAP_SYS_ADMIN</tt> capability in the target namespace.
+<p>For our demonstration, we use this program in conjunction with the <a href=https://lwn.net/Articles/539940/><tt>userns_child_exec.c</tt></a> program developed
+in the previous article in this series. First, we use that program to start
+a shell (we use <tt>ksh</tt>, simply to create a distinctively named
+process) running in a new user namespace:
+<pre>    $ <b>id -u</b>
+    1000
+    $ <b>readlink /proc/$$/ns/user</b>       # Obtain ID for initial namespace
+    user:[4026531837]
+    $ <b>./userns_child_exec -U -M '0 1000 1' -G '0 1000 1' ksh</b>
+    ksh$ <b>echo $$</b>                      # Obtain PID of shell
+    528
+    ksh$ <b>readlink /proc/$$/ns/user</b>    # This shell is in a new namespace
+    user:[4026532318]
+</pre>
+<p>
+Now, we switch to a separate terminal window, to a shell running in the
+initial namespace, and run our test program:
+<pre>    $ <b>readlink /proc/$$/ns/user</b>       # Verify that we are in parent namespace
+    user:[4026531837]
+    $ <b>./userns_setns_test /proc/528/ns/user</b>
+    parent: readlink("/proc/self/ns/user") ==&gt; user:[4026531837]
+    parent: setns() succeeded
+
+    child:  readlink("/proc/self/ns/user") ==&gt; user:[4026532319]
+    child:  setns() failed: Operation not permitted
+</pre>
+<p> The following program shows the parental relationships between the
+various processes (black arrows) and namespaces (blue arrows) that have
+been created:
+<blockquote>
+<img src="data:image/png;base64,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" alt="[A user namespace hierarchy]">
+</blockquote>
+<p> Looking at the output of the <tt>readlink</tt> commands at the start of
+each shell session, we can see that the parent process created when the
+<tt>userns_setns_test</tt> program was run is in the initial user namespace
+(4026531837). (As noted in <a href=https://lwn.net/Articles/531381/#proc_pid_ns>an
+earlier article</a> in this series, these numbers are i-node numbers for
+symbolic links in the <tt>/proc/</tt><i>PID</i><tt>/ns</tt> directory.) As
+such, by rule three above, since the parent process had the same effective
+user ID (1000) as the process that created the new user namespace
+(4026532318), it had all capabilities in that namespace, including
+<tt>CAP_SYS_ADMIN</tt>; thus the <tt>setns()</tt> call in the parent
+succeeds.
+<p> On the other hand, the child process created by
+<tt>userns_setns_test</tt> is in a different namespace
+(4026532319)—in effect, a sibling namespace of the namespace where
+the <tt>ksh</tt> process is running. As such, the second of the rules
+described above does not apply, because that namespace is not an ancestor
+of namespace 4026532318. Thus, the child process does not have the
+<tt>CAP_SYS_ADMIN</tt> capability in that namespace and the
+<tt>setns()</tt> call fails.
+<h4>Combining user namespaces with other types of namespaces</h4>
+<p> Creating namespaces other than user namespaces requires the
+<tt>CAP_SYS_ADMIN</tt> capability. On the other hand, creating a user
+namespace requires (since Linux 3.8) no capabilities, and the first process
+in the namespace gains a full set of capabilities (in the new user
+namespace). This means that that process can now create any other type of
+namespace using a second call to <tt>clone()</tt>.
+<p> However, this two-step process is not necessary. It is also possible to
+include additional <tt>CLONE_NEW*</tt> flags in the <i>same</i>
+<tt>clone()</tt> (or <tt>unshare()</tt>) call that employs
+<tt>CLONE_NEWUSER</tt> to create the new user namespace. In this case, the
+kernel guarantees that the <tt>CLONE_NEWUSER</tt> flag is acted upon first,
+creating a new user namespace in which the to-be-created child has all
+capabilities. The kernel then acts on all of the remaining
+<tt>CLONE_NEW*</tt> flags, creating corresponding new namespaces and making
+the child a member of all of those namespaces.
+<p> Thus, for example, an unprivileged process can make a call of the
+following form to create a child process that is a member of both a new
+user namespace and a new UTS namespace:
+<pre>    clone(child_func, stackp, CLONE_NEWUSER | CLONE_NEWUTS, arg);
+</pre>
+<p> We can use our <tt>userns_child_exec</tt>
+program to perform a
+<tt>clone()</tt> call equivalent to the above and execute a shell in the child
+process. The following command specifies the creation of a new UTS
+namespace (<tt>-u</tt>), and a new user namespace (<tt>-U</tt>) in which
+both user and group ID 1000 are mapped to 0:
+<pre>    $ <b>uname -n</b>           # Display hostname for later reference
+    antero
+    $ <b>./userns_child_exec -u -U -M '0 1000 1' -G '0 1000 1' bash</b>
+</pre>
+<p>
+As expected, the shell process has a full set of
+permitted and effective capabilities:
+<pre>    $ <b>id -u</b>              # Show effective user and group ID of shell
+    0
+    $ <b>id -g</b>
+    0
+    $ <b>cat /proc/$$/status | egrep 'Cap(Inh|Prm|Eff)'</b>
+    CapInh: 0000000000000000
+    CapPrm: 0000001fffffffff
+    CapEff: 0000001fffffffff
+</pre>
+<p> In the above output, the hexadecimal value 1fffffffff represents a
+capability set in which all 37 of the currently available Linux
+capabilities are enabled.
+<p> We can now go on to modify the hostname—one of the global resources
+isolated by UTS namespaces—using the standard <tt>hostname</tt>
+command; that operation requires the <tt>CAP_SYS_ADMIN</tt> capability. First, we
+set the hostname to a new value, and then we review that value with the
+<tt>uname</tt> command:
+<pre>    $ <b>hostname bizarro</b>     # Update hostname in this UTS namespace
+    $ <b>uname -n</b>             # Verify the change
+    bizarro
+</pre>
+<p> Switching to another terminal window—one that is running in the
+initial UTS namespace—we then check the hostname in that UTS
+namespace:
+<pre>    $ <b>uname -n</b>             # Hostname in original UTS namespace is unchanged
+    antero
+</pre>
+<p> From the above output, we can see that the change of hostname in the
+child UTS namespace is not visible in the parent UTS namespace.
+<h4>Capabilities revisited</h4>
+<p> Although the kernel grants all capabilities to the initial process in a
+user namespace, this does not mean that process then has superuser
+privileges within the wider system. (It may, however, mean that
+unprivileged users now have access to exploits in kernel code that was
+formerly accessible only to root, as <a href=https://lwn.net/Articles/540083/>this
+mail</a> on a vulnerability in tmpfs mounts notes.) When a new IPC, mount,
+network, PID, or UTS namespace is created via <tt>clone()</tt> or
+<tt>unshare()</tt>, the kernel records the user namespace of the creating
+process against the new namespace. Whenever a process operates on global
+resources governed by a namespace, permission checks are performed
+according to the process's capabilities in the user namespace that the
+kernel associated with the that namespace.
+<p> For example, suppose that we create a new user namespace using
+<tt>clone(CLONE_NEWUSER)</tt>. The resulting child process will have a full
+set of capabilities in the new user namespace, which means that it will,
+for example, be able to create other types of namespaces and be able to
+change its user and group IDs to other IDs that are mapped in the
+namespace. (In the previous article in this series, we saw that only a
+privileged process in the <i>parent</i> user namespace can create mappings
+to IDs other than the effective user and group ID of the process that
+created the namespace, so there is no security loophole here.)
+<p> On the other hand, the child process would not be able to mount a
+filesystem. The child process is still in the initial mount namespace, and
+in order to mount a filesystem in that namespace, it would need to have
+capabilities in the user namespace associated with that mount namespace
+(i.e., it would need capabilities in the initial user namespace), which it
+does not have. Analogous statements apply for the global resources isolated
+by IPC, network, PID, and UTS namespaces.
+<p> Furthermore, the child process would not be able to perform privileged
+operations that require capabilities that are not (currently) governed by
+namespaces. Thus, for example, the child could not do things such as
+raising its hard resource limits, setting the system time, setting process
+priorities, or loading kernel modules<strike>, or rebooting the
+system</strike>. All of those operations require capabilities that sit
+outside the user namespace hierarchy; in effect, those operations require
+that the caller have capabilities in the initial user namespace.
+<p> By isolating the effect of capabilities to namespaces, user namespaces
+thus deliver on the promise of safely allowing unprivileged users access to
+functionality that was formerly limited to the root user. This in turn
+creates interesting possibilities for new kinds of user-space
+applications. For example, it now becomes possible for unprivileged users
+to run Linux containers without root privileges, to construct <a href=http://dev.chromium.org/developers/design-documents/sandbox>Chrome-style
+sandboxes</a> without the use of set-user-ID-root helpers, to implement <a href=http://fakeroot.alioth.debian.org/>fakeroot</a>-type applications
+without employing dynamic-linking tricks, and to implement <a href=https://lwn.net/Articles/252794/><tt>chroot()</tt>-based applications</a> for
+process isolation. Barring kernel bugs, applications that employ user
+namespaces to access privileged kernel functionality are more secure than
+traditional applications based on set-user-ID-root: with a
+user-namespace-based approach, even if an applications is compromised, it
+does not have any privileges that can be used to do damage in the wider
+system.
+<p>
+<i> The author would like to thank Eric Biederman for answering many questions
+that came up as he experimented with namespaces during the course of
+writing this article series. </i><br clear=all><table class=IndexEntries>
+ <tbody><tr><th colspan=2>Index entries for this article</tr>
+ <tr><td><a href=https://lwn.net/Kernel/Index>Kernel</a><td><a href=https://lwn.net/Kernel/Index#Namespaces-User_namespaces>Namespaces/User namespaces</a></tr>
+ </table><br clear=all>
+<hr width=60% align=left>
+ (<a href="https://lwn.net/Login/?target=/Articles/540087/">Log in</a> to post comments)
+ <p>
+
+</p></div>
+<p><a name=Comments></a>
+<a name=CommAnchor541600></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 18:04 UTC (Wed)
+ by <b>johill</b> (subscriber, #25196)
+ [<a href=https://lwn.net/Articles/541600/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Hmm, what are those namespace IDs (4026531837 and 4026532318)? Those numbers are "prettier" in hex (0xeffffffd and 0xf00001de respectively) but it's not obvious (to me) where they come from. Did I miss that in an earlier article?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541600/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541628></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 20:06 UTC (Wed)
+ by <b>nix</b> (subscriber, #2304)
+ [<a href=https://lwn.net/Articles/541628/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+They're inode numbers of /proc/$pid/ns/user. (This is an identity for the namespace because all members of a given namespace have, in effect, all their "ns/user"s hardlinked together.)<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541628/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor541627></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 20:09 UTC (Wed)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/541627/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+I believe you did miss it in an earlier article.<br>
+<p>
+Those numbers are proc inode numbers, which happen to be recorded in the symlink.<br>
+<p>
+If you need persistent names for any kind of namespace it is recommended that you do mount --bind /proc/PID/ns/user /a/filesystem/path.<br>
+<p>
+<p>
+<p>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541627/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor541612></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 18:45 UTC (Wed)
+ by <b>justincormack</b> (subscriber, #70439)
+ [<a href=https://lwn.net/Articles/541612/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+reboot is actually a special case now (though not apparently documented in the man pages). The reboot syscall in a pid namespace just sends a SIGHUP to the namespaces init process, not a real reboot, so in this sense it is also a namespace capability.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541612/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541689></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 23:41 UTC (Wed)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/541689/>Link</a>] (1 responses)
+ </p></summary>
+ <p>
+<font color=purple>&gt; reboot is actually a special case now
+</font>
+<p>
+Thanks for that pointer; I'd missed that 3.9 change. I've added a strikethrough in the article. And something will make its way into the man page soonish.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541689/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541766></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 7, 2013 11:33 UTC (Thu)
+ by <b>lyda</b> (subscriber, #7429)
+ [<a href=https://lwn.net/Articles/541766/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+As an aside, this is why the LWN comment section is the best comment section online. In a short exchange a missing piece of info was noted, an explanation of what happens was offered, the author of the article addressed the concern and a project gets a patch that makes it better.<br>
+<p>
+Not only was everything "civil," everything was positive and productive.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541766/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+<a name=CommAnchor541631></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Filesystems and security.</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 20:21 UTC (Wed)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/541631/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+It is true that user namespaces allow userspace to interact with more code, and thus somewhat increases the surface one has to worry about for kernel exploits.<br>
+<p>
+However, most filesystems can not be mounted with just user namespace permissions. Even for the filesystems you can mount with user namespace permissions remount is not supported. So while the cited tmpfs issue could have been a problem it it occurred elsewhere in tmpfs, it was not exploitable with user namespaces.<br>
+<p>
+The recent work on converting all of the filesystems for user namespace support is essentially a constructive compiler checked proof that shows that all of the uids and gids that come from userspace are properly converted into kuids. Making it safe to use existing filesystems in the presence of multiple user namespaces.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541631/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542933></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Filesystems and security.</h3>
+ <p class=CommentPoster> Posted Mar 14, 2013 15:38 UTC (Thu)
+ by <b>impossible7</b> (guest, #89863)
+ [<a href=https://lwn.net/Articles/542933/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; However, most filesystems can not be mounted with just user namespace permissions.</font><br>
+<p>
+Are there any plans to change this? If not, is there a reason for that?<br>
+<p>
+It would be nice if an ordinary user could create a user and mount namespaces and then e.g. mount an ext4 fs from a block device that they own.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542933/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor541635></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Resource limits</h3>
+ <p class=CommentPoster> Posted Mar 6, 2013 20:39 UTC (Wed)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/541635/>Link</a>] (4 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I expect there are some system administrators out there looking at this and asking: What resources limits are in place that can be used to limit user namespaces?<br>
+<p>
+The only answer at this point are memory control groups. Everything takes up memory and limiting the amount of memory used limits everything else. Unfortunately for the classic unix rlimit based resource limits fall down when multiple processes are involved.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541635/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541767></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Resource limits</h3>
+ <p class=CommentPoster> Posted Mar 7, 2013 11:36 UTC (Thu)
+ by <b>lyda</b> (subscriber, #7429)
+ [<a href=https://lwn.net/Articles/541767/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+What options exist or interact with this? I worked on a system that doled out memory, cpu and disk usage to a subtree of processes in a container. That was mainly handled in userland; is there work being done to manage this within the kernel or is the feeling that userland is the correct place for this?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541767/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541961></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Resource limits</h3>
+ <p class=CommentPoster> Posted Mar 8, 2013 0:52 UTC (Fri)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/541961/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+At a very basic level I don't see anything in any of the namespaces really being any different from any other process. The big differences are is that it is now possible to allocate kinds of resources that no one has added rlimits for, and that if /etc/subuid is setup and your users have multiple uids per user limits go from mostly useless to totally useless.<br>
+<p>
+To my knowledge there is not much in the control groups that is namespace or container specific. Although I seem to remember a network memory controller that had a connection with the network namespace.<br>
+<p>
+<p>
+Beyond that it all depends on how heavy a sandbox you want to run. Certainly with ptrace and a firm hand you can implement very fine control on processes.<br>
+<p>
+When done well I think the lightest weight solutions will live in the kernel. Certainly the cpu controller seems to live up to that notion.<br>
+<p>
+But honestly whatever works and whatever is easiest.<br>
+<p>
+<p>
+If there is any consensus of feeling on the matter it is that cgroups are ugly but they are the best general solution we have to the problem so far.<br>
+<p>
+Beyond that it looks like most of the time resource consumption is not a problem for most people. With the result that technology to implement and enforce resource limits are frequently neglected.<br>
+<p>
+I hope that helps a little.<br>
+<p>
+Eric<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541961/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor542454></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Resource limits</h3>
+ <p class=CommentPoster> Posted Mar 11, 2013 18:05 UTC (Mon)
+ by <b>BernardB</b> (subscriber, #47903)
+ [<a href=https://lwn.net/Articles/542454/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I'm also interested in having cgroup management supported within namespaces. I've seen a couple of patchsets posted to LKML to attempt to achieve this - most recently from Gao Feng. It seemed to get strong opposition from Tejun Heo though, who was pushing for a userland solution: <a href=http://article.gmane.org/gmane.linux.kernel.containers/24825>http://article.gmane.org/gmane.linux.kernel.containers/24825</a><br>
+<p>
+I haven't seen anything more recent though.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542454/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542481></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Resource limits</h3>
+ <p class=CommentPoster> Posted Mar 11, 2013 21:05 UTC (Mon)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/542481/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+I don't know if userland vs kernel is the appropriate way to characterize the debate.<br>
+<p>
+But yes there is a question of how unprivileged users can take advantage of the facilities cgroups offer, and how we can integrate cgroup support cleanly into containers.<br>
+<p>
+Last I heard mount --bind /cgroupfs/my/group /path/to/container/cgroupfs<br>
+worked as a good approximation to what many people want.<br>
+<p>
+I have not had a chance to look at it in any detail beyond that. It is nothing fundamentally hard it is just something that someone familiar with all the details needs to spend some time and to iron out.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542481/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+<a name=CommAnchor541794></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 7, 2013 13:57 UTC (Thu)
+ by <b>rfrancoise</b> (subscriber, #15508)
+ [<a href=https://lwn.net/Articles/541794/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Thank you Michael for this fantastic article series!<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541794/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542251></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 10, 2013 15:19 UTC (Sun)
+ by <b>cstanhop</b> (subscriber, #4740)
+ [<a href=https://lwn.net/Articles/542251/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Yes. Thank you! This has been a great, comprehensive introduction to the namespace features.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542251/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor542102></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 8, 2013 17:07 UTC (Fri)
+ by <b>alexl</b> (subscriber, #19068)
+ [<a href=https://lwn.net/Articles/542102/>Link</a>] (5 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I tried this in the latest Fedora kernel (3.8.1-201.fc18.x86_64), but it seems the user namespaces doesn't work:<br>
+<p>
+./userns_child_exec -U<br>
+clone: Invalid argument<br>
+<p>
+strace says:<br>
+clone(child_stack=0x7020f0, flags=CLONE_NEWUSER|SIGCHLD) = -1 EINVAL (Invalid argument)<br>
+<p>
+Isn't this supposed to work in 3.8.1?<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542102/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542128></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 8, 2013 19:47 UTC (Fri)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/542128/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+cat /proc/config.gz | grep USER_NS<br>
+<p>
+Were user namespaces enabled?<br>
+<p>
+I expect the generic fedora build enables one of the filesystems that has not had a kuid/kgid conversion in 3.8 and thus can not enable user namespaces.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542128/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor542136></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 8, 2013 20:58 UTC (Fri)
+ by <b>mathstuf</b> (subscriber, #69389)
+ [<a href=https://lwn.net/Articles/542136/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Looking at the config in the kernel srpm, the user namespace isn't supported even in Rawhide yet (3.9.0-rc1).<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542136/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542154></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 8, 2013 22:28 UTC (Fri)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/542154/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+I suspect it will have to wait until 3.10 when XFS stops turning off user namespaces.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542154/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542162></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 8, 2013 23:07 UTC (Fri)
+ by <b>mathstuf</b> (subscriber, #69389)
+ [<a href=https://lwn.net/Articles/542162/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+I was actually planning on building my own kernel RPM with user namespaces this weekend. I don't use XFS anywhere, so I'm fine with the tradeoff.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542162/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor557969></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Jul 7, 2013 12:58 UTC (Sun)
+ by <b>Tobu</b> (subscriber, #24111)
+ [<a href=https://lwn.net/Articles/557969/>Link</a>]
+ </p></summary>
+ The XFS work isn't merged yet…
+Does the same sort of <a href=https://lwn.net/Articles/540345/>complexity</a> exist for Btrfs, which exposes low-level structures through the search ioctl?
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/557969/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+<a name=CommAnchor542337></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 11, 2013 14:44 UTC (Mon)
+ by <b>mathstuf</b> (subscriber, #69389)
+ [<a href=https://lwn.net/Articles/542337/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Is there going to be a tool to help manage namespaces (I'd guess from util-linux)?<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542337/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor542473></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 11, 2013 20:56 UTC (Mon)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/542473/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+In the latest git of util-linux there is nsenter and unshare.<br>
+<p>
+There is code in lxc.<br>
+<p>
+Just for network namespaces there is code in iproute.<br>
+<p>
+There is work underway to get support for multiple uids and gids per user into shadow-utils.<br>
+<p>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/542473/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor543243></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Mar 18, 2013 9:51 UTC (Mon)
+ by <b>Da_Blitz</b> (guest, #50583)
+ [<a href=https://lwn.net/Articles/543243/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+If none of the other options out there float your boat (LXC, unshare command or others) then you may want to try a tool i wrote to play with this from python called asylum. its available at <a rel=nofollow href=http://code.pocketnix.org/asylum>http://code.pocketnix.org/asylum</a><br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/543243/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor556619></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Jun 27, 2013 19:35 UTC (Thu)
+ by <b>Urhixidur</b> (guest, #91620)
+ [<a href=https://lwn.net/Articles/556619/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+What happens to the user ID mappings of a process when it switches user namespaces? Are they zapped?<br>
+<p>
+I also presume the owner IDs of files are translated just like the owner IDs of processes? If a process in a user namespace tries to run an executable whose owner ID has not been mapped, will it be denied access?<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/556619/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor779641></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 6: more on user namespaces</h3>
+ <p class=CommentPoster> Posted Feb 13, 2019 9:40 UTC (Wed)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/779641/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+When a process switches user namespaces, its UID map will be the UID map of the user namespace that it moved to.<br>
+<p>
+Running an executable whose UID and GID have not been mapped is fine: since the file notionally has the "overflow IDs", the this means that the executing process will need o+x permission on the file to do the exec.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/779641/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</div>
+<div class="rightcol not-print">
+<div id=azk93271_right_zone></div>
+</div>
+</div>
+ <br clear=all>
+ <center>
+ <p>
+ <span class=ReallySmall>
+ Copyright © 2013, Eklektix, Inc.<br>
+ This article may be redistributed under the terms of the
+ <a href=http://creativecommons.org/licenses/by-sa/4.0/>Creative
+ Commons CC BY-SA 4.0</a> license<br>
+ Comments and public postings are copyrighted by their creators.<br>
+ Linux is a registered trademark of Linus Torvalds<br>
+ </span>
+ </p></center>
+
+
+<script data-template-shadow-root>(()=>{document.currentScript.remove();processNode(document);function processNode(node){node.querySelectorAll("template[shadowrootmode]").forEach(element=>{let shadowRoot = element.parentElement.shadowRoot;if (!shadowRoot) {try {shadowRoot=element.parentElement.attachShadow({mode:element.getAttribute("shadowrootmode")});shadowRoot.innerHTML=element.innerHTML;element.remove()} catch (error) {} if (shadowRoot) {processNode(shadowRoot)}}})}})()</script>

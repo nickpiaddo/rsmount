@@ -1,0 +1,1029 @@
+<!DOCTYPE html> <html lang=en style><!--
+ Page saved with SingleFile
+ url: https://lwn.net/Articles/532593/
+--><meta charset=utf-8><title>Namespaces in operation, part 5: User namespaces [LWN.net]</title>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel=alternate type=application/rss+xml title="LWN.net headlines" href=https://lwn.net/headlines/rss>
+<link rel=alternate type=application/rss+xml title="Comments posted to this article" href=https://lwn.net/headlines/532593/>
+<style>body{color:black;background-color:#ffffff;padding:0px}h1{margin:0px 0px 5px 0px;padding:0px;color:black}h3{margin:0px 0px 5px 0px;padding:0px}a{text-decoration:underline}a:link{color:DarkBlue}a:visited{color:#444}a:hover{color:DarkBlue;background-color:#eeeeee}a:visited:hover{color:#444}DIV.PageHeadline{text-align:center;max-width:65em;margin-top:1em;margin-bottom:2em}DIV.PageHeadline H1{margin-bottom:0.2em}DETAILS.CommentBox{border-style:none none none solid;border-width:thin;max-width:65em;margin-top:1em;background-color:inherit;padding-left:8px}DETAILS.CommentBox>SUMMARY>H3.CommentTitle{background-color:#ffcc99}DETAILS.CommentBox{border-color:#ffcc99}H3.CommentTitle{display:inline-block;width:100%;padding-left:3px}DETAILS[open]>SUMMARY{list-style-type:none;opacity:1.0;cursor:zoom-out}DETAILS>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[+]"}DETAILS[open]>SUMMARY>.CommentTitle::before{margin-right:4px;content:"[–]"}DETAILS>SUMMARY::MARKER,DETAILS>SUMMARY::-webkit-details-marker{display:none}P.CommentPoster{margin-top:0px}div.CommentReplyButton{display:block;text-align:right;padding:4px}TABLE.IndexEntries{background-color:#eeeeee;padding:3px;margin:5px;float:right}TABLE.IndexEntries TD:first-child{padding:1px 5px 1px 1px}SPAN.ReallySmall{font-size:x-small}DIV.FeatureByline{max-width:20em;float:left;background-color:#eeeeee;margin:2px 5px 2px 0px;padding-bottom:5px;padding-right:25px;padding-left:5px}DIV.ArticleText{margin:0px 0px 0px 0px;padding:0px 2px 0px 0px;max-width:65em}input{font-family:inherit;font-size:inherit}FONT.QuotedText{color:#990099}#menu{width:100%;position:fixed;top:0;left:0;right:0;background-color:#eeeeee;padding:0 0.2em 0 0.2em;overflow-y:visible;display:block;z-index:20;height:42px}DIV.navmenu-container{margin-left:0.5em;margin-top:0.5em;min-width:70%;border-radius:0.8em;padding:0.1em;display:inline-block}ul.navmenu{list-style:none;position:relative;display:inline-table;padding:0;margin:0}.navmenu li{display:inline-block;margin-right:0.4em}.navmenu ul{display:none;position:absolute;top:100%;width:15em;list-style:none;z-index:10;background:#eeeeee;padding-left:0;margin-left:0;border-style:solid}.navmenu ul li{display:block;margin-top:0.2em;margin-left:0.2em;line-height:1.4}.navmenu ul li:first-child{margin-top:1.2em}.navmenu li:hover>ul{display:block}a.navmenu{color:black}.navmenu a{text-decoration:none}.navmenu a:hover{text-decoration:underline}.navmenu a:visited,.topnav-container a:visited{color:DarkBlue}a.navmenu::after{content:" ▶"}span.logo,span.logobl,img.logo{display:none}DIV.topnav-container{margin-left:0.5em;margin-top:45px;margin-right:0.5em;background:#eeeeee;border-radius:0.8em;padding:0.3em}div.flexcol{display:flex;flex-direction:column}div.middlecolumn{flex:5}div.rightcol{padding-top:5em;flex:0 1 content}@media screen and (min-width:48em){.rightcol{flex:0;min-width:120px}}@media screen and (min-width:120em){.rightcol{max-width:400px}}@media screen and (min-width:48em){div.maincolumn{padding-left:10em}div.flexcol{flex-direction:row}#menu{display:block;width:9.6em;height:100%;bottom:0;overflow-y:visible}#menu:hover{overflow-y:auto}div.navmenu-container{display:block;margin-top:120px;margin-left:0;padding:0}.navmenu ul{display:block;position:static;width:9.6em;border-style:none;top:0}.navmenu li{margin:0.5em 0 0 0.1em;width:100%}.navmenu ul li{margin:0.1em 0 0 0.5em;text-indent:-0.4em;padding-right:0;width:auto;line-height:1.2}.navmenu ul li:first-child{margin-top:0}a.navmenu::after{content:""}DIV.topnav-container{margin-left:10.5em;margin-top:0.5em}img.logo{padding-right:0.2em;display:inline;float:left;position:absolute;top:3px;left:3px}span.logo{font-weight:bold;color:green;display:inline;font-size:180%;text-align:right;float:left;padding-left:60px;font-family:sans-serif;line-height:0.8;padding-top:0.3em}span.logobl{color:green;display:inline;font-size:80%;text-align:center;position:absolute;top:85px;left:5px;font-family:sans-serif}}@media screen and (min-width:80em){}@media (max-width:48em){.not-handset{display:none}}@media (min-width:48em){.not-handset{display:inline-block}}DIV.ArticleText{padding-left:0.5em}TABLE{border-collapse:separate;border-spacing:5px 0px}PRE{white-space:pre;overflow:visible}H3.CommentTitle{border-radius:0 2em 2em 0}html{font-family:inherit}input{background-color:#ffffff;color:black;padding:3px;border-radius:0.5em}input:focus{border-color:DarkBlue}input[type="submit"]{background-color:#eeeeee}input[type="submit"]:hover{background-color:#ccc}form.loginform{display:inline}TT{white-space:nowrap}</style>
+<meta name=referrer content=no-referrer><link rel=icon href="data:image/png;base64,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" type=image/png><style>.sf-hidden{display:none!important}</style><link rel=canonical href=https://lwn.net/Articles/532593/><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+ <body>
+ <a name=t></a>
+<div id=menu><a href=https://lwn.net/><img src=data:image/png;base64,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 class=logo border=0 alt="LWN.net Logo">
+ <span class=logo>LWN<br>.net</span>
+ <span class=logobl>News from the source</span></a>
+ <a href=https://lwn.net/><img src=data:, class="sslogo sf-hidden" border=0 alt=LWN></a><div class=navmenu-container>
+ <ul class=navmenu>
+ <li><a class=navmenu href=#t><b>Content</b></a><ul><li><a href=https://lwn.net/current/>Weekly Edition</a><li><a href=https://lwn.net/Archives/>Archives</a><li><a href=https://lwn.net/Search/>Search</a><li><a href=https://lwn.net/Kernel/>Kernel</a><li><a href=https://lwn.net/Security/>Security</a><li><a href=https://lwn.net/Calendar/>Events calendar</a><li><a href=https://lwn.net/Comments/unread>Unread comments</a><li><hr><li><a href=https://lwn.net/op/FAQ.lwn>LWN FAQ</a><li><a href=https://lwn.net/op/AuthorGuide.lwn>Write for us</a></ul></li>
+<li><a class=navmenu href=#t><b>Edition</b></a><ul><li><a href=https://lwn.net/Articles/539462/>Return to the Development page</a></ul></li>
+</ul></div>
+</div>
+<div class=not-handset style=margin-left:10.5em;display:block>
+ <div class=not-print> <div id=azk13321_leaderboard></div> </div>
+ </div>
+ <div class=topnav-container>
+<div class=not-handset><form action=https://lwn.net/Login/ method=post name=loginform class=loginform>
+ <label><b>User:</b> <input type=text name=Username value size=8 id=uc></label>
+ <label><b>Password:</b> <input type=password name=Password size=8 id=pc value></label> <input type=submit name=submit value="Log in"></form> |
+ <form action=https://lwn.net/subscribe/ method=post class=loginform>
+ <input type=submit name=submit value=Subscribe>
+ </form> |
+ <form action=https://lwn.net/Login/newaccount method=post class=loginform>
+ <input type=submit name=submit value=Register>
+ </form>
+ </div>
+ <div class="handset-only sf-hidden">
+ /
+ /
+
+ </div>
+ </div><div class="maincolumn flexcol">
+<div class=middlecolumn>
+<div class=PageHeadline>
+<h1>Namespaces in operation, part 5: User namespaces</h1>
+</div>
+<div class=ArticleText>
+<div class=FeatureByline>
+ By <b>Michael Kerrisk</b><br>February 27, 2013
+ </div>
+<p> Continuing our ongoing <a href=https://lwn.net/Articles/531114/#series_index>series</a> on namespaces, this
+article looks more closely at user namespaces, a feature whose
+implementation was (largely) completed in Linux 3.8. (The remaining work
+consists of changes for <a href=https://lwn.net/Articles/538816/>XFS</a> and <a href=https://lwn.net/Articles/538875/>a number of other filesystems</a>; the latter has
+already been merged for 3.9.) User namespaces allow per-namespace mappings
+of user and group IDs. This means that a process's user and group IDs
+inside a user namespace can be different from its IDs outside of the
+namespace. Most notably, a process can have a nonzero user ID outside a
+namespace while at the same time having a user ID of zero inside the
+namespace; in other words, the process is unprivileged for operations
+outside the user namespace but has root privileges inside the namespace.
+<h4>Creating user namespaces</h4>
+<p> User namespaces are created by specifying
+the <tt>CLONE_NEWUSER</tt> flag when
+calling <tt>clone()</tt> or <tt>unshare()</tt>. Starting with Linux 3.8
+(and unlike the flags used for creating other types of namespaces), no
+privilege is required to create a user namespace. In our examples below,
+all of the user namespaces are created using the unprivileged user ID 1000.
+<p> To begin investigating user namespaces, we'll make use of a small
+program, <a href=https://lwn.net/Articles/539941/><tt>demo_userns.c</tt></a>, that
+creates a child in a new user namespace. The child simply displays its
+effective user and group IDs as well as its <a href=http://man7.org/linux/man-pages/man7/capabilities.7.html>capabilities</a>.
+Running this program as an unprivileged user produces the following result:
+<pre>    $ <b>id -u</b>          # Display effective user ID of shell process
+    1000
+    $ <b>id -g</b>          # Effective group ID of shell
+    1000
+    $ <b>./demo_userns </b>
+    eUID = 65534;  eGID = 65534;  capabilities: =ep
+</pre>
+<p> The output from this program shows some interesting details. One of
+these is the capabilities that were assigned to the child process. The
+string "<tt>=ep</tt>" (produced by the library function
+<tt>cap_to_text()</tt>, which converts capability sets to a textual
+representation) indicates that the child has a full set of permitted and
+effective capabilities, even though the program was run from an
+unprivileged account. When a user namespace is created, the first process
+in the namespace is granted a full set of capabilities in the namespace.
+This allows that process to perform any initializations that are necessary
+in the namespace before other processes are created in the namespace.
+<p> The second point of interest is the user and group IDs of the child
+process. As noted above, a process's user and group IDs inside and outside
+a user namespace can be different. However, there needs to be a mapping
+from the user IDs inside a user namespace to a corresponding set of user
+IDs outside the namespace; the same is true of group IDs. This allows the
+system to perform the appropriate permission checks when a process in a
+user namespace performs operations that affect the wider system (e.g.,
+sending a signal to a process outside the namespace or accessing a file).
+<p> System calls that return process user and group IDs—for example,
+<tt>getuid()</tt> and <tt>getgid()</tt>—always return credentials as
+they appear inside the user namespace in which the calling process resides.
+If a user ID has no mapping inside the namespace, then system calls that
+return user IDs return the value defined in the file
+<tt>/proc/sys/kernel/overflowuid</tt>, which on a standard system defaults
+to the value 65534. Initially, a user namespace has no user ID mapping, so
+all user IDs inside the namespace map to this value. Likewise, a new user
+namespace has no mappings for group IDs, and all unmapped group IDs map to
+<tt>/proc/sys/kernel/overflowgid</tt> (which has the same default as
+<tt>overflowuid</tt>).
+<p>
+There is one other important point worth noting that can't be gleaned from
+the output above. Although the new process has a full set of capabilities
+in the new user namespace, it has no capabilities in the parent namespace.
+This is true regardless of the credentials and capabilities of the process
+that calls <tt>clone()</tt>. In particular, even if root employs
+<tt>clone(CLONE_NEWUSER)</tt>, the resulting child process will have no
+capabilities in the parent namespace.
+<p> One final point to be made about the creation of user namespaces is
+that namespaces can be nested; that is, each user namespace (other than the
+initial user namespace) has a parent user namespace, and can have zero or
+more child user namespaces. The parent of a user namespace is the user
+namespace of the process that creates the user namespace via a call to
+<tt>clone()</tt> or <tt>unshare()</tt> with the <tt>CLONE_NEWUSER</tt>
+flag. The significance of the parent-child relationship between user
+namespaces will become clearer in the remainder of this article.
+<h4>Mapping user and group IDs</h4>
+<p> Normally, one of the first steps after creating a new user namespace is to define
+the mappings used for the user and group IDs of the processes that will be
+created in that namespace.
+This is done by writing mapping information to the
+<tt>/proc/</tt><i>PID</i><tt>/uid_map</tt> and
+<tt>/proc/</tt><i>PID</i><tt>/gid_map</tt> files corresponding to one of
+the processes in the user namespace. (Initially, these two files are
+empty.) This information consists of one or more lines, each of which
+contains three values separated by white space:
+<pre>    ID-inside-ns   ID-outside-ns   length
+</pre>
+<p> Together, the <tt>ID-inside-ns</tt> and <tt>length</tt> values define a
+range of IDs inside the namespace that are to be mapped to an ID range of
+the same length outside the namespace. The <tt>ID-outside-ns</tt> value
+specifies the starting point of the outside range. How
+<tt>ID-outside-ns</tt> is interpreted depends on the whether the process
+opening the file <tt>/proc/</tt><i>PID</i><tt>/uid_map</tt>
+(or <tt>/proc/</tt><i>PID</i><tt>/gid_map</tt>) is in the same user namespace
+as the process <i>PID</i>:
+<ul>
+<li>
+If the two processes are in the same namespace, then <tt>ID-outside-ns</tt>
+is interpreted as a user ID (group ID) in the parent user namespace of the
+process <i>PID</i>. The common case here is that a process is writing to
+its own mapping file (<tt>/proc/self/uid_map</tt> or
+<tt>/proc/self/gid_map</tt>).
+</li>
+<p>
+</p><li>
+If the two processes are in different namespaces, then
+<tt>ID-outside-ns</tt> is interpreted as a user ID (group ID) in the user
+namespace of the process opening <tt>/proc/</tt><i>PID</i><tt>/uid_map</tt>
+(<tt>/proc/</tt><i>PID</i><tt>/gid_map</tt>). The writing process is then
+defining the mapping relative to its own user namespace.
+</li>
+</ul>
+<p> Suppose that we once more invoke our <tt>demo_userns</tt> program, but
+this time with a single command-line argument (any string). This causes
+the program to loop, continuously displaying credentials and capabilities
+every few seconds:
+<pre>    $ <b>./demo_userns x</b>
+    eUID = 65534;  eGID = 65534;  capabilities: =ep
+    eUID = 65534;  eGID = 65534;  capabilities: =ep
+</pre>
+<p> Now we switch to another terminal window—to a shell process
+running in another namespace (namely, the parent user namespace of the
+process running <tt>demo_userns</tt>) and create a user ID mapping for the
+child process in the new user namespace created by <tt>demo_userns</tt>:
+<pre>    $ <b>ps -C demo_userns -o 'pid uid comm'</b>      # Determine PID of clone child
+      PID   UID COMMAND
+     4712  1000 demo_userns                    # This is the parent
+     4713  1000 demo_userns                    # Child in a new user namespace
+    $ <b>echo '0 1000 1' &gt; /proc/4713/uid_map</b>
+</pre>
+<p> If we return to the window running <tt>demo_userns</tt>, we now see:
+<pre>    eUID = 0;  eGID = 65534;  capabilities: =ep
+</pre>
+<p> In other words, the user ID 1000 in the parent user namespace (which
+was formerly mapped to 65534) has been
+mapped to user ID 0 in the user namespace created by <tt>demo_userns</tt>.
+From this point, all operations within the new user namespace that deal
+with this user ID will see the number 0, while corresponding operations in
+the parent user namespace will see the same process as having user ID 1000.
+<p> We can likewise create a mapping for group IDs in the new user
+namespace. Switching to another terminal window, we create a mapping for
+the single group ID 1000 in the parent user namespace to the group ID 0 in
+the new user namespace:
+<pre>    $ <b>echo '0 1000 1' &gt; /proc/4713/gid_map</b>
+</pre>
+<p> Switching back to the window running <tt>demo_userns</tt>, we see that
+change reflected in the display of the effective group ID:
+<pre>    eUID = 0;  eGID = 0;  capabilities: =ep
+</pre>
+<h4>Rules for writing to mapping files</h4>
+<p> There are a number of rules governing writing to <tt>uid_map</tt>
+files; analogous rules apply for writing to <tt>gid_map</tt> files. The
+most important of these rules are as follows.
+<p> Defining a mapping is a one-time operation per namespace: we can perform only a
+single write (that may contain multiple newline-delimited records) to a
+<tt>uid_map</tt> file of exactly one of the processes in the user
+namespace. Furthermore, the number of lines that may be written to the file
+is currently limited to five (an arbitrary limit that may be increased in
+the future).
+<p> The <tt>/proc/</tt><i>PID</i><tt>/uid_map</tt> file is owned by the user
+ID that created the namespace, and is writeable only by that user (or a
+privileged user). In addition, all of the following requirements must be
+met:
+<ul>
+<p>
+</p><li>
+The writing process must have the <tt>CAP_SETUID</tt> (<tt>CAP_SETGID</tt>
+for <tt>gid_map</tt>) capability in the user namespace of the process
+<i>PID</i>.
+</li>
+<p>
+</p><li>
+Regardless of capabilities, the writing process must be in either the user
+namespace of the process <i>PID</i> or inside the (immediate) parent user namespace of
+the process <i>PID</i>.
+</li>
+<p>
+</p><li>
+One of the following must be true:
+</li>
+<ul>
+<p>
+</p><li>
+The data written to <tt>uid_map</tt> (<tt>gid_map</tt>) consists of a
+single line that maps (only) the writing process's effective user ID (group ID) in the
+parent user namespace to a user ID (group ID) in the user namespace.
+This rule allows the initial process in a user namespace (i.e., the child
+created by <tt>clone()</tt>) to write a mapping for its
+own user ID (group ID).
+</li>
+<p>
+</p><li>
+The process has the <tt>CAP_SETUID</tt> (<tt>CAP_SETGID</tt> for
+<tt>gid_map</tt>) capability in the parent user namespace. Such a process
+can define mappings to arbitrary user IDs (group IDs) in the parent user
+namespace. As we noted earlier, the initial process in a new user
+namespace has no capabilities in the parent namespace. Thus, only a process
+in the parent namespace can write a mapping that maps arbitrary IDs in the
+parent user namespace.
+</li>
+</ul>
+</ul>
+<h4>Capabilities, execve(), and user ID 0</h4>
+<p> In an earlier article in this series, we developed the <a href=https://lwn.net/Articles/533492/><tt>ns_child_exec</tt></a> program.
+This program uses <tt>clone()</tt> to create a child process in new
+namespaces specified by command-line options and then executes a shell
+command in the child process.
+<p> Suppose that we use this program to execute a shell in a new user
+namespace and then within that shell we try to define the user ID mapping for
+the new user namespace. In doing so, we run into a problem:
+<pre>    $ <b>./ns_child_exec -U  bash</b>
+    $ <b>echo '0 1000 1' &gt; /proc/$$/uid_map</b>       # $$ is the PID of the shell
+    bash: echo: write error: Operation not permitted
+</pre>
+<p>
+This error occurs because the shell has no capabilities inside the new user
+namespace, as can be seen from the following commands:
+<pre>    $ <b>id -u</b>         # Verify that user ID and group ID are not mapped
+    65534
+    $ <b>id -g</b>
+    65534
+    $ <b>cat /proc/$$/status | egrep 'Cap(Inh|Prm|Eff)'</b>
+    CapInh: 0000000000000000
+    CapPrm: 0000000000000000
+    CapEff: 0000000000000000
+</pre>
+<p> The problem occurred at the <tt>execve()</tt> call that executed the
+<tt>bash</tt> shell: when a process with non-zero user IDs performs an
+<tt>execve()</tt>, the process's capability sets are cleared. (The <a href=http://man7.org/linux/man-pages/man7/capabilities.7.html><tt>capabilities(7)</tt></a>
+manual page details the treatment of capabilities during an
+<tt>execve()</tt>.)
+<p> To avoid this problem, it is necessary to create a user ID mapping
+inside the user namespace <i>before</i> performing the
+<tt>execve()</tt>. This is not possible with the <tt>ns_child_exec</tt>
+program; we need a slightly enhanced version of the program that does allow
+this.
+<p> The <a href=https://lwn.net/Articles/539940/><tt>userns_child_exec.c</tt></a>
+program performs the same task as the <tt>ns_child_exec</tt> program, and
+has the same command-line interface, except that it allows two additional
+command-line options, <tt>-M</tt> and <tt>-G</tt>. These options accept
+string arguments that are used to define user and group ID maps for the new
+user namespace. For example, the following command maps both user ID 1000
+and group ID 1000 to 0 in the new user namespace:
+<pre>    $ <b>./userns_child_exec -U -M '0 1000 1' -G '0 1000 1' bash</b>
+</pre>
+<p>
+This time, updating the mapping files succeeds, and we see that the shell
+has the expected user ID, group ID, and capabilities:
+<pre>    $ <b>id -u</b>
+    0
+    $ <b>id -g</b>
+    0
+    $ <b>cat /proc/$$/status | egrep 'Cap(Inh|Prm|Eff)'</b>
+    CapInh: 0000000000000000
+    CapPrm: 0000001fffffffff
+    CapEff: 0000001fffffffff
+</pre>
+<p> There are some subtleties to the implementation of the
+<tt>userns_child_exec</tt> program. First, either the parent process
+(i.e., the caller of <tt>clone()</tt>) or the new child process could
+update the user ID and group ID maps of the new user namespace. However, following
+the rules above, the only kind of mapping that the child process could
+define would be one that maps just its own effective user ID. If we want to
+define arbitrary user and group ID mappings in the child, then that must be done
+by the parent process. Furthermore, the parent process must have suitable
+capabilities, namely <tt>CAP_SETUID</tt>, <tt>CAP_SETGID</tt>, and (to ensure that
+the parent has the permissions needed to open the mapping files)
+<tt>CAP_DAC_OVERRIDE</tt>.
+<p> Furthermore, the parent must ensure that it updates the mapping files
+before the child calls <tt>execve()</tt> (otherwise we have exactly the
+problem described above, where the child will lose capabilities during the
+<tt>execve()</tt>). To do this, the two processes employ a pipe to ensure
+the required synchronization; comments in the program source code give full
+details.
+<h4>Viewing user and group ID mappings</h4>
+<p> The examples so far showed the use of
+<tt>/proc/</tt><i>PID</i><tt>/uid_map</tt> and
+<tt>/proc/</tt><i>PID</i><tt>/gid_map</tt> files for defining a
+mapping. These files can also be used to view the mappings governing a
+process. As when writing to these files, the second
+(<tt>ID-outside-ns</tt>) value is interpreted according to which process is
+opening the file. If the process opening the file is in the same user
+namespace as the process <i>PID</i>, then <tt>ID-outside-ns</tt> is defined
+with respect to the parent user namespace. If the process opening the file
+is in a different user namespace, then <tt>ID-outside-ns</tt> is defined
+with respect to the user namespace of the process opening the file.
+<p> We can illustrate this by creating a couple of user namespaces running
+shells, and
+examining the <tt>uid_map</tt> files of the processes in the namespaces.
+We begin by creating a new user namespace with a process running a shell:
+<pre>    $ <b>id -u</b>            # Display effective user ID
+    1000
+    $ <b>./userns_child_exec -U -M '0 1000 1' -G '0 1000 1' bash</b>
+    $ <b>echo $$</b>          # Show shell's PID for later reference
+    2465
+    $ <b>cat /proc/2465/uid_map</b>
+             0       1000          1
+    $ <b>id -u</b>            # Mapping gives this process an effective user ID of 0
+    0
+</pre>
+<p> Now suppose we switch to another terminal window and create a sibling
+user namespace that employs different user and group ID mappings:
+<pre>    $ <b>./userns_child_exec -U -M '200 1000 1' -G '200 1000 1' bash</b>
+    $ <b>cat /proc/self/uid_map</b>
+           200       1000          1
+    $ <b>id -u</b>            # Mapping gives this process an effective user ID of 200
+    200
+    $ <b>echo $$</b>          # Show shell's PID for later reference
+    2535
+</pre>
+<p> Continuing in the second terminal window, which is running in the
+second user namespace, we view the user ID mapping of the process in the other
+user namespace:
+<pre>    $ <b>cat /proc/2465/uid_map</b>
+             0        200          1
+</pre>
+<p> The output of this command shows that user ID 0 in the other user
+namespace maps to user ID 200 in this namespace. Note
+that the same command produced different output when executed in the other
+user namespace, because the kernel generates the <tt>ID-outside-ns</tt>
+value according to the user namespace of the process that is reading from
+the file.
+<p>
+If we switch back to the first terminal window, and display the user ID mapping
+file for the process in the second user namespace, we see the converse
+mapping:
+<pre>    $ <b>cat /proc/2535/uid_map</b>
+           200          0          1
+</pre>
+<p> Again, the output here is different from the same command when executed
+in the second user namespace, because the <tt>ID-outside-ns</tt> value is
+generated according to the user namespace of the process that is reading
+from the file. Of course, in the initial namespace, user ID 0 in the first
+namespace and user ID 200 in the second namespace both map to user ID
+1000. We can verify this by executing the following commands in a third
+shell window inside the initial user namespace:
+<pre>    $ <b>cat /proc/2465/uid_map</b>
+             0       1000          1
+    $ <b>cat /proc/2535/uid_map</b>
+           200       1000          1
+</pre>
+<h4>Concluding remarks</h4>
+<p>
+In this article, we've looked at the basics of user namespaces: creating a
+user namespace, using user and group ID map files, and the interaction of user
+namespaces and capabilities.
+<p> As we noted in <a href=https://lwn.net/Articles/528078/>an earlier article</a>, one
+of the motivations for implementing user namespaces is to give non-root
+applications access to functionality that was formerly limited to the root
+user. In traditional UNIX systems, various pieces of functionality have
+been limited to the root user in order to prevent unprivileged users from
+manipulating the runtime environment of privileged programs, which could
+affect the operation of those programs in unexpected or
+undesirable ways.
+<p>
+A user namespace allows a process (that is unprivileged
+outside the namespace) to have root privileges while at the same time
+limiting the scope of that privilege to the namespace, with the result that
+the process cannot manipulate the runtime environment of privileged
+programs in the wider system. In order to use these root privileges
+meaningfully, we need to combine user namespaces with other types of
+namespaces—that topic will form the subject of the next article in
+this series.<br clear=all><table class=IndexEntries>
+ <tbody><tr><th colspan=2>Index entries for this article</tr>
+ <tr><td><a href=https://lwn.net/Kernel/Index>Kernel</a><td><a href=https://lwn.net/Kernel/Index#Namespaces-User_namespaces>Namespaces/User namespaces</a></tr>
+ </table><br clear=all>
+<hr width=60% align=left>
+ (<a href="https://lwn.net/Login/?target=/Articles/532593/">Log in</a> to post comments)
+ <p>
+
+</p></div>
+<p><a name=Comments></a>
+<a name=CommAnchor540304></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 27, 2013 19:50 UTC (Wed)
+ by <b>nix</b> (subscriber, #2304)
+ [<a href=https://lwn.net/Articles/540304/>Link</a>] (6 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Simply excellent documentation. Would that all docs were like this.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540304/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor540308></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 27, 2013 19:59 UTC (Wed)
+ by <b>einstein</b> (guest, #2052)
+ [<a href=https://lwn.net/Articles/540308/>Link</a>] (5 responses)
+ </p></summary>
+ <div class=FormattedComment>
+It looks like we're oh so slowly and painfully discovering and re-inventing openvz a little bit at a time. Hopefully we'll get there before too many more years.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540308/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor540333></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 27, 2013 20:52 UTC (Wed)
+ by <b>SEJeff</b> (guest, #51588)
+ [<a href=https://lwn.net/Articles/540333/>Link</a>] (3 responses)
+ </p></summary>
+ <div class=FormattedComment>
+@einstein: Parallels (virtuozzo/openvz authors) have been some of the primary contributors to the upstream namespace support in the kernel. While I cringe at seeing the 1Mb+ patch that openvz is, I've got to give them props for going about things the right (and very long) way of getting small bits upstream at a time.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540333/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor540350></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 27, 2013 22:34 UTC (Wed)
+ by <b>mabshoff</b> (guest, #86444)
+ [<a href=https://lwn.net/Articles/540350/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Well, I am not quite sure where the 1 MB patch figure comes from, but all the RHEL 6.x based patches weigh in at 27 MB unpacked. Note that this is 2.6.32 vanilla -&gt; RHEL 6.x+ovz, so I do assume that the vast majority of that diff is the RHEL 6.x changes. Either way, as you mentioned a massive amount of code from the people working for Parallels has been merged, so I would be curious what the RHEL 7.0 diff will look like. I guess we will know in a couple months.<br>
+<p>
+Cheers,<br>
+<p>
+Michael<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540350/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor540374></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 28, 2013 4:25 UTC (Thu)
+ by <b>SEJeff</b> (guest, #51588)
+ [<a href=https://lwn.net/Articles/540374/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+From a quick google, I found this:<br>
+<a href=http://openvz.org/Kernel_build#Rebuilding_kernel_from_sources>http://openvz.org/Kernel_build#Rebuilding_kernel_from_sou...</a><br>
+<p>
+[jeff@omniscience tmp]$ wget -q <a href=http://download.openvz.org/kernel/branches/2.6.18/028stab056.1/patches/patch-ovz028stab056.1-combined.gz>http://download.openvz.org/kernel/branches/2.6.18/028stab...</a><br>
+[jeff@omniscience tmp]$ du -hs patch-ovz028stab056.1-combined.gz<br>
+1.2M patch-ovz028stab056.1-combined.gz<br>
+[jeff@omniscience tmp]$ gzip -d patch-ovz028stab056.1-combined.gz <br>
+[jeff@omniscience tmp]$ du -hs patch-ovz028stab056.1-combined <br>
+4.6M patch-ovz028stab056.1-combined<br>
+<p>
+I did the same thing about a year ago and the results were the same. So I still stand by my previous comment. Around a megabyte :)<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540374/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor540420></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 28, 2013 14:33 UTC (Thu)
+ by <b>mabshoff</b> (guest, #86444)
+ [<a href=https://lwn.net/Articles/540420/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; From a quick google, I found this: [SNIP]</font><br>
+<p>
+Yeah, that was the first hit I got, too, but I discarded it for the reason listed below.<br>
+<p>
+<font class=QuotedText>&gt; So I still stand by my previous comment. Around a megabyte :)</font><br>
+<p>
+Well, that specific patch is for a RHEL 5 based kernel, i.e. on top of their version of 2.6.18. The RHEL 6 based 2.6.32 kernel patch weights in at currently 1.3 MB (see [1]). And that patch dates from March 4th 2011, so I would hardly call it current :p.<br>
+<p>
+Anyway, with ploop and some of their other bits being out of mainline for now their patch is a little like the RT patch set: growing some time and shrinking some other time, but as patches move into mainline from it new patches for new functionality get added on top. At least after many years of living mostly out of mainline their efforts like CRIU have shown that you can merge it into mainline assuming all interested parties collaborate, and that is a really positive development imho.<br>
+<p>
+Cheers,<br>
+<p>
+Michael<br>
+<p>
+<p>
+[1] <a rel=nofollow href=http://download.openvz.org/kernel/branches/2.6.32/2.6.32-feoktistov.1/patches/>http://download.openvz.org/kernel/branches/2.6.32/2.6.32-...</a><br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540420/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</details>
+<a name=CommAnchor540345></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Feb 27, 2013 22:11 UTC (Wed)
+ by <b>ebiederm</b> (subscriber, #35028)
+ [<a href=https://lwn.net/Articles/540345/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Oh I would say that the user namespaces at least are much closer to the original vserver approach (which uses a fixed number of the high bits as the container id) and fair bit better than either approach as all of the weird corner cases of mixing userspace uids and gids and the kernel uids and gids are handled.<br>
+<p>
+That is what the remaining XFS work is about ensuring that XFS doesn't mix user space uids with in-kernel uids without adding the appropriate translations, and making it hard to mess confuse those two kinds of uids in the future. XFS has a very unique architecture for it's in-kernel filesystem data structures and many more user facing ioctls than most filesystems which means it can't be treated like just another filesystem.<br>
+<p>
+What was not mentioned is that when a process in a user namespace interacts files, the interaction is the same as interacting with processes. When a file is created the uid of the process is mapped into the initial user namespace those mapped uids are stored on disk. Meanwhile when the process in a user namespace stats those files the uids are mapped back into it's namespace so it sees the uids it wrote with instead of the uids that are stored on disk.<br>
+<p>
+This allows quotas and other filesystem features to work with user namespaces without any changes to the on-disk format.<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540345/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+<a name=CommAnchor540392></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Complexity?</h3>
+ <p class=CommentPoster> Posted Feb 28, 2013 10:31 UTC (Thu)
+ by <b>renox</b> (guest, #23785)
+ [<a href=https://lwn.net/Articles/540392/>Link</a>] (4 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Unix user/group management has always looked very complex to me, I wonder if this is because<br>
+1) I've not invested enough effort understand Unix management<br>
+2) the problem is itself very complex <br>
+3) this is an historical baggage/legacy and other approaches (Plan9? Windows?) could provide the same type of services but in a simpler way..<br>
+<p>
+Thoughts?<br>
+<p>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540392/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor540487></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Complexity?</h3>
+ <p class=CommentPoster> Posted Feb 28, 2013 17:26 UTC (Thu)
+ by <b>hummassa</b> (guest, #307)
+ [<a href=https://lwn.net/Articles/540487/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+IMHO, (2).<br>
+<p>
+Windows-like ACLs (again IMHO) are simpler to apply but cause more esoteric and difficult-to-debug problems.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540487/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor541208></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Complexity?</h3>
+ <p class=CommentPoster> Posted Mar 5, 2013 10:07 UTC (Tue)
+ by <b>malor</b> (guest, #2973)
+ [<a href=https://lwn.net/Articles/541208/>Link</a>] (2 responses)
+ </p></summary>
+ The old Unix permissions system actually isn't very complex, which is its central problem. The permissions are very coarse, and it's very hard to describe complex security arrangements using those very dull tools. It's primarily based on user/group/other, read/write/execute, and the various permutations of those three permissions, granted to those three broad categories. And then you've got system-wide capabilities, which either grant or deny access to users to do things that can be dangerous to the system as a whole. As they presently stand, Unix permissions are very coarsely defined, and can be very far-reaching. Granting a given permission to a program can have nasty security implications that are difficult to understand. <p>
+On the Windows side, NT-derivative systems have used ACLs for a long time, and they're much more capable. The permissions themselves are fairly fine-grained, and then you can specify to a gnat's eyebrow exactly who should and should not get them. As long as you realize that the permissions system is looking for any possible excuse to deny a permission, and only if it A) can't find any reason to reject someone, and B) finds an explicit authorization, will it finally grant a permission. Just think of the NT permissions system as a big asshole, and the whole system ends up being easily understandable, and very powerful.<p>
+But, ACLs have a very fundamental problem: permissions are granted, normally, to <i>users</i>, not <i>programs</i>, so they do almost nothing to protect programs from each other. If they're being run by the same user (say, "malor"), then they can mess each other up. If I'm running Internet Explorer, then it has any permission that I do, and if it's hijacked, it can erase or corrupt anything that I could erase or corrupt. <p>
+Namespaces are kind of an ugly hack that seem to have three basic goals:
+<ol><li>Preserve compability with the old Unix blunt instruments;</li>
+<li>Allow finer-grained permission controls;</li>
+<li>Assign permissions based on programs, rather than users</ol><p>
+Once this stuff has been really integrated into the system software, running Firefox as "malor" should grant a very limited exposure to my other files, should it be hijacked. The browser process might be restricted to creating new files in a download directory only, with no other write access anywhere in the filesystem. A separate, user-facing program might have the authorization to rewrite user configuration files, like bookmarks or the settings in about:config. By separating them in this way, it will be enormously harder for a remote exploit, even in a full-featured language like Java, to escape the virtual sandbox it's in. It probably won't be impossible, but it should be much more difficult, perhaps requiring a specific exploit be written to attack your particular combination of OS and Firefox, making it non-feasible for mass exploit attempts.<p>
+This is kind of the same thing that Microsoft and Apple are trying to do with their DRM-based software stores, and highly restricted environments, but in this case, YOU hold the keys, not Microsoft or Apple. <p>
+The overall solution ends up being kind of ugly, because of the simultaneous need to maintain compatibility with a 40-year-old permissions system, and also to implement a bunch of new permission types that have never existed in Unix before, but I'll tell you this: I'll take an ugly system I can control myself over an imposed system by a corporation any day. If I want the best security, where programs are isolated from one another, but I also want to own my own hardware, Linux namespaces seem to be the way forward. <p>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541208/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541214></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Complexity?</h3>
+ <p class=CommentPoster> Posted Mar 5, 2013 10:29 UTC (Tue)
+ by <b>etienne</b> (guest, #25256)
+ [<a href=https://lwn.net/Articles/541214/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; permissions are granted, normally, to users, not programs</font><br>
+<p>
+Maybe that is not complex enough, and permissions should be granted to what the program is doing:<br>
+- if the program is updating itself (when no package manager) it should have rights to overwrite its own binaries<br>
+- if the program is configuring itself (when user changes something) it should have rights to change its configuration files<br>
+- if the program is being only "used", it shall do none of the above.<br>
+<p>
+Ever seen a security system blocking half of the upgrade of a package?<br>
+I did not say I would like to manage such a system...<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541214/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor640226></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Complexity?</h3>
+ <p class=CommentPoster> Posted Apr 14, 2015 4:51 UTC (Tue)
+ by <b>bandrami</b> (guest, #94229)
+ [<a href=https://lwn.net/Articles/640226/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; NT-derivative systems have used ACLs for a long time, and they're much more capable.</font><br>
+<p>
+And this is not *necessarily* a good thing. Taking Unix permissions and then adding capabilities and ACLs triples (more than triples, really) the logic required to statically verify a configuration. I guess I sort of appreciate the idea that a library that isn't there can't be misconfigured -- I don't run ACLs or CAP_*s or namespaces on my production Linux servers for that reason even though that takes rebuilding the kernel. It's the same argument I have with mandatory access control systems: knobs I can twist are knobs that I can twist the wrong way. I want my security system to be so brain-dead that I can verify it at 3am in a loud server room with a client calling me every 30 seconds.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/640226/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+<a name=CommAnchor540851></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Mar 1, 2013 23:51 UTC (Fri)
+ by <b>darwish07</b> (guest, #49520)
+ [<a href=https://lwn.net/Articles/540851/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Thanks for providing such an interesting, and quite informative, article!<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540851/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor540927></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Hurd?</h3>
+ <p class=CommentPoster> Posted Mar 2, 2013 19:15 UTC (Sat)
+ by <b>cesarb</b> (subscriber, #6266)
+ [<a href=https://lwn.net/Articles/540927/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+<font class=QuotedText>&gt; As we noted in an earlier article, one of the motivations for implementing user namespaces is to give non-root applications access to functionality that was formerly limited to the root user.</font><br>
+<p>
+Wasn't that one of the motivations for the microkernel design of GNU Hurd?<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/540927/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor541720></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Mar 7, 2013 2:40 UTC (Thu)
+ by <b>kevinm</b> (guest, #69913)
+ [<a href=https://lwn.net/Articles/541720/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+So, a UID in the parent namespace that isn't mapped in the child namespace is mapped to a default UID; but what about a UID in the child namespace that isn't mapped - what UID will that have in the parent namespace (for example, a process in the child namespace with UID=0 uses seteuid(9999) where child namespace UID 9999 isn't included in any mapping.<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541720/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor541787></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Example fails on today's Ubuntu 13.04 daily</h3>
+ <p class=CommentPoster> Posted Mar 7, 2013 13:42 UTC (Thu)
+ by <b>BernardB</b> (subscriber, #47903)
+ [<a href=https://lwn.net/Articles/541787/>Link</a>] (1 responses)
+ </p></summary>
+ No luck trying this out on today's Ubuntu 13.04 daily build:
+<pre>$ id
+uid=1000(bernard) gid=1000(bernard)
+$ uname -a
+Linux dev32 3.8.0-11-generic #20-Ubuntu SMP Tue Mar 5 20:33:22 UTC 2013 i686 athlon i686 GNU/Linux
+$ gcc -o demo_userns demo_userns.c  -lcap
+$ ./demo_userns
+clone: Invalid argument
+$ sudo ./demo_userns # It was worth a shot!
+clone: Invalid argument
+$ strace -e clone ./demo_userns
+clone(child_stack=0x814a064, flags=0x10000000|SIGCHLD) = -1 EINVAL (Invalid argument)
+clone: Invalid argument
+$ apt-cache policy linux-image-`uname -r`
+linux-image-3.8.0-11-generic:
+  Installed: 3.8.0-11.20
+  Candidate: 3.8.0-11.20
+  Version table:
+ *** 3.8.0-11.20 0
+        500 http://gb.archive.ubuntu.com/ubuntu/ raring/main i386 Packages
+        100 /var/lib/dpkg/status
+</pre>
+I've yet to delve into the kernel source to find where EINVAL is coming from, but can anyone see if I am missing something obvious? Or maybe it's because Ubuntu's done something magic to their kernel? (The Makefile in their Linux sources purports to be 3.8.2).
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541787/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor541797></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Example fails on today's Ubuntu 13.04 daily</h3>
+ <p class=CommentPoster> Posted Mar 7, 2013 14:05 UTC (Thu)
+ by <b>BernardB</b> (subscriber, #47903)
+ [<a href=https://lwn.net/Articles/541797/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Okay, having dug deeper, it turns out that the examples require CONFIG_USER_NS. As the article points out, 3.8 was still missing the changes for XFS and other filesystems. Unsurprisingly, Ubuntu 13.04 chose XFS and NFS&nbsp;support over CONFIG_USER_NS. Bummer :P<br>
+<p>
+"Soon after 13.04 they will be fully supported." -- <a href=http://permalink.gmane.org/gmane.linux.kernel.containers.lxc.general/4755:>http://permalink.gmane.org/gmane.linux.kernel.containers....</a> <br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/541797/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor635559></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Mar 5, 2015 8:32 UTC (Thu)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/635559/>Link</a>]
+ </p></summary>
+ Note that because of the <a href=http://lwn.net/Articles/626665/>Linux 3.19 changes that fixed a user namespace security loophole</a> related to the <tt>setgroups()</tt> system call, the <tt>userns_child_exec.c</tt> program needs modifications in order to be able to use GID maps on Linux 3.19 and later (and also on earlier stable kernel series that backported the changes). A revised (and backward compatible) version of this program with the necessary changes can be found in the revised <a href=http://man7.org/linux/man-pages/man7/user_namespaces.7.html#EXAMPLE>user_namespaces(7)</a> man page that will appear in a few days time. (Look for the definition and use of the <tt>proc_setgroup_write()</tt> function in the example program.)
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/635559/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor737663></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Oct 29, 2017 8:49 UTC (Sun)
+ by <b>mkerrisk</b> (subscriber, #1978)
+ [<a href=https://lwn.net/Articles/737663/>Link</a>]
+ </p></summary>
+ Slides from my October 2017 presentation on User Namespaces at Open Source Summit Europe can be found <a href=http://man7.org/conf/index.html>here</a>.
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/737663/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+<a name=CommAnchor772885></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Nov 25, 2018 3:36 UTC (Sun)
+ by <b>fusillator</b> (guest, #128821)
+ [<a href=https://lwn.net/Articles/772885/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+This is impressive but a bit hard to follow for a noob like me. <br>
+<p>
+I think these are the main points of the articles:<br>
+When a user namespace is created by clone, the first cloned process in the new namespace is granted a full set of capabilities in the new namespace.<br>
+Invoking exec* functions changes the calling process capabilities following the rules for the transformation of capabilities during exec*:<br>
+1) pI' = pI<br>
+2) pP' = (X &amp; fP) | (pI &amp; fI)<br>
+3) pE' = fE &amp; pP'<br>
+Hence the code ns_child_exec gets the permission error because the child shell in the new userspace is executed as an unprivileged user and the permitted and effective/ inheritable flags weren't set on appropriately.<br>
+<p>
+The code userns_child_exec.c takes care of writing the root map for the new userspace from the parent.<br>
+Firstly it creates the new userspace by mean of clone, then it ensures the map files is written by the father process before the cloned child launches the shell using a pipe for interprocess communication: the pipe is duplicated when the process clones, so each process (father and child) will have their own copies of two file descriptors (pipe_fd[0] for reading, pipe_fd[1] for writing) pointing to the same pipe. The father exploits the write endpoint of the pipe closing the write channel when it completed the user mapping. The cloned child closes his write endpoint and exploits the read endpoint (it reads a character on the pipe expecting to be NULL - eof) to sync with the father ensuring the map was written by the calling process in the context of the father namespace before the shell execution.<br>
+<p>
+These are my considerations:<br>
+In order to write on the mapping file from an unprivileged user (in the context of the parent namespace) the capabilities CAP_SETUID, CAP_SETGID needs to be granted to the calling process (see the first rule in the section Rules for writing to mapping files). The author doesn't show how to grant these privileges, a way is enabling the effective and permitted flags on the userns_child_exec binary.<br>
+<p>
+Moreover I don't get why the writing of the mapping isn't accomplished in the childFunc which has full set of capabilities in the context of the new namespace before executing the shell (following the first point of the third rules in the section Rules for writing to mapping files this should be feasible), this would avoid the need of a sync mechanism.<br>
+<p>
+The author states that to avoid losing the capabilities the parent needs to change the user mapping before executing the shell (since the shell capabilities flags aren't set appropriately for the exec transformation).<br>
+Anyway I think that if this sync check wasn't accomplished the shell might execute with an unpriviledged uid /proc/sys/kernel/overflowuid until the parent will be able to write the mapping. The sync is necessary to avoid race condition during the shell execution and to ensure the shell is running as a privileged process in the new userspace from the very beginning.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/772885/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor772893></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Nov 25, 2018 17:39 UTC (Sun)
+ by <b>fusillator</b> (guest, #128821)
+ [<a href=https://lwn.net/Articles/772893/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+ &gt; Moreover I don't get why the writing of the mapping isn't accomplished in the childFunc which has full set of capabilities in the context of the new namespace before executing the shell (following the first point of the third rules in the section Rules for writing to mapping files this should be feasible), this would avoid the need of a sync mechanism.<br>
+<p>
+Since the command userns_child_exec takes the user mappings as argument, mappings to arbitrary user IDs (group IDs) in the parent user namespace must be allowed (see the second point of third rule in the section Rules for writing to mapping files).<br>
+Conversely, if the mapping is made from the cloned child in the new namespace, it's only possible to map the user id of the parent process in the parent namespace to any uid in the new namespace, root included.<br>
+When a process clones itself the user and group ids in the parent namespace are inherited by the child.<br>
+<p>
+<font class=QuotedText>&gt; In order to write on the mapping file from an unprivileged user (in the context of the parent namespace) the capabilities CAP_SETUID, CAP_SETGID needs to be granted to the calling process (see the first rule in the section Rules for writing to mapping files). The author doesn't show how to grant these privileges, a way is enabling the effective and permitted flags on the userns_child_exec binary.</font><br>
+<p>
+Other rules control the capabilities propagation between namespaces with a parental relationship, from the successive article <a rel=nofollow href=https://lwn.net/Articles/540087/>https://lwn.net/Articles/540087/</a><br>
+"When a user namespace is created, the kernel records the effective user ID of the creating process as being the "owner" of the namespace. A process whose effective user ID matches that of the owner of a user namespace and which is a member of the parent namespace has all capabilities in the namespace."<br>
+So the required capabilities cap_set{uid,gid} are granted to the unprivileged parent process on the new namespace by default.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/772893/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+<a name=CommAnchor904658></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Aug 14, 2022 9:52 UTC (Sun)
+ by <b>marcozov</b> (guest, #160103)
+ [<a href=https://lwn.net/Articles/904658/>Link</a>] (2 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Thanks for the article, it is really nice to read and follow.<br>
+<p>
+I'm having an issue when trying to reproduce part of the mentioned steps (which should all be doable as non-root, as far as I understood).<br>
+In particular, when running `./demo_userns x`, I *can* run `echo '0 1000 1' &gt; /proc/$DEMO_PID/uid_map` successfully (and the output of thee demo_userns program is updated with the new user id, 0), but I *cannot* run `echo '0 1000 1' &gt; /proc/$DEMO_PID/gid_map`.<br>
+If I try to run those echo commands as root, they both work, but this sounds a bit against the purpose of this article (which is about being able to do root actions in a restricted environment -- the new user namespace).<br>
+<p>
+If I proceed with the demo, I have a similar problem when I run `./userns_child_exec -U -M '0 1000 1' -G '0 1000 1' bash`: <br>
+```<br>
+write /proc/10568/gid_map: Operation not permitted<br>
+bash: initialize_job_control: no job control in background: Bad file descriptor<br>
+```<br>
+Removing the -G part makes the error go away here as well.<br>
+<p>
+Any clue on how I can debug this? As far as I understood, if a process is the parent user namespace it should automatically have the necessary capabilities (cap_set_uid, cap_set_gid) to write to the uid_map / gid_map files of the process in the new user namespace.<br>
+Is there anything that I can check to validate this? If I run `cat /proc/$$/status | grep Cap`, I get:<br>
+```<br>
+CapInh: 0000000000000000<br>
+CapPrm: 0000000000000000<br>
+CapEff: 0000000000000000<br>
+CapBnd: 0000003fffffffff<br>
+CapAmb: 0000000000000000<br>
+```<br>
+which I'm not sure how to interpret.<br>
+In particular, I'm referring to the three rules defined under `Rules for writing to mapping files`: the first one should always hold (based on my understanding, CAP_SETUID/CAP_SETGID are always valid for processes in the parent user namespace), the second one seems to hold as well (the spawned terminal is indeed in the user namespace of the shell that run `./demo_userns x`), the third one seems a bit more ambiguous: the first statement holds (that's basically defined via `0 1000 1`), the second one not really (according the to the `cat /proc/$$/status | grep Cap` output) --&gt; but to me it looks like only one of the two has to hold. Furthermore, if this is the problem, I would expect that writing to the uid_map would lead to the same error.<br>
+</p></div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/904658/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor904660></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Aug 14, 2022 10:20 UTC (Sun)
+ by <b>izbyshev</b> (subscriber, #107996)
+ [<a href=https://lwn.net/Articles/904660/>Link</a>] (1 responses)
+ </p></summary>
+ <div class=FormattedComment>
+Looks like the issue with setgroups() that another comment talks about: <a href=https://lwn.net/Articles/635559/>https://lwn.net/Articles/635559/.</a><br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/904660/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ <a name=CommAnchor904667></a>
+ <details class=CommentBox open><template shadowrootmode=closed><slot name=internal-main-summary><summary>Details</summary></slot><slot></slot></template>
+ <summary><h3 class=CommentTitle>Namespaces in operation, part 5: User namespaces</h3>
+ <p class=CommentPoster> Posted Aug 14, 2022 13:05 UTC (Sun)
+ by <b>marcozov</b> (guest, #160103)
+ [<a href=https://lwn.net/Articles/904667/>Link</a>]
+ </p></summary>
+ <div class=FormattedComment>
+Thanks, I also found the related change in the code!<br>
+</div>
+
+ <div class=CommentReplyButton>
+ <form action=/Articles/904667/comment method=post>
+ <input type=submit value="Reply to this comment">
+ </form>
+ </div>
+ <p>
+
+ </p></details>
+</details>
+</details>
+</div>
+<div class="rightcol not-print">
+<div id=azk93271_right_zone></div>
+</div>
+</div>
+ <br clear=all>
+ <center>
+ <p>
+ <span class=ReallySmall>
+ Copyright © 2013, Eklektix, Inc.<br>
+ This article may be redistributed under the terms of the
+ <a href=http://creativecommons.org/licenses/by-sa/4.0/>Creative
+ Commons CC BY-SA 4.0</a> license<br>
+ Comments and public postings are copyrighted by their creators.<br>
+ Linux is a registered trademark of Linus Torvalds<br>
+ </span>
+ </p></center>
+
+
+<script data-template-shadow-root>(()=>{document.currentScript.remove();processNode(document);function processNode(node){node.querySelectorAll("template[shadowrootmode]").forEach(element=>{let shadowRoot = element.parentElement.shadowRoot;if (!shadowRoot) {try {shadowRoot=element.parentElement.attachShadow({mode:element.getAttribute("shadowrootmode")});shadowRoot.innerHTML=element.innerHTML;element.remove()} catch (error) {} if (shadowRoot) {processNode(shadowRoot)}}})}})()</script>

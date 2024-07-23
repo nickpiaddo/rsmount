@@ -1,0 +1,962 @@
+<!DOCTYPE html> <html lang=en-US style><!--
+ Page saved with SingleFile
+ url: https://www.man7.org/linux/man-pages/man7/mount_namespaces.7.html
+--><meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>mount_namespaces(7) - Linux manual page</title>
+<style>html,body{background-color:#fcfcfc;font-family:sans-serif;font-size:100%;color:#181818}body{margin-top:0px;margin-left:0px;margin-right:0px}h1,h2{font-family:helvetica,sans-serif;font-weight:normal;margin-left:8px;margin-right:8px;color:#008000;margin-top:25px}p{margin-left:8px;margin-right:8px;margin-bottom:0.5em}p{max-width:750px}table{max-width:750px}hr{max-width:750px;margin:8px}pre{margin-left:8px}a{color:#1030ff;text-decoration:none}a:visited{color:#4080dd}a:hover,a:focus,a:active{color:red;background-color:#ffe0e0;text-decoration:underline}div.nav-bar{padding-left:8px;padding-right:8px;padding-top:3px;padding-bottom:3px;background-color:#e8e8e8}div.footer{padding-left:8px;padding-right:8px;padding-top:3px;padding-bottom:3px;background-color:#e8e8e8}hr.nav-end{height:0px;margin-top:0px;color:#0000ff;border-color:#ffffff;width:100%}hr.start-footer,hr.end-footer{height:0px;margin-top:0px;margin-bottom:0px;color:#0000ff;border-color:#ffffff;width:100%}p.training-text{margin-top:0px;margin-left:0px;margin-bottom:0px;font-weight:bold;font-size:15px}strong{font-weight:bold;color:#303030}a.training-link:hover,a.training-link:visited,a.training-link:link,a.training-link:active{color:#008000}a.training-link:hover,a.training-link:active{text-decoration:underline;background-color:#ffd0d0}p.nav-text{margin-top:0px;margin-left:0px;margin-bottom:0px}p.nav-text{font-size:15px}</style>
+<style>body{background-color:#FFFFFF}b{color:#502000}i{color:#006000}h2{color:#A00000;padding-top:15px;font-size:100%;font-weight:bold}table.sec-table{width:100%;border:1px}table.nav-table{width:100%;border-spacing:0px;border-width:0px;border-collapse:collapse;border-top:0px;border-bottom:0px;padding-top:0px;padding-bottom:0px}td.nav-cell{padding:0px;border-width:0px}table.colophon-table{width:100%}td.search-box{text-align:left}td.training-cell{text-align:right;padding:0px;border-width:0px}td.pub-info{text-align:left}td.tlpi-cover{text-align:right}fieldset.man-search{border:0px;margin-top:0px;margin-bottom:0px}span.headline{font-weight:bold}span.footline{font-weight:bold}p.section-dir{margin-top:6px;margin-bottom:6px;padding:5px;border-width:1px}span.top-link{font-size:70%}hr.end-man-text{height:0px;border-color:#ffffff;width:100%}pre{font-family:monospace,courier}a:hover{text-decoration:underline;color:red}a:active{text-decoration:underline;background-color:#FFD0D0}.footer p{margin-top:0.7em;margin-bottom:0.7em}</style>
+<meta name=referrer content=no-referrer><link rel=canonical href=https://www.man7.org/linux/man-pages/man7/mount_namespaces.7.html><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body>
+<div class=page-top><a id=top_of_page></a></div>
+ <div class=nav-bar>
+ <table class=nav-table>
+ <tbody><tr>
+ <td class=nav-cell>
+ <p class=nav-text>
+ <a href=https://www.man7.org/index.html>man7.org</a> &gt; Linux &gt; <a href=https://www.man7.org/linux/man-pages/index.html>man-pages</a>
+ </p>
+ </td>
+ <td class=training-cell>
+ <p class=training-text><a class=training-link href=http://man7.org/training/>Linux/UNIX system programming training</a></p>
+ </td>
+ </tr>
+ </table>
+ </div>
+<hr class=nav-end>
+<h1>mount_namespaces(7) — Linux manual page</h1>
+<table class=sec-table>
+<tbody><tr>
+ <td>
+ <p class=section-dir>
+<a href=#NAME>NAME</a> | <a href=#DESCRIPTION>DESCRIPTION</a> | <a href=#SHARED_SUBTREES>SHARED&nbsp;SUBTREES</a> | <a href=#STANDARDS>STANDARDS</a> | <a href=#HISTORY>HISTORY</a> | <a href=#NOTES>NOTES</a> | <a href=#EXAMPLES>EXAMPLES</a> | <a href=#SEE_ALSO>SEE&nbsp;ALSO</a>
+ </p>
+ </td>
+</tr>
+<tr>
+ <td class=search-box>
+ <div class=man-search-box>
+ <form action=https://www.google.com/search>
+ <fieldset class=man-search>
+ <input type=text name=q size=10 maxlength=255 value>
+
+ <input type=submit name=sa value="Search online pages">
+ </fieldset>
+ </form>
+ </div>
+ </td>
+ <td> </td>
+</tr>
+</table>
+<pre><span class=headline><i>mount_namespaces</i>(7) Miscellaneous Information Manual <i>mount_namespaces</i>(7)</span>
+</pre>
+<h2><a id=NAME href=#NAME></a>NAME &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       mount_namespaces - overview of Linux mount namespaces
+</pre>
+<h2><a id=DESCRIPTION href=#DESCRIPTION></a>DESCRIPTION &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       For an overview of namespaces, see <a href=https://www.man7.org/linux/man-pages/man7/namespaces.7.html>namespaces(7)</a>.
+
+       Mount namespaces provide isolation of the list of mounts seen by
+       the processes in each namespace instance.  Thus, the processes in
+       each of the mount namespace instances will see distinct single-
+       directory hierarchies.
+
+       The views provided by the <i>/proc/</i>pid<i>/mounts</i>, <i>/proc/</i>pid<i>/mountinfo</i>,
+       and <i>/proc/</i>pid<i>/mountstats</i> files (all described in <a href=https://www.man7.org/linux/man-pages/man5/proc.5.html>proc(5)</a>)
+       correspond to the mount namespace in which the process with the
+       PID <i>pid</i> resides.  (All of the processes that reside in the same
+       mount namespace will see the same view in these files.)
+
+       A new mount namespace is created using either <a href=https://www.man7.org/linux/man-pages/man2/clone.2.html>clone(2)</a> or
+       <a href=https://www.man7.org/linux/man-pages/man2/unshare.2.html>unshare(2)</a> with the <b>CLONE_NEWNS </b>flag.  When a new mount namespace
+       is created, its mount list is initialized as follows:
+
+       •  If the namespace is created using <a href=https://www.man7.org/linux/man-pages/man2/clone.2.html>clone(2)</a>, the mount list of
+          the child's namespace is a copy of the mount list in the
+          parent process's mount namespace.
+
+       •  If the namespace is created using <a href=https://www.man7.org/linux/man-pages/man2/unshare.2.html>unshare(2)</a>, the mount list
+          of the new namespace is a copy of the mount list in the
+          caller's previous mount namespace.
+
+       Subsequent modifications to the mount list (<a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and
+       <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a>) in either mount namespace will not (by default) affect
+       the mount list seen in the other namespace (but see the following
+       discussion of shared subtrees).
+</pre>
+<h2><a id=SHARED_SUBTREES href=#SHARED_SUBTREES></a>SHARED SUBTREES &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       After the implementation of mount namespaces was completed,
+       experience showed that the isolation that they provided was, in
+       some cases, too great.  For example, in order to make a newly
+       loaded optical disk available in all mount namespaces, a mount
+       operation was required in each namespace.  For this use case, and
+       others, the shared subtree feature was introduced in Linux
+       2.6.15.  This feature allows for automatic, controlled
+       propagation of <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> <i>events</i> between namespaces
+       (or, more precisely, between the mounts that are members of a
+       <i>peer group</i> that are propagating events to one another).
+
+       Each mount is marked (via <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a>) as having one of the
+       following <i>propagation types</i>:
+
+       <b>MS_SHARED</b>
+              This mount shares events with members of a peer group.
+              <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> events immediately under this mount
+              will propagate to the other mounts that are members of the
+              peer group.  <i>Propagation</i> here means that the same <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a>
+              or <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> will automatically occur under all of the
+              other mounts in the peer group.  Conversely, <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and
+              <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> events that take place under peer mounts will
+              propagate to this mount.
+
+       <b>MS_PRIVATE</b>
+              This mount is private; it does not have a peer group.
+              <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> events do not propagate into or out
+              of this mount.
+
+       <b>MS_SLAVE</b>
+              <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> events propagate into this mount
+              from a (master) shared peer group.  <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a>
+              events under this mount do not propagate to any peer.
+
+              Note that a mount can be the slave of another peer group
+              while at the same time sharing <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a>
+              events with a peer group of which it is a member.  (More
+              precisely, one peer group can be the slave of another peer
+              group.)
+
+       <b>MS_UNBINDABLE</b>
+              This is like a private mount, and in addition this mount
+              can't be bind mounted.  Attempts to bind mount this mount
+              (<a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> with the <b>MS_BIND </b>flag) will fail.
+
+              When a recursive bind mount (<a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> with the <b>MS_BIND </b>and
+              <b>MS_REC </b>flags) is performed on a directory subtree, any
+              bind mounts within the subtree are automatically pruned
+              (i.e., not replicated) when replicating that subtree to
+              produce the target subtree.
+
+       For a discussion of the propagation type assigned to a new mount,
+       see NOTES.
+
+       The propagation type is a per-mount-point setting; some mounts
+       may be marked as shared (with each shared mount being a member of
+       a distinct peer group), while others are private (or slaved or
+       unbindable).
+
+       Note that a mount's propagation type determines whether <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a>
+       and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> of mounts <i>immediately under</i> the mount are
+       propagated.  Thus, the propagation type does not affect
+       propagation of events for grandchildren and further removed
+       descendant mounts.  What happens if the mount itself is unmounted
+       is determined by the propagation type that is in effect for the
+       <i>parent</i> of the mount.
+
+       Members are added to a <i>peer group</i> when a mount is marked as
+       shared and either:
+
+       (a)  the mount is replicated during the creation of a new mount
+            namespace; or
+
+       (b)  a new bind mount is created from the mount.
+
+       In both of these cases, the new mount joins the peer group of
+       which the existing mount is a member.
+
+       A new peer group is also created when a child mount is created
+       under an existing mount that is marked as shared.  In this case,
+       the new child mount is also marked as shared and the resulting
+       peer group consists of all the mounts that are replicated under
+       the peers of parent mounts.
+
+       A mount ceases to be a member of a peer group when either the
+       mount is explicitly unmounted, or when the mount is implicitly
+       unmounted because a mount namespace is removed (because it has no
+       more member processes).
+
+       The propagation type of the mounts in a mount namespace can be
+       discovered via the "optional fields" exposed in
+       <i>/proc/</i>pid<i>/mountinfo</i>.  (See <a href=https://www.man7.org/linux/man-pages/man5/proc.5.html>proc(5)</a> for details of this file.)
+       The following tags can appear in the optional fields for a record
+       in that file:
+
+       <i>shared:X</i>
+              This mount is shared in peer group <i>X</i>.  Each peer group has
+              a unique ID that is automatically generated by the kernel,
+              and all mounts in the same peer group will show the same
+              ID.  (These IDs are assigned starting from the value 1,
+              and may be recycled when a peer group ceases to have any
+              members.)
+
+       <i>master:X</i>
+              This mount is a slave to shared peer group <i>X</i>.
+
+       <i>propagate_from:X</i> (since Linux 2.6.26)
+              This mount is a slave and receives propagation from shared
+              peer group <i>X</i>.  This tag will always appear in conjunction
+              with a <i>master:X</i> tag.  Here, <i>X</i> is the closest dominant peer
+              group under the process's root directory.  If <i>X</i> is the
+              immediate master of the mount, or if there is no dominant
+              peer group under the same root, then only the <i>master:X</i>
+              field is present and not the <i>propagate_from:X</i> field.  For
+              further details, see below.
+
+       <i>unbindable</i>
+              This is an unbindable mount.
+
+       If none of the above tags is present, then this is a private
+       mount.
+
+   <b>MS_SHARED and MS_PRIVATE example</b>
+       Suppose that on a terminal in the initial mount namespace, we
+       mark one mount as shared and another as private, and then view
+       the mounts in <i>/proc/self/mountinfo</i>:
+
+           sh1# <b>mount --make-shared /mntS</b>
+           sh1# <b>mount --make-private /mntP</b>
+           sh1# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           77 61 8:17 / /mntS rw,relatime shared:1
+           83 61 8:15 / /mntP rw,relatime
+
+       From the <i>/proc/self/mountinfo</i> output, we see that <i>/mntS</i> is a
+       shared mount in peer group 1, and that <i>/mntP</i> has no optional
+       tags, indicating that it is a private mount.  The first two
+       fields in each record in this file are the unique ID for this
+       mount, and the mount ID of the parent mount.  We can further
+       inspect this file to see that the parent mount of <i>/mntS</i> and <i>/mntP</i>
+       is the root directory, <i>/</i>, which is mounted as private:
+
+           sh1# <b>cat /proc/self/mountinfo | awk '$1 == 61' | sed 's/ - .*//'</b>
+           61 0 8:2 / / rw,relatime
+
+       On a second terminal, we create a new mount namespace where we
+       run a second shell and inspect the mounts:
+
+           $ <b>PS1='sh2# ' sudo unshare -m --propagation unchanged sh</b>
+           sh2# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           222 145 8:17 / /mntS rw,relatime shared:1
+           225 145 8:15 / /mntP rw,relatime
+
+       The new mount namespace received a copy of the initial mount
+       namespace's mounts.  These new mounts maintain the same
+       propagation types, but have unique mount IDs.  (The
+       <i>--propagation unchanged</i> option prevents <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a> from marking
+       all mounts as private when creating a new mount namespace, which
+       it does by default.)
+
+       In the second terminal, we then create submounts under each of
+       <i>/mntS</i> and <i>/mntP</i> and inspect the set-up:
+
+           sh2# <b>mkdir /mntS/a</b>
+           sh2# <b>mount /dev/sdb6 /mntS/a</b>
+           sh2# <b>mkdir /mntP/b</b>
+           sh2# <b>mount /dev/sdb7 /mntP/b</b>
+           sh2# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           222 145 8:17 / /mntS rw,relatime shared:1
+           225 145 8:15 / /mntP rw,relatime
+           178 222 8:22 / /mntS/a rw,relatime shared:2
+           230 225 8:23 / /mntP/b rw,relatime
+
+       From the above, it can be seen that <i>/mntS/a</i> was created as shared
+       (inheriting this setting from its parent mount) and <i>/mntP/b</i> was
+       created as a private mount.
+
+       Returning to the first terminal and inspecting the set-up, we see
+       that the new mount created under the shared mount <i>/mntS</i>
+       propagated to its peer mount (in the initial mount namespace),
+       but the new mount created under the private mount <i>/mntP</i> did not
+       propagate:
+
+           sh1# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           77 61 8:17 / /mntS rw,relatime shared:1
+           83 61 8:15 / /mntP rw,relatime
+           179 77 8:22 / /mntS/a rw,relatime shared:2
+
+   <b>MS_SLAVE example</b>
+       Making a mount a slave allows it to receive propagated <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a>
+       and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> events from a master shared peer group, while
+       preventing it from propagating events to that master.  This is
+       useful if we want to (say) receive a mount event when an optical
+       disk is mounted in the master shared peer group (in another mount
+       namespace), but want to prevent <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> and <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> events
+       under the slave mount from having side effects in other
+       namespaces.
+
+       We can demonstrate the effect of slaving by first marking two
+       mounts as shared in the initial mount namespace:
+
+           sh1# <b>mount --make-shared /mntX</b>
+           sh1# <b>mount --make-shared /mntY</b>
+           sh1# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           132 83 8:23 / /mntX rw,relatime shared:1
+           133 83 8:22 / /mntY rw,relatime shared:2
+
+       On a second terminal, we create a new mount namespace and inspect
+       the mounts:
+
+           sh2# <b>unshare -m --propagation unchanged sh</b>
+           sh2# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           168 167 8:23 / /mntX rw,relatime shared:1
+           169 167 8:22 / /mntY rw,relatime shared:2
+
+       In the new mount namespace, we then mark one of the mounts as a
+       slave:
+
+           sh2# <b>mount --make-slave /mntY</b>
+           sh2# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           168 167 8:23 / /mntX rw,relatime shared:1
+           169 167 8:22 / /mntY rw,relatime master:2
+
+       From the above output, we see that <i>/mntY</i> is now a slave mount
+       that is receiving propagation events from the shared peer group
+       with the ID 2.
+
+       Continuing in the new namespace, we create submounts under each
+       of <i>/mntX</i> and <i>/mntY</i>:
+
+           sh2# <b>mkdir /mntX/a</b>
+           sh2# <b>mount /dev/sda3 /mntX/a</b>
+           sh2# <b>mkdir /mntY/b</b>
+           sh2# <b>mount /dev/sda5 /mntY/b</b>
+
+       When we inspect the state of the mounts in the new mount
+       namespace, we see that <i>/mntX/a</i> was created as a new shared mount
+       (inheriting the "shared" setting from its parent mount) and
+       <i>/mntY/b</i> was created as a private mount:
+
+           sh2# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           168 167 8:23 / /mntX rw,relatime shared:1
+           169 167 8:22 / /mntY rw,relatime master:2
+           173 168 8:3 / /mntX/a rw,relatime shared:3
+           175 169 8:5 / /mntY/b rw,relatime
+
+       Returning to the first terminal (in the initial mount namespace),
+       we see that the mount <i>/mntX/a</i> propagated to the peer (the shared
+       <i>/mntX</i>), but the mount <i>/mntY/b</i> was not propagated:
+
+           sh1# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           132 83 8:23 / /mntX rw,relatime shared:1
+           133 83 8:22 / /mntY rw,relatime shared:2
+           174 132 8:3 / /mntX/a rw,relatime shared:3
+
+       Now we create a new mount under <i>/mntY</i> in the first shell:
+
+           sh1# <b>mkdir /mntY/c</b>
+           sh1# <b>mount /dev/sda1 /mntY/c</b>
+           sh1# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           132 83 8:23 / /mntX rw,relatime shared:1
+           133 83 8:22 / /mntY rw,relatime shared:2
+           174 132 8:3 / /mntX/a rw,relatime shared:3
+           178 133 8:1 / /mntY/c rw,relatime shared:4
+
+       When we examine the mounts in the second mount namespace, we see
+       that in this case the new mount has been propagated to the slave
+       mount, and that the new mount is itself a slave mount (to peer
+       group 4):
+
+           sh2# <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           168 167 8:23 / /mntX rw,relatime shared:1
+           169 167 8:22 / /mntY rw,relatime master:2
+           173 168 8:3 / /mntX/a rw,relatime shared:3
+           175 169 8:5 / /mntY/b rw,relatime
+           179 169 8:1 / /mntY/c rw,relatime master:4
+
+   <b>MS_UNBINDABLE example</b>
+       One of the primary purposes of unbindable mounts is to avoid the
+       "mount explosion" problem when repeatedly performing bind mounts
+       of a higher-level subtree at a lower-level mount.  The problem is
+       illustrated by the following shell session.
+
+       Suppose we have a system with the following mounts:
+
+           # <b>mount | awk '{print $1, $2, $3}'</b>
+           /dev/sda1 on /
+           /dev/sdb6 on /mntX
+           /dev/sdb7 on /mntY
+
+       Suppose furthermore that we wish to recursively bind mount the
+       root directory under several users' home directories.  We do this
+       for the first user, and inspect the mounts:
+
+           # <b>mount --rbind / /home/cecilia/</b>
+           # <b>mount | awk '{print $1, $2, $3}'</b>
+           /dev/sda1 on /
+           /dev/sdb6 on /mntX
+           /dev/sdb7 on /mntY
+           /dev/sda1 on /home/cecilia
+           /dev/sdb6 on /home/cecilia/mntX
+           /dev/sdb7 on /home/cecilia/mntY
+
+       When we repeat this operation for the second user, we start to
+       see the explosion problem:
+
+           # <b>mount --rbind / /home/henry</b>
+           # <b>mount | awk '{print $1, $2, $3}'</b>
+           /dev/sda1 on /
+           /dev/sdb6 on /mntX
+           /dev/sdb7 on /mntY
+           /dev/sda1 on /home/cecilia
+           /dev/sdb6 on /home/cecilia/mntX
+           /dev/sdb7 on /home/cecilia/mntY
+           /dev/sda1 on /home/henry
+           /dev/sdb6 on /home/henry/mntX
+           /dev/sdb7 on /home/henry/mntY
+           /dev/sda1 on /home/henry/home/cecilia
+           /dev/sdb6 on /home/henry/home/cecilia/mntX
+           /dev/sdb7 on /home/henry/home/cecilia/mntY
+
+       Under <i>/home/henry</i>, we have not only recursively added the <i>/mntX</i>
+       and <i>/mntY</i> mounts, but also the recursive mounts of those
+       directories under <i>/home/cecilia</i> that were created in the previous
+       step.  Upon repeating the step for a third user, it becomes
+       obvious that the explosion is exponential in nature:
+
+           # <b>mount --rbind / /home/otto</b>
+           # <b>mount | awk '{print $1, $2, $3}'</b>
+           /dev/sda1 on /
+           /dev/sdb6 on /mntX
+           /dev/sdb7 on /mntY
+           /dev/sda1 on /home/cecilia
+           /dev/sdb6 on /home/cecilia/mntX
+           /dev/sdb7 on /home/cecilia/mntY
+           /dev/sda1 on /home/henry
+           /dev/sdb6 on /home/henry/mntX
+           /dev/sdb7 on /home/henry/mntY
+           /dev/sda1 on /home/henry/home/cecilia
+           /dev/sdb6 on /home/henry/home/cecilia/mntX
+           /dev/sdb7 on /home/henry/home/cecilia/mntY
+           /dev/sda1 on /home/otto
+           /dev/sdb6 on /home/otto/mntX
+           /dev/sdb7 on /home/otto/mntY
+           /dev/sda1 on /home/otto/home/cecilia
+           /dev/sdb6 on /home/otto/home/cecilia/mntX
+           /dev/sdb7 on /home/otto/home/cecilia/mntY
+           /dev/sda1 on /home/otto/home/henry
+           /dev/sdb6 on /home/otto/home/henry/mntX
+           /dev/sdb7 on /home/otto/home/henry/mntY
+           /dev/sda1 on /home/otto/home/henry/home/cecilia
+           /dev/sdb6 on /home/otto/home/henry/home/cecilia/mntX
+           /dev/sdb7 on /home/otto/home/henry/home/cecilia/mntY
+
+       The mount explosion problem in the above scenario can be avoided
+       by making each of the new mounts unbindable.  The effect of doing
+       this is that recursive mounts of the root directory will not
+       replicate the unbindable mounts.  We make such a mount for the
+       first user:
+
+           # <b>mount --rbind --make-unbindable / /home/cecilia</b>
+
+       Before going further, we show that unbindable mounts are indeed
+       unbindable:
+
+           # <b>mkdir /mntZ</b>
+           # <b>mount --bind /home/cecilia /mntZ</b>
+           mount: wrong fs type, bad option, bad superblock on /home/cecilia,
+                  missing codepage or helper program, or other error
+
+                  In some cases useful info is found in syslog - try
+                  dmesg | tail or so.
+
+       Now we create unbindable recursive bind mounts for the other two
+       users:
+
+           # <b>mount --rbind --make-unbindable / /home/henry</b>
+           # <b>mount --rbind --make-unbindable / /home/otto</b>
+
+       Upon examining the list of mounts, we see there has been no
+       explosion of mounts, because the unbindable mounts were not
+       replicated under each user's directory:
+
+           # <b>mount | awk '{print $1, $2, $3}'</b>
+           /dev/sda1 on /
+           /dev/sdb6 on /mntX
+           /dev/sdb7 on /mntY
+           /dev/sda1 on /home/cecilia
+           /dev/sdb6 on /home/cecilia/mntX
+           /dev/sdb7 on /home/cecilia/mntY
+           /dev/sda1 on /home/henry
+           /dev/sdb6 on /home/henry/mntX
+           /dev/sdb7 on /home/henry/mntY
+           /dev/sda1 on /home/otto
+           /dev/sdb6 on /home/otto/mntX
+           /dev/sdb7 on /home/otto/mntY
+
+   <b>Propagation type transitions</b>
+       The following table shows the effect that applying a new
+       propagation type (i.e., <i>mount --make-xxxx</i>) has on the existing
+       propagation type of a mount.  The rows correspond to existing
+       propagation types, and the columns are the new propagation
+       settings.  For reasons of space, "private" is abbreviated as
+       "priv" and "unbindable" as "unbind".
+                     <b>make-shared   make-slave      make-priv  make-unbind</b>
+       ─────────────┬───────────────────────────────────────────────────────
+       <b>shared       </b>│shared        slave/priv [1]  priv       unbind
+       <b>slave        </b>│slave+shared  slave [2]       priv       unbind
+       <b>slave+shared </b>│slave+shared  slave           priv       unbind
+       <b>private      </b>│shared        priv [2]        priv       unbind
+       <b>unbindable   </b>│shared        unbind [2]      priv       unbind
+
+       Note the following details to the table:
+
+       [1] If a shared mount is the only mount in its peer group, making
+           it a slave automatically makes it private.
+
+       [2] Slaving a nonshared mount has no effect on the mount.
+
+   <b>Bind (MS_BIND) semantics</b>
+       Suppose that the following command is performed:
+
+           mount --bind A/a B/b
+
+       Here, <i>A</i> is the source mount, <i>B</i> is the destination mount, <i>a</i> is a
+       subdirectory path under the mount point <i>A</i>, and <i>b</i> is a
+       subdirectory path under the mount point <i>B</i>.  The propagation type
+       of the resulting mount, <i>B/b</i>, depends on the propagation types of
+       the mounts <i>A</i> and <i>B</i>, and is summarized in the following table.
+
+                                  <b>source(A)</b>
+                          <b>shared  private    slave         unbind</b>
+       ──────────────────┬──────────────────────────────────────────
+       <b>dest(B)  shared   </b>│shared  shared     slave+shared  invalid
+                <b>nonshared</b>│shared  private    slave         invalid
+
+       Note that a recursive bind of a subtree follows the same
+       semantics as for a bind operation on each mount in the subtree.
+       (Unbindable mounts are automatically pruned at the target mount
+       point.)
+
+       For further details, see
+       <i>Documentation/filesystems/sharedsubtree.rst</i> in the kernel source
+       tree.
+
+   <b>Move (MS_MOVE) semantics</b>
+       Suppose that the following command is performed:
+
+           mount --move A B/b
+
+       Here, <i>A</i> is the source mount, <i>B</i> is the destination mount, and <i>b</i> is
+       a subdirectory path under the mount point <i>B</i>.  The propagation
+       type of the resulting mount, <i>B/b</i>, depends on the propagation
+       types of the mounts <i>A</i> and <i>B</i>, and is summarized in the following
+       table.
+
+                                  <b>source(A)</b>
+                          <b>shared  private    slave         unbind</b>
+       ──────────────────┬─────────────────────────────────────────────
+       <b>dest(B)  shared   </b>│shared  shared     slave+shared  invalid
+                <b>nonshared</b>│shared  private    slave         unbindable
+
+       Note: moving a mount that resides under a shared mount is
+       invalid.
+
+       For further details, see
+       <i>Documentation/filesystems/sharedsubtree.rst</i> in the kernel source
+       tree.
+
+   <b>Mount semantics</b>
+       Suppose that we use the following command to create a mount:
+
+           mount device B/b
+
+       Here, <i>B</i> is the destination mount, and <i>b</i> is a subdirectory path
+       under the mount point <i>B</i>.  The propagation type of the resulting
+       mount, <i>B/b</i>, follows the same rules as for a bind mount, where the
+       propagation type of the source mount is considered always to be
+       private.
+
+   <b>Unmount semantics</b>
+       Suppose that we use the following command to tear down a mount:
+
+           umount A
+
+       Here, <i>A</i> is a mount on <i>B/b</i>, where <i>B</i> is the parent mount and <i>b</i> is a
+       subdirectory path under the mount point <i>B</i>.  If <b>B </b>is shared, then
+       all most-recently-mounted mounts at <i>b</i> on mounts that receive
+       propagation from mount <i>B</i> and do not have submounts under them are
+       unmounted.
+
+   <b>The /proc/ pid /mountinfo propagate_from tag</b>
+       The <i>propagate_from:X</i> tag is shown in the optional fields of a
+       <i>/proc/</i>pid<i>/mountinfo</i> record in cases where a process can't see a
+       slave's immediate master (i.e., the pathname of the master is not
+       reachable from the filesystem root directory) and so cannot
+       determine the chain of propagation between the mounts it can see.
+
+       In the following example, we first create a two-link master-slave
+       chain between the mounts <i>/mnt</i>, <i>/tmp/etc</i>, and <i>/mnt/tmp/etc</i>.  Then
+       the <a href=https://www.man7.org/linux/man-pages/man1/chroot.1.html>chroot(1)</a> command is used to make the <i>/tmp/etc</i> mount point
+       unreachable from the root directory, creating a situation where
+       the master of <i>/mnt/tmp/etc</i> is not reachable from the (new) root
+       directory of the process.
+
+       First, we bind mount the root directory onto <i>/mnt</i> and then bind
+       mount <i>/proc</i> at <i>/mnt/proc</i> so that after the later <a href=https://www.man7.org/linux/man-pages/man1/chroot.1.html>chroot(1)</a> the
+       <a href=https://www.man7.org/linux/man-pages/man5/proc.5.html>proc(5)</a> filesystem remains visible at the correct location in the
+       chroot-ed environment.
+
+           # <b>mkdir -p /mnt/proc</b>
+           # <b>mount --bind / /mnt</b>
+           # <b>mount --bind /proc /mnt/proc</b>
+
+       Next, we ensure that the <i>/mnt</i> mount is a shared mount in a new
+       peer group (with no peers):
+
+           # <b>mount --make-private /mnt  </b># Isolate from any previous peer group
+           # <b>mount --make-shared /mnt</b>
+           # <b>cat /proc/self/mountinfo | grep '/mnt' | sed 's/ - .*//'</b>
+           239 61 8:2 / /mnt ... shared:102
+           248 239 0:4 / /mnt/proc ... shared:5
+
+       Next, we bind mount <i>/mnt/etc</i> onto <i>/tmp/etc</i>:
+
+           # <b>mkdir -p /tmp/etc</b>
+           # <b>mount --bind /mnt/etc /tmp/etc</b>
+           # <b>cat /proc/self/mountinfo | egrep '/mnt|/tmp/' | sed 's/ - .*//'</b>
+           239 61 8:2 / /mnt ... shared:102
+           248 239 0:4 / /mnt/proc ... shared:5
+           267 40 8:2 /etc /tmp/etc ... shared:102
+
+       Initially, these two mounts are in the same peer group, but we
+       then make the <i>/tmp/etc</i> a slave of <i>/mnt/etc</i>, and then make
+       <i>/tmp/etc</i> shared as well, so that it can propagate events to the
+       next slave in the chain:
+
+           # <b>mount --make-slave /tmp/etc</b>
+           # <b>mount --make-shared /tmp/etc</b>
+           # <b>cat /proc/self/mountinfo | egrep '/mnt|/tmp/' | sed 's/ - .*//'</b>
+           239 61 8:2 / /mnt ... shared:102
+           248 239 0:4 / /mnt/proc ... shared:5
+           267 40 8:2 /etc /tmp/etc ... shared:105 master:102
+
+       Then we bind mount <i>/tmp/etc</i> onto <i>/mnt/tmp/etc</i>.  Again, the two
+       mounts are initially in the same peer group, but we then make
+       <i>/mnt/tmp/etc</i> a slave of <i>/tmp/etc</i>:
+
+           # <b>mkdir -p /mnt/tmp/etc</b>
+           # <b>mount --bind /tmp/etc /mnt/tmp/etc</b>
+           # <b>mount --make-slave /mnt/tmp/etc</b>
+           # <b>cat /proc/self/mountinfo | egrep '/mnt|/tmp/' | sed 's/ - .*//'</b>
+           239 61 8:2 / /mnt ... shared:102
+           248 239 0:4 / /mnt/proc ... shared:5
+           267 40 8:2 /etc /tmp/etc ... shared:105 master:102
+           273 239 8:2 /etc /mnt/tmp/etc ... master:105
+
+       From the above, we see that <i>/mnt</i> is the master of the slave
+       <i>/tmp/etc</i>, which in turn is the master of the slave <i>/mnt/tmp/etc</i>.
+
+       We then <a href=https://www.man7.org/linux/man-pages/man1/chroot.1.html>chroot(1)</a> to the <i>/mnt</i> directory, which renders the mount
+       with ID 267 unreachable from the (new) root directory:
+
+           # <b>chroot /mnt</b>
+
+       When we examine the state of the mounts inside the chroot-ed
+       environment, we see the following:
+
+           # <b>cat /proc/self/mountinfo | sed 's/ - .*//'</b>
+           239 61 8:2 / / ... shared:102
+           248 239 0:4 / /proc ... shared:5
+           273 239 8:2 /etc /tmp/etc ... master:105 propagate_from:102
+
+       Above, we see that the mount with ID 273 is a slave whose master
+       is the peer group 105.  The mount point for that master is
+       unreachable, and so a <i>propagate_from</i> tag is displayed, indicating
+       that the closest dominant peer group (i.e., the nearest reachable
+       mount in the slave chain) is the peer group with the ID 102
+       (corresponding to the <i>/mnt</i> mount point before the <a href=https://www.man7.org/linux/man-pages/man1/chroot.1.html>chroot(1)</a> was
+       performed).
+</pre>
+<h2><a id=STANDARDS href=#STANDARDS></a>STANDARDS &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       Linux.
+</pre>
+<h2><a id=HISTORY href=#HISTORY></a>HISTORY &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       Linux 2.4.19.
+</pre>
+<h2><a id=NOTES href=#NOTES></a>NOTES &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       The propagation type assigned to a new mount depends on the
+       propagation type of the parent mount.  If the mount has a parent
+       (i.e., it is a non-root mount point) and the propagation type of
+       the parent is <b>MS_SHARED</b>, then the propagation type of the new
+       mount is also <b>MS_SHARED</b>.  Otherwise, the propagation type of the
+       new mount is <b>MS_PRIVATE</b>.
+
+       Notwithstanding the fact that the default propagation type for
+       new mount is in many cases <b>MS_PRIVATE</b>, <b>MS_SHARED </b>is typically
+       more useful.  For this reason, <a href=https://www.man7.org/linux/man-pages/man1/systemd.1.html>systemd(1)</a> automatically remounts
+       all mounts as <b>MS_SHARED </b>on system startup.  Thus, on most modern
+       systems, the default propagation type is in practice <b>MS_SHARED</b>.
+
+       Since, when one uses <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a> to create a mount namespace, the
+       goal is commonly to provide full isolation of the mounts in the
+       new namespace, <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a> (since <i>util-linux</i> 2.27) in turn
+       reverses the step performed by <a href=https://www.man7.org/linux/man-pages/man1/systemd.1.html>systemd(1)</a>, by making all mounts
+       private in the new namespace.  That is, <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a> performs the
+       equivalent of the following in the new mount namespace:
+
+           mount --make-rprivate /
+
+       To prevent this, one can use the <i>--propagation unchanged</i> option
+       to <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a>.
+
+       An application that creates a new mount namespace directly using
+       <a href=https://www.man7.org/linux/man-pages/man2/clone.2.html>clone(2)</a> or <a href=https://www.man7.org/linux/man-pages/man2/unshare.2.html>unshare(2)</a> may desire to prevent propagation of mount
+       events to other mount namespaces (as is done by <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a>).
+       This can be done by changing the propagation type of mounts in
+       the new namespace to either <b>MS_SLAVE </b>or <b>MS_PRIVATE</b>, using a call
+       such as the following:
+
+           mount(NULL, "/", MS_SLAVE | MS_REC, NULL);
+
+       For a discussion of propagation types when moving mounts
+       (<b>MS_MOVE</b>) and creating bind mounts (<b>MS_BIND</b>), see
+       <i>Documentation/filesystems/sharedsubtree.rst</i>.
+
+   <b>Restrictions on mount namespaces</b>
+       Note the following points with respect to mount namespaces:
+
+       [1] Each mount namespace has an owner user namespace.  As
+           explained above, when a new mount namespace is created, its
+           mount list is initialized as a copy of the mount list of
+           another mount namespace.  If the new namespace and the
+           namespace from which the mount list was copied are owned by
+           different user namespaces, then the new mount namespace is
+           considered <i>less privileged</i>.
+
+       [2] When creating a less privileged mount namespace, shared
+           mounts are reduced to slave mounts.  This ensures that
+           mappings performed in less privileged mount namespaces will
+           not propagate to more privileged mount namespaces.
+
+       [3] Mounts that come as a single unit from a more privileged
+           mount namespace are locked together and may not be separated
+           in a less privileged mount namespace.  (The <a href=https://www.man7.org/linux/man-pages/man2/unshare.2.html>unshare(2)</a>
+           <b>CLONE_NEWNS </b>operation brings across all of the mounts from
+           the original mount namespace as a single unit, and recursive
+           mounts that propagate between mount namespaces propagate as a
+           single unit.)
+
+           In this context, "may not be separated" means that the mounts
+           are locked so that they may not be individually unmounted.
+           Consider the following example:
+
+               $ <b>sudo sh</b>
+               # <b>mount --bind /dev/null /etc/shadow</b>
+               # <b>cat /etc/shadow       </b># Produces no output
+
+           The above steps, performed in a more privileged mount
+           namespace, have created a bind mount that obscures the
+           contents of the shadow password file, <i>/etc/shadow</i>.  For
+           security reasons, it should not be possible to <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> that
+           mount in a less privileged mount namespace, since that would
+           reveal the contents of <i>/etc/shadow</i>.
+
+           Suppose we now create a new mount namespace owned by a new
+           user namespace.  The new mount namespace will inherit copies
+           of all of the mounts from the previous mount namespace.
+           However, those mounts will be locked because the new mount
+           namespace is less privileged.  Consequently, an attempt to
+           <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> the mount fails as show in the following step:
+
+               # <b>unshare --user --map-root-user --mount \</b>
+                              <b>strace -o /tmp/log \</b>
+                              <b>umount /mnt/dir</b>
+               umount: /etc/shadow: not mounted.
+               # <b>grep '^umount' /tmp/log</b>
+               umount2("/etc/shadow", 0)     = -1 EINVAL (Invalid argument)
+
+           The error message from <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> is a little confusing, but
+           the <a href=https://www.man7.org/linux/man-pages/man1/strace.1.html>strace(1)</a> output reveals that the underlying <a href=https://www.man7.org/linux/man-pages/man2/umount2.2.html>umount2(2)</a>
+           system call failed with the error <b>EINVAL</b>, which is the error
+           that the kernel returns to indicate that the mount is locked.
+
+           Note, however, that it is possible to stack (and unstack) a
+           mount on top of one of the inherited locked mounts in a less
+           privileged mount namespace:
+
+               # <b>echo 'aaaaa' &gt; /tmp/a    </b># File to mount onto /etc/shadow
+               # <b>unshare --user --map-root-user --mount \</b>
+                   <b>sh -c 'mount --bind /tmp/a /etc/shadow; cat /etc/shadow'</b>
+               aaaaa
+               # <b>umount /etc/shadow</b>
+
+           The final <a href=https://www.man7.org/linux/man-pages/man8/umount.8.html>umount(8)</a> command above, which is performed in the
+           initial mount namespace, makes the original <i>/etc/shadow</i> file
+           once more visible in that namespace.
+
+       [4] Following on from point [3], note that it is possible to
+           <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> an entire subtree of mounts that propagated as a
+           unit into a less privileged mount namespace, as illustrated
+           in the following example.
+
+           First, we create new user and mount namespaces using
+           <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a>.  In the new mount namespace, the propagation type
+           of all mounts is set to private.  We then create a shared
+           bind mount at <i>/mnt</i>, and a small hierarchy of mounts
+           underneath that mount.
+
+               $ <b>PS1='ns1# ' sudo unshare --user --map-root-user \</b>
+                                      <b>--mount --propagation private bash</b>
+               ns1# <b>echo $$        </b># We need the PID of this shell later
+               778501
+               ns1# <b>mount --make-shared --bind /mnt /mnt</b>
+               ns1# <b>mkdir /mnt/x</b>
+               ns1# <b>mount --make-private -t tmpfs none /mnt/x</b>
+               ns1# <b>mkdir /mnt/x/y</b>
+               ns1# <b>mount --make-private -t tmpfs none /mnt/x/y</b>
+               ns1# <b>grep /mnt /proc/self/mountinfo | sed 's/ - .*//'</b>
+               986 83 8:5 /mnt /mnt rw,relatime shared:344
+               989 986 0:56 / /mnt/x rw,relatime
+               990 989 0:57 / /mnt/x/y rw,relatime
+
+           Continuing in the same shell session, we then create a second
+           shell in a new user namespace and a new (less privileged)
+           mount namespace and check the state of the propagated mounts
+           rooted at <i>/mnt</i>.
+
+               ns1# <b>PS1='ns2# ' unshare --user --map-root-user \</b>
+                                      <b>--mount --propagation unchanged bash</b>
+               ns2# <b>grep /mnt /proc/self/mountinfo | sed 's/ - .*//'</b>
+               1239 1204 8:5 /mnt /mnt rw,relatime master:344
+               1240 1239 0:56 / /mnt/x rw,relatime
+               1241 1240 0:57 / /mnt/x/y rw,relatime
+
+           Of note in the above output is that the propagation type of
+           the mount <i>/mnt</i> has been reduced to slave, as explained in
+           point [2].  This means that submount events will propagate
+           from the master <i>/mnt</i> in "ns1", but propagation will not occur
+           in the opposite direction.
+
+           From a separate terminal window, we then use <a href=https://www.man7.org/linux/man-pages/man1/nsenter.1.html>nsenter(1)</a> to
+           enter the mount and user namespaces corresponding to "ns1".
+           In that terminal window, we then recursively bind mount
+           <i>/mnt/x</i> at the location <i>/mnt/ppp</i>.
+
+               $ <b>PS1='ns3# ' sudo nsenter -t 778501 --user --mount</b>
+               ns3# <b>mount --rbind --make-private /mnt/x /mnt/ppp</b>
+               ns3# <b>grep /mnt /proc/self/mountinfo | sed 's/ - .*//'</b>
+               986 83 8:5 /mnt /mnt rw,relatime shared:344
+               989 986 0:56 / /mnt/x rw,relatime
+               990 989 0:57 / /mnt/x/y rw,relatime
+               1242 986 0:56 / /mnt/ppp rw,relatime
+               1243 1242 0:57 / /mnt/ppp/y rw,relatime shared:518
+
+           Because the propagation type of the parent mount, <i>/mnt</i>, was
+           shared, the recursive bind mount propagated a small subtree
+           of mounts under the slave mount <i>/mnt</i> into "ns2", as can be
+           verified by executing the following command in that shell
+           session:
+
+               ns2# <b>grep /mnt /proc/self/mountinfo | sed 's/ - .*//'</b>
+               1239 1204 8:5 /mnt /mnt rw,relatime master:344
+               1240 1239 0:56 / /mnt/x rw,relatime
+               1241 1240 0:57 / /mnt/x/y rw,relatime
+               1244 1239 0:56 / /mnt/ppp rw,relatime
+               1245 1244 0:57 / /mnt/ppp/y rw,relatime master:518
+
+           While it is not possible to <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> a part of the
+           propagated subtree (<i>/mnt/ppp/y</i>) in "ns2", it is possible to
+           <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a> the entire subtree, as shown by the following
+           commands:
+
+               ns2# <b>umount /mnt/ppp/y</b>
+               umount: /mnt/ppp/y: not mounted.
+               ns2# <b>umount -l /mnt/ppp | sed 's/ - .*//'      </b># Succeeds...
+               ns2# <b>grep /mnt /proc/self/mountinfo</b>
+               1239 1204 8:5 /mnt /mnt rw,relatime master:344
+               1240 1239 0:56 / /mnt/x rw,relatime
+               1241 1240 0:57 / /mnt/x/y rw,relatime
+
+       [5] The <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a> flags <b>MS_RDONLY</b>, <b>MS_NOSUID</b>, <b>MS_NOEXEC</b>, and the
+           "atime" flags (<b>MS_NOATIME</b>, <b>MS_NODIRATIME</b>, <b>MS_RELATIME</b>)
+           settings become locked when propagated from a more privileged
+           to a less privileged mount namespace, and may not be changed
+           in the less privileged mount namespace.
+
+           This point is illustrated in the following example where, in
+           a more privileged mount namespace, we create a bind mount
+           that is marked as read-only.  For security reasons, it should
+           not be possible to make the mount writable in a less
+           privileged mount namespace, and indeed the kernel prevents
+           this:
+
+               $ <b>sudo mkdir /mnt/dir</b>
+               $ <b>sudo mount --bind -o ro /some/path /mnt/dir</b>
+               $ <b>sudo unshare --user --map-root-user --mount \</b>
+                              <b>mount -o remount,rw /mnt/dir</b>
+               mount: /mnt/dir: permission denied.
+
+       [6] A file or directory that is a mount point in one namespace
+           that is not a mount point in another namespace, may be
+           renamed, unlinked, or removed (<a href=https://www.man7.org/linux/man-pages/man2/rmdir.2.html>rmdir(2)</a>) in the mount
+           namespace in which it is not a mount point (subject to the
+           usual permission checks).  Consequently, the mount point is
+           removed in the mount namespace where it was a mount point.
+
+           Previously (before Linux 3.18), attempting to unlink, rename,
+           or remove a file or directory that was a mount point in
+           another mount namespace would result in the error <b>EBUSY</b>.
+           That behavior had technical problems of enforcement (e.g.,
+           for NFS) and permitted denial-of-service attacks against more
+           privileged users (i.e., preventing individual files from
+           being updated by bind mounting on top of them).
+</pre>
+<h2><a id=EXAMPLES href=#EXAMPLES></a>EXAMPLES &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       See <a href=https://www.man7.org/linux/man-pages/man2/pivot_root.2.html>pivot_root(2)</a>.
+</pre>
+<h2><a id=SEE_ALSO href=#SEE_ALSO></a>SEE ALSO &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a>, <a href=https://www.man7.org/linux/man-pages/man2/clone.2.html>clone(2)</a>, <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a>, <a href=https://www.man7.org/linux/man-pages/man2/mount_setattr.2.html>mount_setattr(2)</a>, <a href=https://www.man7.org/linux/man-pages/man2/pivot_root.2.html>pivot_root(2)</a>,
+       <a href=https://www.man7.org/linux/man-pages/man2/setns.2.html>setns(2)</a>, <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a>, <a href=https://www.man7.org/linux/man-pages/man2/unshare.2.html>unshare(2)</a>, <a href=https://www.man7.org/linux/man-pages/man5/proc.5.html>proc(5)</a>, <a href=https://www.man7.org/linux/man-pages/man7/namespaces.7.html>namespaces(7)</a>,
+       <a href=https://www.man7.org/linux/man-pages/man7/user_namespaces.7.html>user_namespaces(7)</a>, <a href=https://www.man7.org/linux/man-pages/man8/findmnt.8.html>findmnt(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/pam_namespace.8.html>pam_namespace(8)</a>,
+       <a href=https://www.man7.org/linux/man-pages/man8/pivot_root.8.html>pivot_root(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/umount.8.html>umount(8)</a>
+
+       <i>Documentation/filesystems/sharedsubtree.rst</i> in the kernel source
+       tree.
+
+<span class=footline>Linux man-pages (unreleased)     (date)              <i>mount_namespaces</i>(7)</span>
+</pre>
+<hr class=end-man-text>
+<p>Pages that refer to this page:
+ <a href=https://www.man7.org/linux/man-pages/man1/fuser.1.html>fuser(1)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man1/nsenter.1.html>nsenter(1)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man1/unshare.1.html>unshare(1)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man2/clone.2.html>clone(2)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man2/mount.2.html>mount(2)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man2/mount_setattr.2.html>mount_setattr(2)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man2/pivot_root.2.html>pivot_root(2)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man2/umount.2.html>umount(2)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man2/unshare.2.html>unshare(2)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man3/lttng-ust.3.html>lttng-ust(3)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/core.5.html>core(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/proc.5.html>proc(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/systemd.exec.5.html>systemd.exec(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/landlock.7.html>landlock(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/pid_namespaces.7.html>pid_namespaces(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/symlink.7.html>symlink(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/umount.8.html>umount(8)</a>
+</p>
+<hr>
+
+<hr class=start-footer>
+<div class=footer>
+<table class=colophon-table>
+ <tbody><tr>
+ <td class=pub-info>
+ <p>
+ HTML rendering created 2023-12-22
+ by <a href=https://man7.org/mtk/index.html>Michael Kerrisk</a>,
+ author of
+ <a href=https://man7.org/tlpi/><em>The Linux Programming Interface</em></a>.
+ </p>
+ <p>
+ For details of in-depth
+ <strong>Linux/UNIX system programming training courses</strong>
+ that I teach, look <a href=https://man7.org/training/>here</a>.
+ </p>
+ <p>
+ Hosting by <a href=https://www.jambit.com/index_en.html>jambit GmbH</a>.
+ </p>
+ </td>
+ <td class=colophon-divider>
+ </td>
+ <td class=tlpi-cover>
+ <a href=https://man7.org/tlpi/><img src="data:image/png;base64,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7QYALFmyZN68ed8QQwOe59etW7dr165Dhw6dSzL09fX95je/+T48AQihSqWSZXn9+vUD7/TYY489++yzTz755GuvvTZgfM6zbCn2gCCI83jFNWvWrF27duD0rbfeWrNmjdVqTXVeAMBrr72G43hbW9t1110XDAbPvff111+PRCKiKP74xz/WarUEQZz389tstltuuQUAUFNT89prr32TMYQQrlixoqqqatKkSclk8tyic81UR0fH6tWrnU7nYJqslBI4ePDgyZMnUw5ASgmYzWaEEI7jc+fORQjxPA8AGDly5Ln3pkYZQujYsWMAgCeffHKgSK1W2+32ASXQ2dl533334TieKlUUBcfxf7R+KSWQKr3//vsBAHv37n3//ffPVQKPPvrotm3bAABPP/106qfVarX/VAnk5uamHkeSZMoIp5SAw+HAMCylRgZUfOrfvyC6dUAGdOuOHTsAAC0tLQih559/HgCwatWqtra25ubmG2+8EQDwzDPPpGBKZSTec889DQ0NHR0dFEWdC2tjY2PK7i9evBghFI/HAQBtbW2px02dOpUkyXNhffTRR1PDVpblf4QVIURRFI7jL7/88neB9d133039eClYd+/eDQDIyMj46KOPurq6Xn/99cGHNeVgnXdx1apVAz3L4XBYrdbU8fPPP09RVOoVWZZNuTUDctttt53bAWfNmjXgYKVeIAWQ1+u94YYbzn1oU1NTit9JEbipEQMAWLRoEULozTffHHCwAAAPPvggQmjEiBEDVj7lgQy07/F4EEJjx44tLS0deMSoUaMAAO3t7anTvXv3FhQUDLyqWq1ubm7+V2H976kWhNB5zPG3iNvtRghlZGT809Kuri6CIBwOx6UfJiWTyba2toKCgvMI5e9ItRDfxWR99xbT09O/pTQnJ+eHEn3SNF1aWnqZE7hMtVyG9bL8z+TbdOuGDRtCodCtt94KAHj55ZfD4fAvfvGLVFF7e/snn3xy7733PvPMM21tbefeVVxcfO211z700EMD7uewYcPuvvvu6urq9957LzWnMnz48P/4j/8AAHR3dz/11FMD944ZM+bmm28GAGzevLm1tfXee+89t+Xnn39+3759Ho+nsrJy7dq1DofjnnvukWU5VSpJ0ksvvfQtqSHfq3yLgzV37tyioqLUcXZ29gDzhBDavn17ys365S9/uWDBglRsOmfO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" alt="Cover of TLPI"></a>
+ </td>
+ </tr>
+</table>
+</div>
+<hr class=end-footer>
+<noscript><div class="statcounter"><a title="Web Analytics
+Made Easy - StatCounter" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/7422636/0/9b6714ff/1/" alt="Web Analytics Made Easy -
+StatCounter"></a></div></noscript>
