@@ -152,6 +152,15 @@ fn is_file_open_read_write(file: &File) -> io::Result<(bool, bool)> {
 }
 
 #[doc(hidden)]
+/// Returns `true` if a file is open in read-only mode.
+pub fn is_open_read_only(file: &File) -> io::Result<bool> {
+    let state = is_file_open_read_write(file)? == (true, false);
+    log::debug!("ffi_utils::is_open_read_only value: {:?}", state);
+
+    Ok(state)
+}
+
+#[doc(hidden)]
 /// Returns `true` if a file is open in read-write mode.
 pub fn is_open_read_write(file: &File) -> io::Result<bool> {
     let state = is_file_open_read_write(file)? == (true, true);
@@ -189,6 +198,13 @@ fn c_file_stream_from(file: &File, mode: &CStr) -> io::Result<*mut libc::FILE> {
             }
         }
     }
+}
+
+#[doc(hidden)]
+/// Associate a write-only C FILE stream to a `File`'s underlying raw file descriptor.
+pub fn read_only_c_file_stream_from(file: &File) -> io::Result<*mut libc::FILE> {
+    let write_only = CString::new("r")?;
+    c_file_stream_from(file, write_only.as_c_str())
 }
 
 #[doc(hidden)]

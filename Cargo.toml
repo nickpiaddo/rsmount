@@ -29,6 +29,7 @@ typed-builder = "0.19.1"
 
 [dev-dependencies]
 pretty_assertions = "1.4.0"
+tempfile = "3.10.1"
 
 [build-dependencies]
 pkg-config = "0.3.30"

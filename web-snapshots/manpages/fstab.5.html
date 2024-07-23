@@ -1,0 +1,293 @@
+<!DOCTYPE html> <html lang=en-US style><!--
+ Page saved with SingleFile
+ url: https://www.man7.org/linux/man-pages/man5/fstab.5.html
+--><meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>fstab(5) - Linux manual page</title>
+<style>html,body{background-color:#fcfcfc;font-family:sans-serif;font-size:100%;color:#181818}body{margin-top:0px;margin-left:0px;margin-right:0px}h1,h2{font-family:helvetica,sans-serif;font-weight:normal;margin-left:8px;margin-right:8px;color:#008000;margin-top:25px}p{margin-left:8px;margin-right:8px;margin-bottom:0.5em}p{max-width:750px}table{max-width:750px}hr{max-width:750px;margin:8px}pre{margin-left:8px}a{color:#1030ff;text-decoration:none}a:visited{color:#4080dd}a:hover,a:focus,a:active{color:red;background-color:#ffe0e0;text-decoration:underline}div.nav-bar{padding-left:8px;padding-right:8px;padding-top:3px;padding-bottom:3px;background-color:#e8e8e8}div.footer{padding-left:8px;padding-right:8px;padding-top:3px;padding-bottom:3px;background-color:#e8e8e8}hr.nav-end{height:0px;margin-top:0px;color:#0000ff;border-color:#ffffff;width:100%}hr.start-footer,hr.end-footer{height:0px;margin-top:0px;margin-bottom:0px;color:#0000ff;border-color:#ffffff;width:100%}p.training-text{margin-top:0px;margin-left:0px;margin-bottom:0px;font-weight:bold;font-size:15px}strong{font-weight:bold;color:#303030}a.training-link:hover,a.training-link:visited,a.training-link:link,a.training-link:active{color:#008000}a.training-link:hover,a.training-link:active{text-decoration:underline;background-color:#ffd0d0}p.nav-text{margin-top:0px;margin-left:0px;margin-bottom:0px}p.nav-text{font-size:15px}</style>
+<style>body{background-color:#FFFFFF}b{color:#502000}i{color:#006000}h2{color:#A00000;padding-top:15px;font-size:100%;font-weight:bold}table.sec-table{width:100%;border:1px}table.nav-table{width:100%;border-spacing:0px;border-width:0px;border-collapse:collapse;border-top:0px;border-bottom:0px;padding-top:0px;padding-bottom:0px}td.nav-cell{padding:0px;border-width:0px}table.colophon-table{width:100%}td.search-box{text-align:left}td.training-cell{text-align:right;padding:0px;border-width:0px}td.pub-info{text-align:left}td.tlpi-cover{text-align:right}fieldset.man-search{border:0px;margin-top:0px;margin-bottom:0px}span.headline{font-weight:bold}span.footline{font-weight:bold}p.section-dir{margin-top:6px;margin-bottom:6px;padding:5px;border-width:1px}span.top-link{font-size:70%}hr.end-man-text{height:0px;border-color:#ffffff;width:100%}pre{font-family:monospace,courier}a:hover{text-decoration:underline;color:red}a:active{text-decoration:underline;background-color:#FFD0D0}.footer p{margin-top:0.7em;margin-bottom:0.7em}</style>
+<meta name=referrer content=no-referrer><link rel=canonical href=https://www.man7.org/linux/man-pages/man5/fstab.5.html><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body>
+<div class=page-top><a id=top_of_page></a></div>
+ <div class=nav-bar>
+ <table class=nav-table>
+ <tbody><tr>
+ <td class=nav-cell>
+ <p class=nav-text>
+ <a href=https://www.man7.org/index.html>man7.org</a> &gt; Linux &gt; <a href=https://www.man7.org/linux/man-pages/index.html>man-pages</a>
+ </p>
+ </td>
+ <td class=training-cell>
+ <p class=training-text><a class=training-link href=http://man7.org/training/>Linux/UNIX system programming training</a></p>
+ </td>
+ </tr>
+ </table>
+ </div>
+<hr class=nav-end>
+<h1>fstab(5) — Linux manual page</h1>
+<table class=sec-table>
+<tbody><tr>
+ <td>
+ <p class=section-dir>
+<a href=#NAME>NAME</a> | <a href=#SYNOPSIS>SYNOPSIS</a> | <a href=#DESCRIPTION>DESCRIPTION</a> | <a href=#FILES>FILES</a> | <a href=#NOTES>NOTES</a> | <a href=#HISTORY>HISTORY</a> | <a href=#SEE_ALSO>SEE&nbsp;ALSO</a> | <a href=#REPORTING_BUGS>REPORTING&nbsp;BUGS</a> | <a href=#AVAILABILITY>AVAILABILITY</a>
+ </p>
+ </td>
+</tr>
+<tr>
+ <td class=search-box>
+ <div class=man-search-box>
+ <form action=https://www.google.com/search>
+ <fieldset class=man-search>
+ <input type=text name=q size=10 maxlength=255 value>
+
+ <input type=submit name=sa value="Search online pages">
+ </fieldset>
+ </form>
+ </div>
+ </td>
+ <td> </td>
+</tr>
+</table>
+<pre><span class=headline><i>FSTAB</i>(5)                      File formats                      <i>FSTAB</i>(5)</span>
+</pre>
+<h2><a id=NAME href=#NAME></a>NAME &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       fstab - static information about the filesystems
+</pre>
+<h2><a id=SYNOPSIS href=#SYNOPSIS></a>SYNOPSIS &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       <i>/etc/fstab</i>
+</pre>
+<h2><a id=DESCRIPTION href=#DESCRIPTION></a>DESCRIPTION &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       The file <b>fstab </b>contains descriptive information about the
+       filesystems the system can mount. <b>fstab </b>is only read by programs,
+       and not written; it is the duty of the system administrator to
+       properly create and maintain this file. The order of records in
+       <b>fstab </b>is important because <a href=https://www.man7.org/linux/man-pages/man8/fsck.8.html>fsck(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>, and <a href=https://www.man7.org/linux/man-pages/man8/umount.8.html>umount(8)</a>
+       sequentially iterate through <b>fstab </b>doing their thing.
+
+       The file is not read by <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> only but often is used by many
+       other tools and daemons, and proper functionality may require
+       additional steps. For example, on systemd-based systems, it’s
+       recommended to use 'systemctl daemon-reload' after <b>fstab</b>
+       modification.
+
+       Each filesystem is described on a separate line. Fields on each
+       line are separated by tabs or spaces. Lines starting with '#' are
+       comments. Blank lines are ignored.
+
+       The following is a typical example of an <b>fstab </b>entry:
+
+           LABEL=t-home2   /home      ext4    defaults,auto_da_alloc      0  2
+
+   <b>The first field (<i>fs_spec</i>).</b>
+       This field describes the block special device, remote filesystem
+       or filesystem image for loop device to be mounted or swap file or
+       swap device to be enabled.
+
+       For ordinary mounts, it will hold (a link to) a block special
+       device node (as created by <a href=https://www.man7.org/linux/man-pages/man2/mknod.2.html>mknod(2)</a>) for the device to be
+       mounted, like <i>/dev/cdrom</i> or <i>/dev/sdb7</i>. For NFS mounts, this field
+       is <i>&lt;host&gt;:&lt;dir&gt;</i>, e.g., <i>knuth.aeb.nl:/</i>. For filesystems with no
+       storage, any string can be used, and will show up in <a href=https://www.man7.org/linux/man-pages/man1/df.1.html>df(1)</a>
+       output, for example. Typical usage is <i>proc</i> for <b>procfs</b>; <i>mem</i>, <i>none</i>,
+       or <i>tmpfs</i> for <b>tmpfs</b>. Other special filesystems, like <b>udev </b>and
+       <b>sysfs</b>, are typically not listed in <b>fstab</b>.
+
+       LABEL=&lt;label&gt; or UUID=&lt;uuid&gt; may be given instead of a device
+       name. This is the recommended method, as device names are often a
+       coincidence of hardware detection order, and can change when
+       other disks are added or removed. For example, 'LABEL=Boot' or
+       'UUID=3e6be9de-8139-11d1-9106-a43f08d823a6'. (Use a
+       filesystem-specific tool like <a href=https://www.man7.org/linux/man-pages/man8/e2label.8.html>e2label(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/xfs_admin.8.html>xfs_admin(8)</a>, or
+       <a href=https://www.man7.org/linux/man-pages/man8/fatlabel.8.html>fatlabel(8)</a> to set LABELs on filesystems).
+
+       It’s also possible to use <b>PARTUUID= </b>and <b>PARTLABEL=</b>. These
+       partitions identifiers are supported for example for GUID
+       Partition Table (GPT).
+
+       See <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/blkid.8.html>blkid(8)</a> or <a href=https://www.man7.org/linux/man-pages/man8/lsblk.8.html>lsblk(8)</a> for more details about device
+       identifiers.
+
+       Note that <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> uses UUIDs as strings. The string
+       representation of the UUID should be based on lower case
+       characters. But when specifying the volume ID of FAT or NTFS file
+       systems upper case characters are used (e.g UUID="A40D-85E7" or
+       UUID="61DB7756DB7779B3").
+
+   <b>The second field (<i>fs_file</i>).</b>
+       This field describes the mount point (target) for the filesystem.
+       For swap area, this field should be specified as `none'. If the
+       name of the mount point contains spaces or tabs these can be
+       escaped as `\040' and '\011' respectively.
+
+   <b>The third field (<i>fs_vfstype</i>).</b>
+       This field describes the type of the filesystem. Linux supports
+       many filesystem types: ext4, xfs, btrfs, f2fs, vfat, ntfs,
+       hfsplus, tmpfs, sysfs, proc, iso9660, udf, squashfs, nfs, cifs,
+       and many more. For more details, see <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>.
+
+       An entry <i>swap</i> denotes a file or partition to be used for
+       swapping, cf. <a href=https://www.man7.org/linux/man-pages/man8/swapon.8.html>swapon(8)</a>. An entry <i>none</i> is useful for bind or move
+       mounts.
+
+       More than one type may be specified in a comma-separated list.
+
+       <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> and <a href=https://www.man7.org/linux/man-pages/man8/umount.8.html>umount(8)</a> support filesystem <i>subtypes</i>. The subtype
+       is defined by '.subtype' suffix. For example 'fuse.sshfs'. It’s
+       recommended to use subtype notation rather than add any prefix to
+       the first fstab field (for example 'sshfs#example.com' is
+       deprecated).
+
+   <b>The fourth field (<i>fs_mntops</i>).</b>
+       This field describes the mount options associated with the
+       filesystem.
+
+       It is formatted as a comma-separated list of options and is
+       optional for <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> or <a href=https://www.man7.org/linux/man-pages/man8/swapon.8.html>swapon(8)</a>. The usual convention is to
+       use at least "defaults" keyword there.
+
+       It usually contains the type of mount (<b>ro </b>or <b>rw</b>, the default is
+       <b>rw</b>), plus any additional options appropriate to the filesystem
+       type (including performance-tuning options). For details, see
+       <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> or <a href=https://www.man7.org/linux/man-pages/man8/swapon.8.html>swapon(8)</a>.
+
+       Basic filesystem-independent options are:
+
+       <b>defaults</b>
+           use default options. The default depends on the kernel and
+           the filesystem. <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a> does not have any hardcoded set of
+           default options. The kernel default is usually rw, suid, dev,
+           exec, auto, nouser, and async.
+
+       <b>noauto</b>
+           do not mount when <b>mount -a </b>is given (e.g., at boot time)
+
+       <b>user</b>
+           allow a user to mount
+
+       <b>owner</b>
+           allow device owner to mount
+
+       <b>comment</b>
+           or <b>x-&lt;name&gt; </b>for use by fstab-maintaining programs
+
+       <b>nofail</b>
+           do not report errors for this device if it does not exist.
+
+   <b>The fifth field (<i>fs_freq</i>).</b>
+       This field is used by <b>dump</b>(8) to determine which filesystems need
+       to be dumped. Defaults to zero (don’t dump) if not present.
+
+   <b>The sixth field (<i>fs_passno</i>).</b>
+       This field is used by <a href=https://www.man7.org/linux/man-pages/man8/fsck.8.html>fsck(8)</a> to determine the order in which
+       filesystem checks are done at boot time. The root filesystem
+       should be specified with a <i>fs_passno</i> of 1. Other filesystems
+       should have a <i>fs_passno</i> of 2. Filesystems within a drive will be
+       checked sequentially, but filesystems on different drives will be
+       checked at the same time to utilize parallelism available in the
+       hardware. Defaults to zero (don’t check the filesystem) if not
+       present.
+</pre>
+<h2><a id=FILES href=#FILES></a>FILES &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       <i>/etc/fstab</i>, <i>&lt;fstab.h&gt;</i>
+</pre>
+<h2><a id=NOTES href=#NOTES></a>NOTES &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       The proper way to read records from <b>fstab </b>is to use the routines
+       <a href=https://www.man7.org/linux/man-pages/man3/getmntent.3.html>getmntent(3)</a> or <b>libmount</b>.
+
+       The keyword <b>ignore </b>as a filesystem type (3rd field) is no longer
+       supported by the pure libmount based mount utility (since
+       util-linux v2.22).
+</pre>
+<h2><a id=HISTORY href=#HISTORY></a>HISTORY &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       The ancestor of this <b>fstab </b>file format appeared in 4.0BSD.
+</pre>
+<h2><a id=SEE_ALSO href=#SEE_ALSO></a>SEE ALSO &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       <a href=https://www.man7.org/linux/man-pages/man3/getmntent.3.html>getmntent(3)</a>, <a href=https://www.man7.org/linux/man-pages/man5/fs.5.html>fs(5)</a>, <a href=https://www.man7.org/linux/man-pages/man8/findmnt.8.html>findmnt(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>, <a href=https://www.man7.org/linux/man-pages/man8/swapon.8.html>swapon(8)</a>
+</pre>
+<h2><a id=REPORTING_BUGS href=#REPORTING_BUGS></a>REPORTING BUGS &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       For bug reports, use the issue tracker at
+       <a href=https://github.com/util-linux/util-linux/issues>https://github.com/util-linux/util-linux/issues</a>.
+</pre>
+<h2><a id=AVAILABILITY href=#AVAILABILITY></a>AVAILABILITY &nbsp; &nbsp; &nbsp; &nbsp; <a href=#top_of_page><span class=top-link>top</span></a></h2><pre>       <b>fstab </b>is part of the util-linux package which can be downloaded
+       from Linux Kernel Archive
+       &lt;<a href=https://www.kernel.org/pub/linux/utils/util-linux/>https://www.kernel.org/pub/linux/utils/util-linux/</a>&gt;. This page
+       is part of the <i>util-linux</i> (a random collection of Linux
+       utilities) project. Information about the project can be found at
+       ⟨<a href=https://www.kernel.org/pub/linux/utils/util-linux/>https://www.kernel.org/pub/linux/utils/util-linux/</a>⟩. If you have
+       a bug report for this manual page, send it to
+       util-linux@vger.kernel.org. This page was obtained from the
+       project's upstream Git repository
+       ⟨git://git.kernel.org/pub/scm/utils/util-linux/util-linux.git⟩ on
+       2023-12-22. (At that time, the date of the most recent commit
+       that was found in the repository was 2023-12-14.) If you discover
+       any rendering problems in this HTML version of the page, or you
+       believe there is a better or more up-to-date source for the page,
+       or you have corrections or improvements to the information in
+       this COLOPHON (which is <i>not</i> part of the original manual page),
+       send a mail to man-pages@man7.org
+
+<span class=footline>util-linux 2.39.594-1e0ad      2023-07-19                       <i>FSTAB</i>(5)</span>
+</pre>
+<hr class=end-man-text>
+<p>Pages that refer to this page:
+ <a href=https://www.man7.org/linux/man-pages/man1/quota.1.html>quota(1)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man1/systemd-dissect.1.html>systemd-dissect(1)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man3/getfsent.3.html>getfsent(3)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man3/getmntent.3.html>getmntent(3)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/crypttab.5.html>crypttab(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/lxc.container.conf.5.html>lxc.container.conf(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/nfs.5.html>nfs(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/proc.5.html>proc(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/repart.d.5.html>repart.d(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/systemd.automount.5.html>systemd.automount(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/systemd.mount.5.html>systemd.mount(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/systemd.swap.5.html>systemd.swap(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man5/veritytab.5.html>veritytab(5)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/bootparam.7.html>bootparam(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/dracut.cmdline.7.html>dracut.cmdline(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/kernel-command-line.7.html>kernel-command-line(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/spufs.7.html>spufs(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man7/systemd.generator.7.html>systemd.generator(7)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/e2mmpstatus.8.html>e2mmpstatus(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/findmnt.8.html>findmnt(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/fsck.8@@e2fsprogs.html>fsck(8@@e2fsprogs)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/fsck.8.html>fsck(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/fsck.btrfs.8.html>fsck.btrfs(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/fsck.xfs.8.html>fsck.xfs(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/mount.8.html>mount(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/quotacheck.8.html>quotacheck(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/quotaon.8.html>quotaon(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/swapon.8.html>swapon(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/systemd-fstab-generator.8.html>systemd-fstab-generator(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/systemd-gpt-auto-generator.8.html>systemd-gpt-auto-generator(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/systemd-hibernate-resume-generator.8.html>systemd-hibernate-resume-generator(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/systemd-makefs@.service.8.html>systemd-makefs@.service(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/systemd-remount-fs.service.8.html>systemd-remount-fs.service(8)</a>,&nbsp;
+ <a href=https://www.man7.org/linux/man-pages/man8/xfs_fsr.8.html>xfs_fsr(8)</a>
+</p>
+<hr>
+
+<hr class=start-footer>
+<div class=footer>
+<table class=colophon-table>
+ <tbody><tr>
+ <td class=pub-info>
+ <p>
+ HTML rendering created 2023-12-22
+ by <a href=https://man7.org/mtk/index.html>Michael Kerrisk</a>,
+ author of
+ <a href=https://man7.org/tlpi/><em>The Linux Programming Interface</em></a>.
+ </p>
+ <p>
+ For details of in-depth
+ <strong>Linux/UNIX system programming training courses</strong>
+ that I teach, look <a href=https://man7.org/training/>here</a>.
+ </p>
+ <p>
+ Hosting by <a href=https://www.jambit.com/index_en.html>jambit GmbH</a>.
+ </p>
+ </td>
+ <td class=colophon-divider>
+ </td>
+ <td class=tlpi-cover>
+ <a href=https://man7.org/tlpi/><img src="data:image/png;base64,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7QYALFmyZN68ed8QQwOe59etW7dr165Dhw6dSzL09fX95je/+T48AQihSqWSZXn9+vUD7/TYY489++yzTz755GuvvTZgfM6zbCn2gCCI83jFNWvWrF27duD0rbfeWrNmjdVqTXVeAMBrr72G43hbW9t1110XDAbPvff111+PRCKiKP74xz/WarUEQZz389tstltuuQUAUFNT89prr32TMYQQrlixoqqqatKkSclk8tyic81UR0fH6tWrnU7nYJqslBI4ePDgyZMnUw5ASgmYzWaEEI7jc+fORQjxPA8AGDly5Ln3pkYZQujYsWMAgCeffHKgSK1W2+32ASXQ2dl533334TieKlUUBcfxf7R+KSWQKr3//vsBAHv37n3//ffPVQKPPvrotm3bAABPP/106qfVarX/VAnk5uamHkeSZMoIp5SAw+HAMCylRgZUfOrfvyC6dUAGdOuOHTsAAC0tLQih559/HgCwatWqtra25ubmG2+8EQDwzDPPpGBKZSTec889DQ0NHR0dFEWdC2tjY2PK7i9evBghFI/HAQBtbW2px02dOpUkyXNhffTRR1PDVpblf4QVIURRFI7jL7/88neB9d133039eClYd+/eDQDIyMj46KOPurq6Xn/99cGHNeVgnXdx1apVAz3L4XBYrdbU8fPPP09RVOoVWZZNuTUDctttt53bAWfNmjXgYKVeIAWQ1+u94YYbzn1oU1NTit9JEbipEQMAWLRoEULozTffHHCwAAAPPvggQmjEiBEDVj7lgQy07/F4EEJjx44tLS0deMSoUaMAAO3t7anTvXv3FhQUDLyqWq1ubm7+V2H976kWhNB5zPG3iNvtRghlZGT809Kuri6CIBwOx6UfJiWTyba2toKCgvMI5e9ItRDfxWR99xbT09O/pTQnJ+eHEn3SNF1aWnqZE7hMtVyG9bL8z+TbdOuGDRtCodCtt94KAHj55ZfD4fAvfvGLVFF7e/snn3xy7733PvPMM21tbefeVVxcfO211z700EMD7uewYcPuvvvu6urq9957LzWnMnz48P/4j/8AAHR3dz/11FMD944ZM+bmm28GAGzevLm1tfXee+89t+Xnn39+3759Ho+nsrJy7dq1DofjnnvukWU5VSpJ0ksvvfQtqSHfq3yLgzV37tyioqLUcXZ29gDzhBDavn17ys365S9/uWDBglRsOmfO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" alt="Cover of TLPI"></a>
+ </td>
+ </tr>
+</table>
+</div>
+<hr class=end-footer>
+<noscript><div class="statcounter"><a title="Web Analytics
+Made Easy - StatCounter" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/7422636/0/9b6714ff/1/" alt="Web Analytics Made Easy -
+StatCounter"></a></div></noscript>
