@@ -28,6 +28,10 @@ pub enum ParserError {
     #[error("{0}")]
     Label(String),
 
+    /// Error while parsing a string into a [`MountOption`](crate::tables::MountOption).
+    #[error("{0}")]
+    MountOption(String),
+
     /// Error while parsing a string into a [`MountPoint`](crate::core::device::MountPoint).
     #[error("{0}")]
     MountPoint(String),

@@ -21,3 +21,6 @@
 // From standard library
 
 // From this library
+pub use mount_option_struct::MountOption;
+
+mod mount_option_struct;
