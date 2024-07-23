@@ -12,6 +12,7 @@ use thiserror::Error;
 use crate::core::errors::CacheError;
 use crate::core::errors::FsTabEntryBuilderError;
 use crate::core::errors::FsTabEntryError;
+use crate::core::errors::FsTabError;
 use crate::core::errors::GenIteratorError;
 use crate::core::errors::MountInfoEntryError;
 use crate::core::errors::ParserError;
@@ -45,6 +46,9 @@ pub type Result<T> = std::result::Result<T, RsMountError>;
 pub enum RsMountError {
     #[error(transparent)]
     Cache(#[from] CacheError),
+
+    #[error(transparent)]
+    FsTab(#[from] FsTabError),
 
     #[error(transparent)]
     FsTabEntry(#[from] FsTabEntryError),
