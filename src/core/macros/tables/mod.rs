@@ -6,3 +6,4 @@
 // From standard library
 
 // From this library
+mod table_shared_methods_macro;
