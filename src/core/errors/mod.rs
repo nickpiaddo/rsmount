@@ -20,6 +20,7 @@ pub use swaps_entry_error_enum::SwapsEntryError;
 pub use swaps_error_enum::SwapsError;
 pub use utab_entry_builder_error_enum::UTabEntryBuilderError;
 pub use utab_entry_error_enum::UTabEntryError;
+pub use utab_error_enum::UTabError;
 
 mod cache_error_enum;
 mod fs_tab_entry_builder_error_enum;
@@ -33,3 +34,4 @@ mod swaps_entry_error_enum;
 mod swaps_error_enum;
 mod utab_entry_builder_error_enum;
 mod utab_entry_error_enum;
+mod utab_error_enum;
