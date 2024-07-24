@@ -8,7 +8,23 @@ use thiserror::Error;
 
 // From this library
 
-/// `Swaps` runtime errors.
+/// [`Swaps`](crate::tables::Swaps) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
-pub enum SwapsError {}
+pub enum SwapsError {
+    /// Error while creating a new [`Swaps`](crate::tables::Swaps) instance.
+    #[error("{0}")]
+    Creation(String),
+
+    /// Error while configuring a new [`Swaps`](crate::tables::Swaps) instance.
+    #[error("{0}")]
+    Config(String),
+
+    /// Error while removing duplicate entries in a [`Swaps`](crate::tables::Swaps).
+    #[error("{0}")]
+    Deduplicate(String),
+
+    /// Error while importing new entries into a [`Swaps`](crate::tables::Swaps).
+    #[error("{0}")]
+    Import(String),
+}

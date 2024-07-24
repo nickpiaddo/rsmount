@@ -123,9 +123,11 @@ pub(crate) use gc_item_enum::GcItem;
 pub use mount_info_struct::MountInfo;
 pub use mount_option_struct::MountOption;
 pub use parser_flow_enum::ParserFlow;
+pub use swaps_struct::Swaps;
 
 mod fs_tab_struct;
 mod gc_item_enum;
 mod mount_info_struct;
 mod mount_option_struct;
 mod parser_flow_enum;
+mod swaps_struct;
