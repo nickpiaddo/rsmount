@@ -124,6 +124,7 @@ pub use mount_info_struct::MountInfo;
 pub use mount_option_struct::MountOption;
 pub use parser_flow_enum::ParserFlow;
 pub use swaps_struct::Swaps;
+pub use utab_struct::UTab;
 
 mod fs_tab_struct;
 mod gc_item_enum;
@@ -131,3 +132,4 @@ mod mount_info_struct;
 mod mount_option_struct;
 mod parser_flow_enum;
 mod swaps_struct;
+mod utab_struct;
