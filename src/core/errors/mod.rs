@@ -17,6 +17,7 @@ pub use mount_info_entry_error_enum::MountInfoEntryError;
 pub use mount_info_error_enum::MountInfoError;
 pub use parser_error_enum::ParserError;
 pub use swaps_entry_error_enum::SwapsEntryError;
+pub use swaps_error_enum::SwapsError;
 pub use utab_entry_builder_error_enum::UTabEntryBuilderError;
 pub use utab_entry_error_enum::UTabEntryError;
 
@@ -29,5 +30,6 @@ mod mount_info_entry_error_enum;
 mod mount_info_error_enum;
 mod parser_error_enum;
 mod swaps_entry_error_enum;
+mod swaps_error_enum;
 mod utab_entry_builder_error_enum;
 mod utab_entry_error_enum;

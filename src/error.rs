@@ -18,6 +18,7 @@ use crate::core::errors::MountInfoEntryError;
 use crate::core::errors::MountInfoError;
 use crate::core::errors::ParserError;
 use crate::core::errors::SwapsEntryError;
+use crate::core::errors::SwapsError;
 use crate::core::errors::UTabEntryBuilderError;
 use crate::core::errors::UTabEntryError;
 
@@ -68,6 +69,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     Parser(#[from] ParserError),
+
+    #[error(transparent)]
+    Swaps(#[from] SwapsError),
 
     #[error(transparent)]
     SwapsEntry(#[from] SwapsEntryError),
