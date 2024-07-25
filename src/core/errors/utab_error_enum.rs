@@ -8,6 +8,7 @@ use thiserror::Error;
 use std::ffi::NulError;
 
 // From this library
+use crate::core::errors::UTabIterError;
 
 /// [`UTab`](crate::tables::UTab) runtime errors.
 #[derive(Debug, Error)]
@@ -41,10 +42,17 @@ pub enum UTabError {
     #[error("{0}")]
     Import(String),
 
+    /// Error while indexing entries in [`FsTab`](crate::tables::FsTab).
+    #[error("{0}")]
+    IndexOutOfBounds(String),
+
     #[error(transparent)]
     IoError(#[from] std::io::Error),
 
     /// Error if a file lacks the required access permissions.
     #[error("{0}")]
     Permission(String),
+
+    #[error(transparent)]
+    UTabIter(#[from] UTabIterError),
 }

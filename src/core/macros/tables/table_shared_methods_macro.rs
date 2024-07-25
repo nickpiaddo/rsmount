@@ -1268,105 +1268,36 @@ macro_rules! table_shared_target_methods {
 #[doc(hidden)]
 macro_rules! table_shared_edit_methods {
     ($table_type:ident, $table_entry_type:ident, $table_error_type:ident) => {
+        paste::paste! {
 
-        // From dependency library
+            // From dependency library
 
-        // From standard library
-        use std::fs::File;
+            // From standard library
+            use std::fs::File;
 
-        // From this library
+            // From this library
 
-        #[allow(dead_code)]
-        impl $table_type {
+            #[allow(dead_code)]
+            impl $table_type {
 
-            //---- BEGIN mutators
+                //---- BEGIN mutators
 
-             #[doc = concat!("Appends a [`", stringify!($table_entry_type),"`] to this `", stringify!($table_type), "`.") ]
-            pub fn push(&mut self, element: $table_entry_type) -> Result<(), $table_error_type> {
-                log::debug!("FsTab::push adding a new table entry");
+                 #[doc = concat!("Appends a [`", stringify!($table_entry_type),"`] to this `", stringify!($table_type), "`.") ]
+                pub fn push(&mut self, element: $table_entry_type) -> Result<(), $table_error_type> {
+                    log::debug!(concat!(stringify!($table_type), "::push adding a new table entry"));
 
-                let result = unsafe { libmount::mnt_table_add_fs(self.inner, element.inner) };
+                    let result = unsafe { libmount::mnt_table_add_fs(self.inner, element.inner) };
 
-                match result {
-                    0 => {
-                        log::debug!("FsTab::push added a new table entry");
-
-                        Ok(())
-                    }
-                    code => {
-                        let err_msg = "failed to add a new table entry".to_owned();
-                        log::debug!(
-                            "FsTab::push {}. libmount::mnt_table_add_fs returned error code: {:?}",
-                            err_msg,
-                            code
-                        );
-
-                        Err(<$table_error_type>::Action(err_msg))
-                    }
-                }
-            }
-
-            #[doc(hidden)]
-            /// Adds a new entry to the table before or after a specific table entry `pos`.
-            ///
-            /// - If `pos` is NULL and `before` is set to `true`, adds the new entry to the beginning of the table
-            /// - If `pos` is NULL and `before` is set to `false`, adds the new entry to the end of the table
-            fn insert_entry(
-                table: &mut Self,
-                after: bool,
-                pos: *mut libmount::libmnt_fs,
-                entry: *mut libmount::libmnt_fs,
-            ) -> Result<(), $table_error_type> {
-                let op = if after { 1 } else { 0 };
-                let op_str = if after {
-                    "after".to_owned()
-                } else {
-                    "before".to_owned()
-                };
-
-                let result = unsafe { libmount::mnt_table_insert_fs(table.inner, op, pos, entry) };
-
-                match result {
-                    0 => {
-                        log::debug!(
-                            "FsTab::insert_entry inserted new entry {} reference",
-                            op_str
-                        );
-
-                        Ok(())
-                    }
-                    code => {
-                        let err_msg = format!("failed to insert new entry {} reference", op_str);
-                        log::debug!("FsTab::insert_entry {}. libmount::mnt_table_insert_fs returned error code: {:?}", err_msg, code);
-
-                        Err(<$table_error_type>::Action(err_msg))
-                    }
-                }
-            }
-
-            #[doc = concat!("Prepends a new element to the `", stringify!($table_type),"`.")]
-            pub fn push_front(&mut self, element: $table_entry_type) -> Result<(), $table_error_type> {
-                log::debug!("FsTab::push_front prepending new entry");
-
-                Self::insert_entry(self, true, std::ptr::null_mut(), element.inner)
-            }
-
-            /// Removes all table entries.
-            pub fn clear(&mut self) -> Result<(), $table_error_type> {
-                log::debug!("FsTab::clear removing all table entries");
-
-                unsafe {
-                    match libmount::mnt_reset_table(self.inner) {
+                    match result {
                         0 => {
-                            log::debug!("FsTab::clear removed all table entries");
-                            self.collect_garbage();
+                            log::debug!(concat!(stringify!($table_type), "::push added a new table entry"));
 
                             Ok(())
                         }
                         code => {
-                            let err_msg = "failed to remove all table entries".to_owned();
+                            let err_msg = "failed to add a new table entry".to_owned();
                             log::debug!(
-                                "FsTab::clear {}. libmount::mnt_reset_table returned error code: {:?}",
+                                concat!(stringify!($table_type), "::push {}. libmount::mnt_table_add_fs returned error code: {:?}"),
                                 err_msg,
                                 code
                             );
@@ -1375,82 +1306,175 @@ macro_rules! table_shared_edit_methods {
                         }
                     }
                 }
-            }
 
-            /// Saves this table's entries to a file.
-            pub fn write_file<T>(&mut self, file_path: T) -> Result<(), $table_error_type>
-            where
-                T: AsRef<Path>,
-            {
-                let file_path = file_path.as_ref();
-                let file_path_cstr = ffi_utils::as_ref_path_to_c_string(file_path)?;
-                log::debug!("FsTab::write_file saving table content to {:?}", file_path);
+                #[doc(hidden)]
+                /// Adds a new entry to the table before or after a specific table entry `pos`.
+                ///
+                /// - If `pos` is NULL and `before` is set to `true`, adds the new entry to the beginning of the table
+                /// - If `pos` is NULL and `before` is set to `false`, adds the new entry to the end of the table
+                fn insert_entry(
+                    table: &mut Self,
+                    after: bool,
+                    pos: *mut libmount::libmnt_fs,
+                    entry: *mut libmount::libmnt_fs,
+                ) -> Result<(), $table_error_type> {
+                    let op = if after { 1 } else { 0 };
+                    let op_str = if after {
+                        "after".to_owned()
+                    } else {
+                        "before".to_owned()
+                    };
 
-                let result =
-                    unsafe { libmount::mnt_table_replace_file(self.inner, file_path_cstr.as_ptr()) };
-
-                match result {
-                    0 => {
-                        log::debug!("FsTab::write_file saved table content to {:?}", file_path);
-
-                        Ok(())
-                    }
-                    code => {
-                        let err_msg = format!("failed to save table content to {:?}", file_path);
-                        log::debug!("FsTab::write_file {}. libmount::mnt_table_replace_file returned error code: {:?}", err_msg, code);
-
-                        Err(<$table_error_type>::Export(err_msg))
-                    }
-                }
-            }
-
-            /// Writes this table's entries to a file stream.
-            pub fn write_stream(&mut self, file_stream: &mut File) -> Result<(), $table_error_type> {
-                log::debug!("FsTab::write_stream writing mount table content to file stream");
-
-                if ffi_utils::is_open_write_only(file_stream)?
-                    || ffi_utils::is_open_read_write(file_stream)?
-                {
-                    let file = ffi_utils::write_only_c_file_stream_from(file_stream)?;
-
-                    let result = unsafe { libmount::mnt_table_write_file(self.inner, file as *mut _) };
+                    let result = unsafe { libmount::mnt_table_insert_fs(table.inner, op, pos, entry) };
 
                     match result {
                         0 => {
-                            log::debug!("FsTab::write_stream wrote mount table content to file stream");
+                            log::debug!(
+                                concat!(stringify!($table_type), "::insert_entry inserted new entry {} reference"),
+                                op_str
+                            );
 
                             Ok(())
                         }
                         code => {
-                            let err_msg = "failed to write mount table content to file stream".to_owned();
-                            log::debug!("FsTab::write_stream {}. libmount::mnt_table_write_file  returned error code: {:?}", err_msg, code);
+                            let err_msg = format!("failed to insert new entry {} reference", op_str);
+                            log::debug!(concat!(stringify!($table_type), "::insert_entry {}. libmount::mnt_table_insert_fs returned error code: {:?}"), err_msg, code);
 
-                            Err($table_error_type::Export(err_msg))
+                            Err(<$table_error_type>::Action(err_msg))
                         }
                     }
-                } else {
-                    let err_msg = "you do not have permission to write in this file stream".to_owned();
-                    log::debug!("FsTab::write_stream {}", err_msg);
-
-                    Err(<$table_error_type>::Permission(err_msg))
                 }
+
+                #[doc = concat!("Prepends a new element to the `", stringify!($table_type),"`.")]
+                pub fn push_front(&mut self, element: $table_entry_type) -> Result<(), $table_error_type> {
+                    log::debug!(concat!(stringify!($table_type), "::push_front prepending new entry"));
+
+                    Self::insert_entry(self, true, std::ptr::null_mut(), element.inner)
+                }
+
+                /// Inserts an element at position `index` within the table, shifting all elements after it to
+                /// the bottom.
+                pub fn insert(&mut self, index: usize, element: $table_entry_type) -> Result<(), $table_error_type> {
+                    log::debug!(concat!(stringify!($table_type), "::insert inserting new entry at index: {:?}"), index);
+
+                    let mut iter = [<$table_type Iter>]::new(self)?;
+
+                    match iter.nth(index) {
+                        Some(position) => Self::insert_entry(self, false, position.inner, element.inner),
+                        None => {
+                            let err_msg = format!(
+                                "failed to insert element at index: {:?}. Index out of bounds.",
+                                index
+                            );
+                            log::debug!(concat!(stringify!($table_type), "::insert {}"), err_msg);
+
+                            Err(<$table_error_type>::IndexOutOfBounds(err_msg))
+                        }
+                    }
+                }
+
+                /// Removes all table entries.
+                pub fn clear(&mut self) -> Result<(), $table_error_type> {
+                    log::debug!(concat!(stringify!($table_type), "::clear removing all table entries"));
+
+                    unsafe {
+                        match libmount::mnt_reset_table(self.inner) {
+                            0 => {
+                                log::debug!(concat!(stringify!($table_type), "::clear removed all table entries"));
+                                self.collect_garbage();
+
+                                Ok(())
+                            }
+                            code => {
+                                let err_msg = "failed to remove all table entries".to_owned();
+                                log::debug!(
+                                    concat!(stringify!($table_type), "::clear {}. libmount::mnt_reset_table returned error code: {:?}"),
+                                    err_msg,
+                                    code
+                                );
+
+                                Err(<$table_error_type>::Action(err_msg))
+                            }
+                        }
+                    }
+                }
+
+                /// Saves this table's entries to a file.
+                pub fn write_file<T>(&mut self, file_path: T) -> Result<(), $table_error_type>
+                where
+                    T: AsRef<Path>,
+                {
+                    let file_path = file_path.as_ref();
+                    let file_path_cstr = ffi_utils::as_ref_path_to_c_string(file_path)?;
+                    log::debug!(concat!(stringify!($table_type), "::write_file saving table content to {:?}"), file_path);
+
+                    let result =
+                        unsafe { libmount::mnt_table_replace_file(self.inner, file_path_cstr.as_ptr()) };
+
+                    match result {
+                        0 => {
+                            log::debug!(concat!(stringify!($table_type), "::write_file saved table content to {:?}"), file_path);
+
+                            Ok(())
+                        }
+                        code => {
+                            let err_msg = format!("failed to save table content to {:?}", file_path);
+                            log::debug!(concat!(stringify!($table_type), "::write_file {}. libmount::mnt_table_replace_file returned error code: {:?}"), err_msg, code);
+
+                            Err(<$table_error_type>::Export(err_msg))
+                        }
+                    }
+                }
+
+                /// Writes this table's entries to a file stream.
+                pub fn write_stream(&mut self, file_stream: &mut File) -> Result<(), $table_error_type> {
+                    log::debug!(concat!(stringify!($table_type), "::write_stream writing mount table content to file stream"));
+
+                    if ffi_utils::is_open_write_only(file_stream)?
+                        || ffi_utils::is_open_read_write(file_stream)?
+                    {
+                        let file = ffi_utils::write_only_c_file_stream_from(file_stream)?;
+
+                        let result = unsafe { libmount::mnt_table_write_file(self.inner, file as *mut _) };
+
+                        match result {
+                            0 => {
+                                log::debug!(concat!(stringify!($table_type), "::write_stream wrote mount table content to file stream"));
+
+                                Ok(())
+                            }
+                            code => {
+                                let err_msg = "failed to write mount table content to file stream".to_owned();
+                                log::debug!(concat!(stringify!($table_type), "::write_stream {}. libmount::mnt_table_write_file  returned error code: {:?}"), err_msg, code);
+
+                                Err($table_error_type::Export(err_msg))
+                            }
+                        }
+                    } else {
+                        let err_msg = "you do not have permission to write in this file stream".to_owned();
+                        log::debug!(concat!(stringify!($table_type), "::write_stream {}"), err_msg);
+
+                        Err(<$table_error_type>::Permission(err_msg))
+                    }
+                }
+
+                //---- END mutators
+
+                //---- BEGIN predicates
+
+                #[doc = concat!("Returns `true` if this `", stringify!($table_type),"` contains a element matching **exactly** the given `element`.")]
+                pub fn contains(&self, element: &$table_entry_type) -> bool {
+                    let state = unsafe { libmount::mnt_table_find_fs(self.inner, element.inner) > 0 };
+                    log::debug!(concat!(stringify!($table_type), "::contains value: {:?}"), state);
+
+                    state
+                }
+
+                //---- END predicates
+
             }
 
-            //---- END mutators
-
-            //---- BEGIN predicates
-
-            #[doc = concat!("Returns `true` if this `", stringify!($table_type),"` contains a element matching **exactly** the given `element`.")]
-            pub fn contains(&self, element: &$table_entry_type) -> bool {
-                let state = unsafe { libmount::mnt_table_find_fs(self.inner, element.inner) > 0 };
-                log::debug!("FsTab::contains value: {:?}", state);
-
-                state
-            }
-
-            //---- END predicates
-
-        }
+        } //---- END paste
     };
 }
 

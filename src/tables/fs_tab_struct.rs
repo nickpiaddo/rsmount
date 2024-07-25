@@ -1534,6 +1534,66 @@ mod tests {
     }
 
     #[test]
+    fn fs_tab_can_insert_an_element_at_a_predefined_position() -> crate::Result<()> {
+        // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
+        let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+        let entry1 = FsTabEntry::builder()
+            .source(uuid)
+            .target("/")
+            .file_system_type(FileSystem::Ext4)
+            // Comma-separated list of mount options.
+            .mount_options("rw,relatime")
+            // Interval, in days, between file system backups by the dump command on ext2/3/4
+            // file systems.
+            .backup_frequency(0)
+            // Order in which file systems are checked by the `fsck` command.
+            .fsck_checking_order(1)
+            .build()?;
+
+        // /dev/usbdisk /media/usb vfat noauto 0 0
+        let block_device = BlockDevice::from_str("/dev/usbdisk").map(Source::from)?;
+        let entry2 = FsTabEntry::builder()
+            .source(block_device)
+            .target("/media/usb")
+            .file_system_type(FileSystem::VFAT)
+            .mount_options("noauto")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        // tmpfs /tmp tmpfs nosuid,nodev 0 0
+        let entry3 = FsTabEntry::builder()
+            .source(Pseudo::None.into())
+            .target("/tmp")
+            .file_system_type(FileSystem::Tmpfs)
+            .mount_options("nosuid,nodev")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        let entry1_inner = entry1.inner;
+        let entry2_inner = entry2.inner;
+        let entry3_inner = entry3.inner;
+
+        let mut fs_tab = FsTab::new()?;
+
+        fs_tab.push(entry1)?;
+        fs_tab.push(entry2)?;
+        fs_tab.insert(1, entry3)?;
+
+        assert_eq!(fs_tab.len(), 3);
+        let first_inner = fs_tab[0].inner;
+        let second_inner = fs_tab[1].inner;
+        let third_inner = fs_tab[2].inner;
+
+        assert_eq!(first_inner, entry1_inner);
+        assert_eq!(second_inner, entry3_inner);
+        assert_eq!(third_inner, entry2_inner);
+
+        Ok(())
+    }
+
+    #[test]
     fn fs_tab_writes_to_a_file_stream() -> crate::Result<()> {
         let mut fs_tab = FsTab::new()?;
 

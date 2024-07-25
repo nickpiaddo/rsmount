@@ -8,6 +8,7 @@ use thiserror::Error;
 use std::ffi::NulError;
 
 // From this library
+use crate::core::errors::FsTabIterError;
 
 /// [`FsTab`](crate::tables::FsTab) runtime errors.
 #[derive(Debug, Error)]
@@ -37,9 +38,16 @@ pub enum FsTabError {
     #[error("{0}")]
     Export(String),
 
+    #[error(transparent)]
+    FsTabIter(#[from] FsTabIterError),
+
     /// Error while importing new entries into a [`FsTab`](crate::tables::FsTab).
     #[error("{0}")]
     Import(String),
+
+    /// Error while indexing entries in [`FsTab`](crate::tables::FsTab).
+    #[error("{0}")]
+    IndexOutOfBounds(String),
 
     #[error(transparent)]
     IoError(#[from] std::io::Error),
