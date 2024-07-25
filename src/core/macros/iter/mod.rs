@@ -7,3 +7,4 @@
 
 // From this library
 mod gen_table_iter_macro;
+mod gen_table_iter_mut_macro;
