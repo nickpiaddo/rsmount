@@ -8,6 +8,7 @@
 //! 2. [Examples](#examples)
 //!     1. [Import `/etc/fstab` to RAM](#import-etcfstab-to-ram)
 //!     2. [Manually create an `fstab` file](#manually-create-an-fstab-file)
+//!     3. [Print `/proc/self/mountinfo` to the terminal](#print-procselfmountinfo-to-the-terminal)
 //!
 //!
 //! ## Description
@@ -107,6 +108,28 @@
 //!     // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
 //!     // /dev/usbdisk /media/usb vfat noauto 0 0
 //!     // none /tmp tmpfs nosuid,nodev 0 0
+//!
+//!     Ok(())
+//! }
+//! ```
+//!
+//! ## Print `/proc/self/mountinfo` to the terminal
+//!
+//! ```
+//! use rsmount::tables::MountInfo;
+//!
+//! fn main() -> rsmount::Result<()> {
+//!     let mut mountinfo = MountInfo::new()?;
+//!     // Import `/proc/self/mountinfo`.
+//!     mountinfo.import_mountinfo()?;
+//!
+//!     println!("{}", mountinfo);
+//!
+//!     // Example output
+//!     //
+//!     // 21 26 0:20 / /sys rw,nosuid,nodev,noexec,relatime - sysfs sysfs rw
+//!     // 23 26 0:21 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+//!     // 25 22 0:23 / /dev/shm rw,nosuid,nodev,noexec,relatime - tmpfs shm rw,inode64
 //!
 //!     Ok(())
 //! }

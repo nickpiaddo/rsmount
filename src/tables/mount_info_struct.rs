@@ -4,6 +4,7 @@
 // From dependency library
 
 // From standard library
+use std::fmt;
 
 // From this library
 use crate::core::entries::FsTabEntry;
@@ -292,6 +293,18 @@ impl MountInfo {
     }
 
     //---- END predicates
+}
+
+impl fmt::Display for MountInfo {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let mut output: Vec<String> = vec![];
+
+        for line in self.iter() {
+            output.push(line.to_string());
+        }
+
+        write!(f, "{}", output.join("\n"))
+    }
 }
 
 #[cfg(test)]
