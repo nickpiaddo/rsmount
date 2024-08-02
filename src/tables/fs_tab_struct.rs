@@ -914,6 +914,14 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "Index out of bounds")]
+    fn fs_tab_indexing_an_empty_table_triggers_a_panic() {
+        let fs_tab = FsTab::new().unwrap();
+
+        let _ = fs_tab[0];
+    }
+
+    #[test]
     fn fs_tab_push_adds_an_element_to_a_table() -> crate::Result<()> {
         let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
         let entry = FsTabEntry::builder()
@@ -1492,6 +1500,35 @@ mod tests {
         assert_eq!(third_inner, entry2_inner);
         assert!(fourth.is_none());
         assert!(fifth.is_none());
+
+        Ok(())
+    }
+
+    #[test]
+    fn fs_tab_can_index_into_a_table() -> crate::Result<()> {
+        // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
+        let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+        let entry = FsTabEntry::builder()
+            .source(uuid)
+            .target("/")
+            .file_system_type(FileSystem::Ext4)
+            // Comma-separated list of mount options.
+            .mount_options("rw,relatime")
+            // Interval, in days, between file system backups by the dump command on ext2/3/4
+            // file systems.
+            .backup_frequency(0)
+            // Order in which file systems are checked by the `fsck` command.
+            .fsck_checking_order(1)
+            .build()?;
+
+        let expected = entry.inner;
+
+        let mut fs_tab = FsTab::new()?;
+        fs_tab.push(entry)?;
+
+        let actual = fs_tab[0].inner;
+
+        assert_eq!(actual, expected);
 
         Ok(())
     }

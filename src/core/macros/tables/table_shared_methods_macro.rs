@@ -132,6 +132,7 @@ macro_rules! table_shared_methods {
 
             // From standard library
             use std::mem::MaybeUninit;
+            use std::ops::Index;
             use std::path::Path;
             use std::cmp::Ordering;
 
@@ -902,6 +903,30 @@ macro_rules! table_shared_methods {
                 #[inline]
                 fn as_ref(&self) -> &$table_type {
                     self
+                }
+            }
+
+            impl Index<usize> for $table_type {
+                type Output = $table_entry_type;
+
+                /// Performs the indexing (`container\[index]`) operation.
+                fn index(&self, index: usize) -> &Self::Output {
+                    log::debug!(concat!(stringify!($table_type), "::index getting item at index: {:?}"), index);
+
+                    #[cold]
+                    #[inline(never)]
+                    #[track_caller]
+                    fn indexing_failed() -> ! {
+                        panic!("Index out of bounds");
+                    }
+
+                    let mut iter = [<$table_type Iter>]::new(self).unwrap();
+
+                    match iter.nth(index) {
+                        Some(item) => item,
+                        None => indexing_failed(),
+                    }
+
                 }
             }
         } //---- END paste
