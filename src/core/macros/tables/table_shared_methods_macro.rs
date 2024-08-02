@@ -1373,6 +1373,145 @@ macro_rules! table_shared_edit_methods {
                     }
                 }
 
+                #[doc(hidden)]
+                /// Moves an `entry` from `source_table` to `dest_table` before or after a given position.
+                ///
+                /// - If `position` is NULL and `before` is set to `true`, transfers the `entry` to the beginning of the `dest_table`.
+                /// - If `position` is NULL and `before` is set to `false`, transfers the `entry` to the end of the `dest_table`.
+                fn move_entry(
+                    after: bool,
+                    source_table: *mut libmount::libmnt_table,
+                    entry: *mut libmount::libmnt_fs,
+                    dest_table: *mut libmount::libmnt_table,
+                    position: *mut libmount::libmnt_fs,
+                ) -> Result<(), $table_error_type> {
+                    log::debug!(concat!(stringify!($table_type), "::move_entry transferring entry between tables"));
+
+                    let op = if after { 1 } else { 0 };
+
+                    let result =
+                        unsafe { libmount::mnt_table_move_fs(source_table, dest_table, op, position, entry) };
+
+                    match result {
+                        0 => {
+                            log::debug!(concat!(stringify!($table_type), "::move_entry transferred entry between tables"));
+
+                            Ok(())
+                        }
+                        code => {
+                            let err_msg = "failed to transfer entry between tables".to_owned();
+                            log::debug!(
+                                concat!(stringify!($table_type), "::move_entry {}. libmount::mnt_table_move_fs returned error code: {:?}"),
+                                err_msg,
+                                code
+                            );
+
+                            Err($table_error_type::Transfer(err_msg))
+                        }
+                    }
+                }
+
+                /// Transfers an element between two `FsTab`s, from `index` in the source table to
+                /// `dest_index` in the destination table.
+                ///
+                /// # Examples
+                ///
+                /// ```ignore
+                ///     // Initialize `source_table`
+                #[doc = concat!("     let mut source_table = ", stringify!($table_type), "::new()?;")]
+                ///     source_table.push(entry3)?;
+                ///
+                ///     // Initialize `dest_table`
+                #[doc = concat!("     let mut dest_table = ", stringify!($table_type), "::new()?;")]
+                ///     dest_table.push(entry1)?;
+                ///     dest_table.push(entry2)?;
+                ///
+                ///     // Transfer `entry3` from `source_table` to the end of `dest_table`
+                ///     source_table.transfer(0, &mut dest_table, 2)?;
+                /// ```
+                pub fn transfer(
+                    &mut self,
+                    index: usize,
+                    destination: &mut $table_type,
+                    dest_index: usize,
+                ) -> Result<(), $table_error_type> {
+                    let mut iter = [<$table_type Iter>]::new(self)?;
+
+                    match iter.nth(index) {
+                        Some(entry) if dest_index == 0 => {
+                            log::debug!(
+                                concat!(stringify!($table_type), "::transfer transferring element a index: {:?} to start of destination table"),
+                                index
+                            );
+
+                            Self::move_entry(
+                                true,
+                                self.inner,
+                                entry.inner,
+                                destination.inner,
+                                std::ptr::null_mut(),
+                            )
+                        }
+                        Some(entry) if dest_index == destination.len() => {
+                            log::debug!(
+                                concat!(stringify!($table_type), "::transfer transferring element a index: {:?} to end of destination table"),
+                                index
+                            );
+
+                            Self::move_entry(
+                                false,
+                                self.inner,
+                                entry.inner,
+                                destination.inner,
+                                std::ptr::null_mut(),
+                            )
+                        }
+                        Some(element) => {
+                            let mut iter_dest = [<$table_type Iter>]::new(destination)?;
+                            match iter_dest.nth(dest_index) {
+                                Some(position) => {
+                                    log::debug!(concat!(stringify!($table_type), "::transfer transferring element at index {:?} to destination at index {:?}"), index, dest_index);
+                                    // dbg!(element);
+                                    // dbg!(position);
+
+                                    // FIXME FATAL BUG
+                                    // We have `position` == `element` MaybeUninit in table_entry_iter_struct
+                                    // FsTabIter::next/next_back reuses the memory location of the
+                                    // reference returned overwriting the value in `element` with the one in
+                                    // `position` triggering a SIGSEV when Self::nove_entry is invoked. Find a
+                                    // way to prevent this!
+
+                                    Self::move_entry(
+                                        false,
+                                        self.inner,
+                                        element.inner,
+                                        destination.inner,
+                                        position.inner,
+                                    )
+                                }
+                                None => {
+                                    let err_msg = format!(
+                                "failed to transfer element at index {:?} to index {:?} in destination table. Index out of bounds.", index,
+                                dest_index
+                            );
+                                    log::debug!(concat!(stringify!($table_type), "::transfer {}"), err_msg);
+
+                                    Err(<$table_error_type>::IndexOutOfBounds(err_msg))
+                                }
+                            }
+                        }
+                        None => {
+                            let err_msg = format!(
+                                "failed to access element at index {:?} in source table. Index out of bounds.",
+                                index
+                            );
+                            log::debug!(concat!(stringify!($table_type), "::transfer {}"), err_msg);
+
+                            Err(<$table_error_type>::IndexOutOfBounds(err_msg))
+                        }
+                    }
+                }
+
                 /// Removes the given `element` from the table.
                 ///
                 /// # Panics

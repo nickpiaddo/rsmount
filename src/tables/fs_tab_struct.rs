@@ -1634,6 +1634,219 @@ mod tests {
     }
 
     #[test]
+    fn fs_tab_can_transfer_an_element_between_tables_to_destination_start() -> crate::Result<()> {
+        // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
+        let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+        let entry1 = FsTabEntry::builder()
+            .source(uuid)
+            .target("/")
+            .file_system_type(FileSystem::Ext4)
+            // Comma-separated list of mount options.
+            .mount_options("rw,relatime")
+            // Interval, in days, between file system backups by the dump command on ext2/3/4
+            // file systems.
+            .backup_frequency(0)
+            // Order in which file systems are checked by the `fsck` command.
+            .fsck_checking_order(1)
+            .build()?;
+
+        // /dev/usbdisk /media/usb vfat noauto 0 0
+        let block_device = BlockDevice::from_str("/dev/usbdisk").map(Source::from)?;
+        let entry2 = FsTabEntry::builder()
+            .source(block_device)
+            .target("/media/usb")
+            .file_system_type(FileSystem::VFAT)
+            .mount_options("noauto")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        // tmpfs /tmp tmpfs nosuid,nodev 0 0
+        let entry3 = FsTabEntry::builder()
+            .source(Pseudo::None.into())
+            .target("/tmp")
+            .file_system_type(FileSystem::Tmpfs)
+            .mount_options("nosuid,nodev")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        let entry1_inner = entry1.inner;
+        let entry2_inner = entry2.inner;
+        let entry3_inner = entry3.inner;
+
+        let mut source_table = FsTab::new()?;
+        source_table.push(entry1)?;
+
+        let mut dest_table = FsTab::new()?;
+        dest_table.push(entry2)?;
+        dest_table.push(entry3)?;
+
+        // Before transfer
+        assert_eq!(source_table.len(), 1);
+        assert_eq!(dest_table.len(), 2);
+
+        source_table.transfer(0, &mut dest_table, 0)?;
+
+        // After transfer
+        assert_eq!(source_table.is_empty(), true);
+
+        assert_eq!(dest_table.len(), 3);
+
+        let first_inner = dest_table[0].inner;
+        let second_inner = dest_table[1].inner;
+        let third_inner = dest_table[2].inner;
+
+        assert_eq!(first_inner, entry1_inner);
+        assert_eq!(second_inner, entry2_inner);
+        assert_eq!(third_inner, entry3_inner);
+
+        Ok(())
+    }
+
+    #[test]
+    fn fs_tab_can_transfer_an_element_between_tables_to_destination_middle() -> crate::Result<()> {
+        // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
+        let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+        let entry1 = FsTabEntry::builder()
+            .source(uuid)
+            .target("/")
+            .file_system_type(FileSystem::Ext4)
+            // Comma-separated list of mount options.
+            .mount_options("rw,relatime")
+            // Interval, in days, between file system backups by the dump command on ext2/3/4
+            // file systems.
+            .backup_frequency(0)
+            // Order in which file systems are checked by the `fsck` command.
+            .fsck_checking_order(1)
+            .build()?;
+
+        // /dev/usbdisk /media/usb vfat noauto 0 0
+        let block_device = BlockDevice::from_str("/dev/usbdisk").map(Source::from)?;
+        let entry2 = FsTabEntry::builder()
+            .source(block_device)
+            .target("/media/usb")
+            .file_system_type(FileSystem::VFAT)
+            .mount_options("noauto")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        // tmpfs /tmp tmpfs nosuid,nodev 0 0
+        let entry3 = FsTabEntry::builder()
+            .source(Pseudo::None.into())
+            .target("/tmp")
+            .file_system_type(FileSystem::Tmpfs)
+            .mount_options("nosuid,nodev")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        let entry1_inner = entry1.inner;
+        let entry2_inner = entry2.inner;
+        let entry3_inner = entry3.inner;
+
+        let mut source_table = FsTab::new()?;
+        source_table.push(entry1)?;
+
+        let mut dest_table = FsTab::new()?;
+        dest_table.push(entry2)?;
+        dest_table.push(entry3)?;
+
+        // Before transfer
+        assert_eq!(source_table.len(), 1);
+        assert_eq!(dest_table.len(), 2);
+
+        source_table.transfer(0, &mut dest_table, 1)?;
+
+        // After transfer
+        assert_eq!(source_table.is_empty(), true);
+
+        assert_eq!(dest_table.len(), 3);
+
+        let first_inner = dest_table[0].inner;
+        let second_inner = dest_table[1].inner;
+        let third_inner = dest_table[2].inner;
+
+        assert_eq!(first_inner, entry2_inner);
+        assert_eq!(second_inner, entry1_inner);
+        assert_eq!(third_inner, entry3_inner);
+
+        Ok(())
+    }
+
+    #[test]
+    fn fs_tab_can_transfer_an_element_between_tables_to_destination_end() -> crate::Result<()> {
+        // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
+        let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+        let entry1 = FsTabEntry::builder()
+            .source(uuid)
+            .target("/")
+            .file_system_type(FileSystem::Ext4)
+            // Comma-separated list of mount options.
+            .mount_options("rw,relatime")
+            // Interval, in days, between file system backups by the dump command on ext2/3/4
+            // file systems.
+            .backup_frequency(0)
+            // Order in which file systems are checked by the `fsck` command.
+            .fsck_checking_order(1)
+            .build()?;
+
+        // /dev/usbdisk /media/usb vfat noauto 0 0
+        let block_device = BlockDevice::from_str("/dev/usbdisk").map(Source::from)?;
+        let entry2 = FsTabEntry::builder()
+            .source(block_device)
+            .target("/media/usb")
+            .file_system_type(FileSystem::VFAT)
+            .mount_options("noauto")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        // tmpfs /tmp tmpfs nosuid,nodev 0 0
+        let entry3 = FsTabEntry::builder()
+            .source(Pseudo::None.into())
+            .target("/tmp")
+            .file_system_type(FileSystem::Tmpfs)
+            .mount_options("nosuid,nodev")
+            .backup_frequency(0)
+            .fsck_checking_order(0)
+            .build()?;
+
+        let entry1_inner = entry1.inner;
+        let entry2_inner = entry2.inner;
+        let entry3_inner = entry3.inner;
+
+        let mut source_table = FsTab::new()?;
+        source_table.push(entry1)?;
+
+        let mut dest_table = FsTab::new()?;
+        dest_table.push(entry2)?;
+        dest_table.push(entry3)?;
+
+        // Before transfer
+        assert_eq!(source_table.len(), 1);
+        assert_eq!(dest_table.len(), 2);
+
+        source_table.transfer(0, &mut dest_table, 2)?;
+
+        // After transfer
+        assert_eq!(source_table.is_empty(), true);
+
+        assert_eq!(dest_table.len(), 3);
+
+        let first_inner = dest_table[0].inner;
+        let second_inner = dest_table[1].inner;
+        let third_inner = dest_table[2].inner;
+
+        assert_eq!(first_inner, entry2_inner);
+        assert_eq!(second_inner, entry3_inner);
+        assert_eq!(third_inner, entry1_inner);
+
+        Ok(())
+    }
+
+    #[test]
     fn fs_tab_writes_to_a_file_stream() -> crate::Result<()> {
         let mut fs_tab = FsTab::new()?;
 

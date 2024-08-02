@@ -55,4 +55,8 @@ pub enum FsTabError {
     /// Error if a file lacks the required access permissions.
     #[error("{0}")]
     Permission(String),
+
+    /// Error while transferring an element from an [`FsTab`](crate::tables::FsTab) to another.
+    #[error("{0}")]
+    Transfer(String),
 }
