@@ -1373,6 +1373,57 @@ macro_rules! table_shared_edit_methods {
                     }
                 }
 
+                /// Removes the given `element` from the table.
+                ///
+                /// # Panics
+                ///
+                /// May panic if the index is out of bounds.
+                pub fn remove(&mut self, index: usize) -> $table_entry_type {
+                    log::debug!(concat!(stringify!($table_type), "::remove removing entry from table"));
+
+                    let err_msg = format!("failed to find entry at index: {:?}", index);
+                    let element: &$table_entry_type = self
+                        .get(index)
+                        .ok_or(Err::<&$table_entry_type, $table_error_type>(
+                            <$table_error_type>::IndexOutOfBounds(err_msg),
+                        ))
+                        .unwrap();
+
+                    #[cold]
+                    #[inline(never)]
+                    #[track_caller]
+                    fn assert_failed() -> ! {
+                        panic!("cannot remove table entry. Not found");
+                    }
+
+                    // increment reference counter to prevent mnt_table_remove from deallocating the underlying
+                    // table entry
+                    let borrowed = <$table_entry_type>::borrow_ptr(element.inner);
+
+                    let result = unsafe { libmount::mnt_table_remove_fs(self.inner, element.inner) };
+
+                    match result {
+                        0 => {
+                            log::debug!(concat!(stringify!($table_type), "::remove removed entry from table"));
+
+                            borrowed
+                        }
+                        code => {
+                            let err_msg = "failed to remove entry from table".to_owned();
+                            log::debug!(
+                                concat!(stringify!($table_type), "::remove {}. libmount::mnt_table_remove_fs returned error code: {:?}"),
+                                err_msg,
+                                code
+                            );
+
+                            // the element is not in the table, so we decrement its reference counter by
+                            // dropping it to cancel out the increment performed by $table_entry_type::borrow_ptr
+                            drop(borrowed);
+                            assert_failed()
+                        }
+                    }
+                }
+
                 /// Removes all table entries.
                 pub fn clear(&mut self) -> Result<(), $table_error_type> {
                     log::debug!(concat!(stringify!($table_type), "::clear removing all table entries"));

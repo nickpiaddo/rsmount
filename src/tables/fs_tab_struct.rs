@@ -1594,6 +1594,46 @@ mod tests {
     }
 
     #[test]
+    fn fs_tab_can_remove_an_element_from_a_table() -> crate::Result<()> {
+        let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+        let entry = FsTabEntry::builder()
+            .source(uuid)
+            .target("/")
+            .file_system_type(FileSystem::Ext4)
+            // Comma-separated list of mount options.
+            .mount_options("rw,relatime")
+            // Interval, in days, between file system backups by the dump command on ext2/3/4
+            // file systems.
+            .backup_frequency(0)
+            // Order in which file systems are checked by the `fsck` command.
+            .fsck_checking_order(1)
+            .build()?;
+
+        let mut fs_tab = FsTab::new()?;
+        fs_tab.push(entry)?;
+
+        assert_eq!(fs_tab.len(), 1);
+
+        let item = fs_tab.remove(0);
+
+        let actual = item.tag().unwrap();
+        let expected: Tag = "UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f".parse()?;
+        assert_eq!(actual, expected);
+
+        let actual = item.file_system_type().unwrap();
+        let expected = FileSystem::Ext4;
+        assert_eq!(actual, expected);
+
+        let actual = item.mount_options().unwrap();
+        let expected = "rw,relatime";
+        assert_eq!(actual, expected);
+
+        assert_eq!(fs_tab.is_empty(), true);
+
+        Ok(())
+    }
+
+    #[test]
     fn fs_tab_writes_to_a_file_stream() -> crate::Result<()> {
         let mut fs_tab = FsTab::new()?;
 
