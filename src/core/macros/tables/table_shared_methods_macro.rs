@@ -85,6 +85,7 @@ macro_rules! fs_tab_shared_methods {
         $crate::table_shared_methods!($table_type, $table_entry_type, $table_error_type);
         $crate::table_shared_edit_methods!($table_type, $table_entry_type, $table_error_type);
         $crate::table_shared_target_methods!($table_type, $table_entry_type, $table_error_type);
+        $crate::table_iter_mut!($table_type, $table_entry_type, $table_error_type);
     };
 }
 
@@ -116,6 +117,7 @@ macro_rules! utab_shared_methods {
         $crate::table_shared_methods!($table_type, $table_entry_type, $table_error_type);
         $crate::table_shared_edit_methods!($table_type, $table_entry_type, $table_error_type);
         $crate::table_shared_target_methods!($table_type, $table_entry_type, $table_error_type);
+        $crate::table_iter_mut!($table_type, $table_entry_type, $table_error_type);
     };
 }
 
@@ -1499,5 +1501,40 @@ macro_rules! table_find_mount_point {
             }
 
         }
+    };
+}
+
+#[allow(unused_macros)]
+#[macro_export]
+#[doc(hidden)]
+macro_rules! table_iter_mut {
+    ($table_type:ident, $table_entry_type:ident, $table_error_type:ident) => {
+        paste::paste!{
+
+            // From dependency library
+
+            // From standard library
+
+            // From this library
+            use $crate::core::iter::[<$table_type IterMut>];
+
+            #[allow(dead_code)]
+            impl $table_type {
+                //---- BEGIN iterators
+
+                 #[doc = concat!("Returns an iterator over mutable [`", stringify!($table_type), "`] entries.")]
+                ///
+                /// # Panics
+                ///
+                #[doc = concat!("Panics if it fails to create a [`", stringify!($table_type), "IterMut`].")]
+                pub fn iter_mut(&mut self) -> [<$table_type IterMut>] {
+                    log::debug!(concat!(stringify!($table_type), "::iter_mut creating a new `", stringify!($table_type), "IterMut`"));
+
+                    [<$table_type IterMut>]::new(self).unwrap()
+                }
+
+                //---- END iterators
+            } //---- END impl
+        } //---- END paste
     };
 }
