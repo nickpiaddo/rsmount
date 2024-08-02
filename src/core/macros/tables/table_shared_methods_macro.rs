@@ -549,6 +549,15 @@ macro_rules! table_shared_methods {
                     len as usize
                 }
 
+                /// Returns a reference to an element at `index`, or `None` if out of bounds.
+                pub fn get(&self, index: usize) -> Option<&$table_entry_type> {
+                    log::debug!(concat!(stringify!($table_type), "::get_mut getting reference of item at index: {:?}"), index);
+
+                    let mut iter = [<$table_type Iter>]::new(self).unwrap();
+
+                    iter.nth(index)
+                }
+
                 #[doc(hidden)]
                 /// Searches forward/backward for the first entry in the `table` that satisfies the `predicate`
                 /// depending on the [`Direction`] defined at the `iterator`'s creation.
