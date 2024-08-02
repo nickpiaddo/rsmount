@@ -1543,6 +1543,20 @@ macro_rules! table_iter_mut {
                 }
 
                 //---- END iterators
+
+                //---- BEGIN getters
+
+                /// Returns a mutable reference to an element at `index`, or `None` if out of bounds.
+                pub fn get_mut(&mut self, index: usize) -> Option<&mut $table_entry_type> {
+                    log::debug!(concat!(stringify!($table_type), "::get_mut getting mutable reference of item at index: {:?}"), index);
+
+                    let mut iter = [<$table_type IterMut>]::new(self).unwrap();
+
+                    iter.nth(index)
+                }
+
+                //---- END getters
+
             } //---- END impl
         } //---- END paste
     };
