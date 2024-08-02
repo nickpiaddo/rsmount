@@ -1548,6 +1548,7 @@ macro_rules! table_iter_mut {
             // From dependency library
 
             // From standard library
+            use std::ops::IndexMut;
 
             // From this library
             use $crate::core::iter::[<$table_type IterMut>];
@@ -1583,6 +1584,28 @@ macro_rules! table_iter_mut {
                 //---- END getters
 
             } //---- END impl
+
+            impl IndexMut<usize> for $table_type {
+                /// Performs the mutable indexing (`container\[index]`) operation.
+                fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+                    log::debug!(concat!(stringify!($table_type), "::index getting item at index: {:?}"), index);
+
+                    #[cold]
+                    #[inline(never)]
+                    #[track_caller]
+                    fn indexing_failed() -> ! {
+                        panic!("Index out of bounds");
+                    }
+
+                    let mut iter = [<$table_type IterMut>]::new(self).unwrap();
+
+                    match iter.nth(index) {
+                        Some(item) => item,
+                        None => indexing_failed(),
+                    }
+
+                }
+            }
         } //---- END paste
     };
 }
