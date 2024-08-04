@@ -21,6 +21,9 @@
 // From standard library
 
 // From this library
+#[allow(unused_imports)]
+pub(crate) use gc_item_enum::GcItem;
 pub use mount_option_struct::MountOption;
 
+mod gc_item_enum;
 mod mount_option_struct;
