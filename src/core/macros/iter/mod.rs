@@ -6,5 +6,6 @@
 // From standard library
 
 // From this library
+mod gen_child_iter_macro;
 mod gen_table_iter_macro;
 mod gen_table_iter_mut_macro;
