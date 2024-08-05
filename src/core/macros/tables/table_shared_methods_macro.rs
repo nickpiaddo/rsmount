@@ -1471,15 +1471,6 @@ macro_rules! table_shared_edit_methods {
                             match iter_dest.nth(dest_index) {
                                 Some(position) => {
                                     log::debug!(concat!(stringify!($table_type), "::transfer transferring element at index {:?} to destination at index {:?}"), index, dest_index);
-                                    // dbg!(element);
-                                    // dbg!(position);
-
-                                    // FIXME FATAL BUG
-                                    // We have `position` == `element` MaybeUninit in table_entry_iter_struct
-                                    // FsTabIter::next/next_back reuses the memory location of the
-                                    // reference returned overwriting the value in `element` with the one in
-                                    // `position` triggering a SIGSEV when Self::nove_entry is invoked. Find a
-                                    // way to prevent this!
 
                                     Self::move_entry(
                                         false,
