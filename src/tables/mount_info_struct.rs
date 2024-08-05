@@ -11,6 +11,7 @@ use crate::core::entries::FsTabEntry;
 use crate::core::entries::MountInfoEntry;
 use crate::core::errors::MountInfoError;
 use crate::core::iter::MountInfoChildIter;
+use crate::core::iter::MountInfoOvermountIter;
 use crate::declare_tab;
 use crate::mount_info_shared_methods;
 
@@ -309,6 +310,21 @@ impl MountInfo {
         log::debug!("MountInfo::iter_children creating a new `MountInfoChildIter`");
 
         MountInfoChildIter::new(self, parent).unwrap()
+    }
+
+    /// Returns an iterator over all [`MountInfo`] entries sharing the same mountpoint as `entry`
+    /// (i.e. over mounted entries).
+    ///
+    /// # Panics
+    ///
+    /// Panics if it fails to create a [`MountInfoOvermountIter`] iterator.
+    pub fn iter_overmounts<'table>(
+        &'table self,
+        entry: &'table MountInfoEntry,
+    ) -> MountInfoOvermountIter {
+        log::debug!("MountInfo::iter_overmounts creating a new `MountInfoOvermountIter`");
+
+        MountInfoOvermountIter::new(self, entry)
     }
 
     //---- END iterators
