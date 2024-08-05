@@ -10,6 +10,7 @@ use std::fmt;
 use crate::core::entries::FsTabEntry;
 use crate::core::entries::MountInfoEntry;
 use crate::core::errors::MountInfoError;
+use crate::core::iter::MountInfoChildIter;
 use crate::declare_tab;
 use crate::mount_info_shared_methods;
 
@@ -293,6 +294,24 @@ impl MountInfo {
     }
 
     //---- END predicates
+
+    //---- BEGIN iterators
+
+    /// Returns an iterator over the children in the file system sub-tree of [`MountInfo`] entries.
+    ///
+    /// # Panics
+    ///
+    /// Panics if it fails to create a [`MountInfoChildIter`] iterator.
+    pub fn iter_children<'table>(
+        &'table self,
+        parent: &'table MountInfoEntry,
+    ) -> MountInfoChildIter {
+        log::debug!("MountInfo::iter_children creating a new `MountInfoChildIter`");
+
+        MountInfoChildIter::new(self, parent).unwrap()
+    }
+
+    //---- END iterators
 }
 
 impl fmt::Display for MountInfo {
