@@ -142,6 +142,7 @@
 
 // From this library
 pub use comparison_enum::Comparison;
+pub use fs_tab_diff_struct::FsTabDiff;
 pub use fs_tab_struct::FsTab;
 pub(crate) use gc_item_enum::GcItem;
 pub use mount_info_struct::MountInfo;
@@ -151,6 +152,7 @@ pub use swaps_struct::Swaps;
 pub use utab_struct::UTab;
 
 mod comparison_enum;
+mod fs_tab_diff_struct;
 mod fs_tab_struct;
 mod gc_item_enum;
 mod mount_info_struct;
