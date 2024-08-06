@@ -6,8 +6,3 @@
 // From standard library
 
 // From this library
-pub mod device;
-pub mod entries;
-pub mod errors;
-pub mod iter;
-pub mod tables;
