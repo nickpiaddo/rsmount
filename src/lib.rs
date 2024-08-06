@@ -834,13 +834,13 @@
 //!
 //! #### Compare changes in mount tables
 //!
-//! | `libmount`                       | `rsmount`                                                                                       |
-//! | ------------------               | ---------                                                                                       |
-//! | [`struct libmnt_tabdiff`][326]   | [`FsTabDiff`](crate::tables::FsTabDiff)                                                         |
-//! | [`mnt_new_tabdiff`][327]         | [`FsTabDiff::new`](crate::tables::FsTabDiff::new)                                               |
-//! | [`mnt_free_tabdiff`][329]        | [`FsTabDiff`](crate::tables::FsTabDiff) is automatically deallocated when it goes out of scope. |
-//! | [`mnt_tabdiff_next_change`][331] |                                                                                                 |
-//! | [`mnt_diff_tables`][329]         | [`FsTabDiff::diff`](crate::tables::FsTabDiff::diff)                                             |
+//! | `libmount`                       | `rsmount`                                                                                                                                         |
+//! | ------------------               | ---------                                                                                                                                         |
+//! | [`struct libmnt_tabdiff`][326]   | [`FsTabDiff`](crate::tables::FsTabDiff) <br> [`MountInfoDiff`](crate::tables::MountInfoDiff)                                                      |
+//! | [`mnt_new_tabdiff`][327]         | [`FsTabDiff::new`](crate::tables::FsTabDiff::new) <br> [`MountInfoDiff::new`](crate::tables::MountInfoDiff::new)                                  |
+//! | [`mnt_free_tabdiff`][329]        | [`FsTabDiff`](crate::tables::FsTabDiff), [`MountInfoDiff`](crate::tables::MountInfoDiff) are automatically deallocated when they go out of scope. |
+//! | [`mnt_tabdiff_next_change`][331] |                                                                                                                                                   |
+//! | [`mnt_diff_tables`][329]         | [`FsTabDiff::diff`](crate::tables::FsTabDiff::diff) <br> [`MountInfoDiff::diff`](crate::tables::MountInfoDiff::diff)                              |
 //!
 //! [326]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Compare-changes-in-mount-tables.html#libmnt-tabdiff
 //! [327]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Compare-changes-in-mount-tables.html#mnt-new-tabdiff
