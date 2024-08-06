@@ -15,3 +15,4 @@ pub mod errors;
 pub mod flags;
 pub mod fs;
 pub mod iter;
+pub(crate) mod macros;
