@@ -11,6 +11,7 @@ use thiserror::Error;
 // From this library
 use crate::core::errors::CacheError;
 use crate::core::errors::FsTabDiffError;
+use crate::core::errors::FsTabDiffIterError;
 use crate::core::errors::FsTabEntryBuilderError;
 use crate::core::errors::FsTabEntryError;
 use crate::core::errors::FsTabError;
@@ -61,6 +62,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     FsTabDiff(#[from] FsTabDiffError),
+
+    #[error(transparent)]
+    FsTabDiffIter(#[from] FsTabDiffIterError),
 
     #[error(transparent)]
     FsTabEntry(#[from] FsTabEntryError),
