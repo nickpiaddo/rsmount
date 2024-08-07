@@ -151,6 +151,7 @@ pub use mount_option_struct::MountOption;
 pub use parser_flow_enum::ParserFlow;
 pub use swaps_diff_struct::SwapsDiff;
 pub use swaps_struct::Swaps;
+pub use utab_diff_struct::UTabDiff;
 pub use utab_struct::UTab;
 
 mod comparison_enum;
@@ -163,4 +164,5 @@ mod mount_option_struct;
 mod parser_flow_enum;
 mod swaps_diff_struct;
 mod swaps_struct;
+mod utab_diff_struct;
 mod utab_struct;

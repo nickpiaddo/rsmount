@@ -834,13 +834,13 @@
 //!
 //! #### Compare changes in mount tables
 //!
-//! | `libmount`                       | `rsmount`                                                                                                                                                                                  |
-//! | ------------------               | ---------                                                                                                                                                                                  |
-//! | [`struct libmnt_tabdiff`][326]   | [`FsTabDiff`](crate::tables::FsTabDiff) <br> [`MountInfoDiff`](crate::tables::MountInfoDiff) <br> [`SwapsDiff`](crate::tables::SwapsDiff)                                                  |
-//! | [`mnt_new_tabdiff`][327]         | [`FsTabDiff::new`](crate::tables::FsTabDiff::new) <br> [`MountInfoDiff::new`](crate::tables::MountInfoDiff::new) <br> [`SwapsDiff::new`](crate::tables::SwapsDiff::new)                    |
-//! | [`mnt_free_tabdiff`][329]        | [`FsTabDiff`](crate::tables::FsTabDiff), [`MountInfoDiff`](crate::tables::MountInfoDiff), [`SwapsDiff`](crate::tables::SwapsDiff) are automatically deallocated when they go out of scope. |
-//! | [`mnt_tabdiff_next_change`][331] |                                                                                                                                                                                            |
-//! | [`mnt_diff_tables`][329]         | [`FsTabDiff::diff`](crate::tables::FsTabDiff::diff) <br> [`MountInfoDiff::diff`](crate::tables::MountInfoDiff::diff) <br> [`SwapsDiff::diff`](crate::tables::SwapsDiff::diff)              |
+//! | `libmount`                       | `rsmount`                                                                                                                                                                                                                            |
+//! | ------------------               | ---------                                                                                                                                                                                                                            |
+//! | [`struct libmnt_tabdiff`][326]   | [`FsTabDiff`](crate::tables::FsTabDiff) <br> [`MountInfoDiff`](crate::tables::MountInfoDiff) <br> [`SwapsDiff`](crate::tables::SwapsDiff) <br> [`UTabDiff`](crate::tables::UTabDiff)                                                 |
+//! | [`mnt_new_tabdiff`][327]         | [`FsTabDiff::new`](crate::tables::FsTabDiff::new) <br> [`MountInfoDiff::new`](crate::tables::MountInfoDiff::new) <br> [`SwapsDiff::new`](crate::tables::SwapsDiff::new) <br> [`UTabDiff::new`](crate::tables::UTabDiff::new)         |
+//! | [`mnt_free_tabdiff`][329]        | [`FsTabDiff`](crate::tables::FsTabDiff), [`MountInfoDiff`](crate::tables::MountInfoDiff), [`SwapsDiff`](crate::tables::SwapsDiff), [`UTabDiff`](crate::tables::UTabDiff) are automatically deallocated when they go out of scope.    |
+//! | [`mnt_tabdiff_next_change`][331] |                                                                                                                                                                                                                                      |
+//! | [`mnt_diff_tables`][329]         | [`FsTabDiff::diff`](crate::tables::FsTabDiff::diff) <br> [`MountInfoDiff::diff`](crate::tables::MountInfoDiff::diff) <br> [`SwapsDiff::diff`](crate::tables::SwapsDiff::diff) <br> [`UTabDiff::diff`](crate::tables::UTabDiff::diff) |
 //!
 //! [326]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Compare-changes-in-mount-tables.html#libmnt-tabdiff
 //! [327]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Compare-changes-in-mount-tables.html#mnt-new-tabdiff
