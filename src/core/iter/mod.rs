@@ -19,6 +19,7 @@ pub use mount_info_iter_struct::MountInfoIter;
 pub use mount_info_overmount_iter_struct::MountInfoOvermountIter;
 pub use swaps_diff_iter_struct::SwapsDiffIter;
 pub use swaps_iter_struct::SwapsIter;
+pub use utab_diff_iter_struct::UTabDiffIter;
 pub use utab_iter_mut_struct::UTabIterMut;
 pub use utab_iter_struct::UTabIter;
 
@@ -33,5 +34,6 @@ mod mount_info_iter_struct;
 mod mount_info_overmount_iter_struct;
 mod swaps_diff_iter_struct;
 mod swaps_iter_struct;
+mod utab_diff_iter_struct;
 mod utab_iter_mut_struct;
 mod utab_iter_struct;
