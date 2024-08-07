@@ -18,6 +18,7 @@ pub use swaps_entry_diff_struct::SwapsEntryDiff;
 pub use swaps_entry_struct::SwapsEntry;
 pub use utab_entry_builder_struct::UTabEntryBuilder;
 pub(crate) use utab_entry_builder_struct::UTbEntBuilder;
+pub use utab_entry_diff_struct::UTabEntryDiff;
 pub use utab_entry_struct::UTabEntry;
 
 mod fs_tab_entry_builder_struct;
@@ -29,4 +30,5 @@ mod mount_info_entry_struct;
 mod swaps_entry_diff_struct;
 mod swaps_entry_struct;
 mod utab_entry_builder_struct;
+mod utab_entry_diff_struct;
 mod utab_entry_struct;
