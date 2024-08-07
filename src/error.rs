@@ -29,6 +29,7 @@ use crate::core::errors::SwapsDiffIterError;
 use crate::core::errors::SwapsEntryError;
 use crate::core::errors::SwapsError;
 use crate::core::errors::SwapsIterError;
+use crate::core::errors::UTabDiffError;
 use crate::core::errors::UTabEntryBuilderError;
 use crate::core::errors::UTabEntryError;
 use crate::core::errors::UTabError;
@@ -120,6 +121,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     UTab(#[from] UTabError),
+
+    #[error(transparent)]
+    UTabDiff(#[from] UTabDiffError),
 
     #[error(transparent)]
     UTabEntry(#[from] UTabEntryError),
