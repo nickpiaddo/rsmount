@@ -14,6 +14,7 @@ macro_rules! gen_table_diff {
 
             // From this library
             use $crate::core::errors::[<$table_type DiffError>];
+            use $crate::core::iter::[<$table_type DiffIter>];
             use $crate::tables::GcItem;
             use $crate::tables::$table_type;
 
@@ -97,6 +98,17 @@ macro_rules! gen_table_diff {
                             Ok(nb_changes as usize)
                         }
                     }
+                }
+
+                #[doc = concat!("Returns an iterator over `",  stringify!($table_type), "Diff` items comparing two [`", stringify!($table_type), "`]s.")]
+                ///
+                /// # Panics
+                ///
+                #[doc = concat!("Panics if it fails to create an [`", stringify!($table_type), "DiffIter`] iterator.")]
+                pub fn iter(&self) -> [<$table_type DiffIter>] {
+                    log::debug!(concat!(stringify!($table_type), "Diff::iter creating a new `", stringify!($table_type), "DiffIter` instance"));
+
+                    [<$table_type DiffIter>]::new(self).unwrap()
                 }
             }
 
