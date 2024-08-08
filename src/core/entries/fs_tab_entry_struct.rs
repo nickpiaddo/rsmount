@@ -11,6 +11,7 @@ use std::str::FromStr;
 use crate::core::device::Tag;
 use crate::core::entries::FsTabEntryBuilder;
 use crate::core::entries::FsTbEntBuilder;
+use crate::core::entries::MntEnt;
 use crate::core::errors::FsTabEntryError;
 use crate::declare_tab_entry;
 use crate::fs_tab_entry_shared_methods;
@@ -86,6 +87,31 @@ impl FsTabEntry {
                 log::debug!("FsTabEntry::append_comment {}. libmount::mnt_fs_append_comment returned error code: {:?}", err_msg, code);
 
                 Err(FsTabEntryError::Config(err_msg))
+            }
+        }
+    }
+
+    /// Converts this `FsTabEntry` to a [`MntEnt`].
+    pub fn to_mnt_ent(&self) -> Result<MntEnt, FsTabEntryError> {
+        log::debug!("FsTabEntry::to_mnt_ent converting `FsTabEntry` to `libmount::mntent`");
+
+        let mut ptr = MaybeUninit::<*mut libmount::mntent>::zeroed();
+
+        let result = unsafe { libmount::mnt_fs_to_mntent(self.inner, ptr.as_mut_ptr()) };
+
+        match result {
+            0 => {
+                log::debug!("FsTabEntry::to_mnt_ent converted `FsTabEntry` to `libmount::mntent`");
+                let ptr = unsafe { ptr.assume_init() };
+                let entry = MntEnt::from_raw_parts(ptr);
+
+                Ok(entry)
+            }
+            code => {
+                let err_msg = "failed to convert `FsTabEntry` to `libmount::mntent`".to_owned();
+                log::debug!("FsTabEntry::to_mnt_ent {}. libmount::mnt_fs_to_mntent returned error code: {:?}", err_msg, code);
+
+                Err(FsTabEntryError::Action(err_msg))
             }
         }
     }

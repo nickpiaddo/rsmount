@@ -609,7 +609,7 @@
 //! | [`mnt_fs_strdup_options`][291]      |                                                                                                                                        |
 //! | [`mnt_fs_streq_srcpath`][292]       | [`FsTabEntry::is_exact_source`](crate::core::entries::FsTabEntry::is_exact_source)                                                     |
 //! | [`mnt_fs_streq_target`][293]        | [`FsTabEntry::is_exact_target`](crate::core::entries::FsTabEntry::is_exact_target)                                                     |
-//! | [`mnt_fs_to_mntent`][294]           |                                                                                                                                        |
+//! | [`mnt_fs_to_mntent`][294]           | [`FsTabEntry::to_mnt_ent`](crate::core::entries::FsTabEntry::to_mnt_ent)                                                               |
 //! | [`mnt_new_fs`][295]                 | [`FsTabEntry::builder`](crate::core::entries::FsTabEntry::builder)                                                                     |
 //! | [`mnt_reset_fs`][296]               | Not supported.                                                                                                                         |
 //!
