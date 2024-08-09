@@ -15,6 +15,7 @@ use crate::core::device::{Tag, TagName};
 use crate::core::errors::CacheError;
 use crate::core::fs::{FileSystem, FsType};
 use crate::ffi_utils;
+use crate::tables::MountInfo;
 
 /// A cache of device paths, and tags.
 #[derive(Debug)]
@@ -186,6 +187,28 @@ impl Cache {
                 );
 
                 Some(value)
+            }
+        }
+    }
+
+    /// Imports canonicalized paths from a [`MountInfo`] table. This operation will provide already
+    /// canonicalized paths to search functions using a `Cache`.
+    pub fn import_paths(&mut self, table: &MountInfo) -> Result<(), CacheError> {
+        log::debug!("Cache::import_paths import canonicalized paths");
+
+        let result = unsafe { libmount::mnt_cache_set_targets(self.inner, table.inner) };
+
+        match result {
+            0 => {
+                log::debug!("Cache::import_paths imported canonicalized paths");
+
+                Ok(())
+            }
+            code => {
+                let err_msg = "failed to import canonicalized paths".to_owned();
+                log::debug!("Cache::import_paths {}. libmount::mnt_cache_set_targets returned error code: {:?}", err_msg, code);
+
+                Err(CacheError::Import(err_msg))
             }
         }
     }
