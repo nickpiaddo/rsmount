@@ -7,6 +7,8 @@
 use std::fmt;
 
 // From this library
+use crate::core::entries::UTabEntryBuilder;
+use crate::core::entries::UTbEntBuilder;
 use crate::core::errors::UTabEntryError;
 use crate::core::utils;
 use crate::declare_tab_entry;
@@ -21,6 +23,38 @@ For example:
 SRC=/dev/vda TARGET=/mnt ROOT=/ OPTS=x-initrd.mount
 ```"
 );
+
+impl UTabEntry {
+    /// Creates a [`UTabEntryBuilder`] to configure and construct a new `UTabEntry`.
+    ///
+    /// Call the `UTabEntryBuilder`'s [`build()`](UTabEntryBuilder::build) method to
+    /// construct a new `UTabEntry`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use pretty_assertions::assert_eq;
+    /// use rsmount::core::entries::UTabEntry;
+    ///
+    /// fn main() -> rsmount::Result<()> {
+    ///     // Example entry in /etc/fstab
+    ///     //
+    ///     // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
+    ///     let entry = UTabEntry::builder()
+    ///         .source("/dev/vda1")
+    ///         .target("/")
+    ///         // Comma-separated list of mount options.
+    ///         .mount_options("rw,relatime")
+    ///         .build()?;
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    pub fn builder() -> UTabEntryBuilder {
+        log::debug!("UTabEntry::builder creating new `UTabEntryBuilder` instance");
+        UTbEntBuilder::builder()
+    }
+}
 
 utab_entry_shared_methods!(UTabEntry, UTabEntryError);
 

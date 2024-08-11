@@ -7,8 +7,18 @@ use thiserror::Error;
 // From standard library
 
 // From this library
+use crate::core::errors::UTabEntryError;
 
-/// `UTabEntryBuilder` runtime errors.
+/// [`UTabEntryBuilder`](crate::core::entries::UTabEntryBuilder) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
-pub enum UTabEntryBuilderError {}
+pub enum UTabEntryBuilderError {
+    #[error("{0}")]
+    MutuallyExclusive(String),
+
+    #[error("{0}")]
+    Required(String),
+
+    #[error(transparent)]
+    UTabEntry(#[from] UTabEntryError),
+}
