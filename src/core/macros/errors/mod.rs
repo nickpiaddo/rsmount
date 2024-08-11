@@ -6,3 +6,4 @@
 // From standard library
 
 // From this library
+mod gen_table_entry_error_macro;
