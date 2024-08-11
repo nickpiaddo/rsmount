@@ -16,6 +16,7 @@ use crate::core::errors::GenIteratorError;
 use crate::core::errors::MountInfoEntryError;
 use crate::core::errors::ParserError;
 use crate::core::errors::SwapsEntryError;
+use crate::core::errors::UTabEntryBuilderError;
 use crate::core::errors::UTabEntryError;
 
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
@@ -65,4 +66,7 @@ pub enum RsMountError {
 
     #[error(transparent)]
     UTabEntry(#[from] UTabEntryError),
+
+    #[error(transparent)]
+    UTabEntryBuilder(#[from] UTabEntryBuilderError),
 }
