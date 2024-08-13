@@ -8,6 +8,7 @@
 // From standard library
 
 // From this library
+pub use block_device_struct::BlockDevice;
 pub use id_struct::Id;
 pub use label_struct::Label;
 pub use nfs_struct::NFS;
@@ -17,6 +18,7 @@ pub use tag_enum::Tag;
 pub use tag_name_enum::TagName;
 pub use uuid_struct::Uuid;
 
+mod block_device_struct;
 mod id_struct;
 mod label_struct;
 mod nfs_struct;

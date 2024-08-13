@@ -12,6 +12,10 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum ParserError {
+    /// Error while parsing a string into a [`BlockDevice`](crate::core::device::BlockDevice).
+    #[error("{0}")]
+    BlockDevice(String),
+
     /// Error while parsing a string into a [`Id`](crate::core::device::Id).
     #[error("{0}")]
     Id(String),
