@@ -28,6 +28,10 @@ pub enum ParserError {
     #[error("{0}")]
     SmbFs(String),
 
+    /// Error while parsing a string into a [`SshFs`](crate::core::device::SshFs).
+    #[error("{0}")]
+    SshFs(String),
+
     /// Error while parsing a string into a [`Tag`](crate::core::device::Tag).
     #[error("{0}")]
     Tag(String),
