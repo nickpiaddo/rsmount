@@ -10,6 +10,7 @@
 // From this library
 pub use id_struct::Id;
 pub use label_struct::Label;
+pub use nfs_struct::NFS;
 pub use smb_fs_struct::SmbFs;
 pub use tag_enum::Tag;
 pub use tag_name_enum::TagName;
@@ -17,6 +18,7 @@ pub use uuid_struct::Uuid;
 
 mod id_struct;
 mod label_struct;
+mod nfs_struct;
 mod smb_fs_struct;
 mod tag_enum;
 mod tag_name_enum;

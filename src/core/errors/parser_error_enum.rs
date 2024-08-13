@@ -20,6 +20,10 @@ pub enum ParserError {
     #[error("{0}")]
     Label(String),
 
+    /// Error while parsing a string into a [`NFS`](crate::core::device::NFS).
+    #[error("{0}")]
+    NFS(String),
+
     /// Error while parsing a string into a [`SmbFs`](crate::core::device::SmbFs).
     #[error("{0}")]
     SmbFs(String),
