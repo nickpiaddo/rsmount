@@ -14,6 +14,7 @@ use crate::ffi_utils;
 use crate::mount::ExitCode;
 use crate::mount::ExitStatus;
 use crate::mount::MountSource;
+use crate::mount::UMountIter;
 use crate::mount::UMountNamespace;
 use crate::mount::UmntBuilder;
 use crate::mount::UnmountBuilder;
@@ -1128,6 +1129,19 @@ impl Unmount {
     }
 
     //---- END getters
+
+    //---- BEGIN iterators
+
+    /// Tries to sequentially umount entries in `/proc/self/mountinfo`.
+    ///
+    /// To filter devices to umount by file system type and/or mount options, use the
+    /// methods [`UnmountBuilder::match_file_systems`] and/or [`UnmountBuilder::match_mount_options`]
+    /// when instantiating a new `Mount` object.
+    pub fn seq_unmount(&mut self) -> UMountIter {
+        UMountIter::new(self).unwrap()
+    }
+
+    //---- END iterators
 
     //---- BEGIN predicates
 
