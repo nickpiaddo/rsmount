@@ -449,7 +449,7 @@
 //! | [`mnt_context_finalize_mount`][165] | [`Mount::finalize_mount`](crate::mount::Mount::finalize_mount)                                                             |
 //! | [`mnt_context_mount`][166]          | [`Mount::mount_device`](crate::mount::Mount::mount_device)                                                                 |
 //! | [`mnt_context_next_mount`][167]     | [`Mount::seq_mount`](crate::mount::Mount::seq_mount)                                                                       |
-//! | [`mnt_context_next_remount`][168]   |                                                                                                                            |
+//! | [`mnt_context_next_remount`][168]   | [`Mount::seq_remount`](crate::mount::Mount::seq_remount)                                                                   |
 //! | [`mnt_context_prepare_mount`][169]  | [`Mount::prepare_mount`](crate::mount::Mount::prepare_mount)                                                               |
 //!
 //! [113]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Mount-context.html#MNT-MS-COMMENT:CAPS

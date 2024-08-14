@@ -33,6 +33,7 @@ use crate::mount::MountNamespace;
 use crate::mount::MountOptionsMode;
 use crate::mount::MountSource;
 use crate::mount::ProcessExitStatus;
+use crate::mount::ReMountIter;
 
 /// Object to mount/unmount a device.
 #[derive(Debug)]
@@ -2077,6 +2078,15 @@ impl Mount {
     /// when instantiating a new `Mount` object.
     pub fn seq_mount(&mut self) -> MountIter {
         MountIter::new(self).unwrap()
+    }
+
+    /// Tries to sequentially remount entries in `/proc/self/mountinfo`.
+    ///
+    /// To filter devices to remount by file system type and/or mount options, use the
+    /// methods [`MountBuilder::match_file_systems`] and/or [`MountBuilder::match_mount_options`]
+    /// when instantiating a new `Mount` object.
+    pub fn seq_remount(&mut self) -> ReMountIter {
+        ReMountIter::new(self).unwrap()
     }
 
     //---- END iterators
