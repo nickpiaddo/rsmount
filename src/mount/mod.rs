@@ -624,6 +624,7 @@ pub use process_exit_status_struct::ProcessExitStatus;
 mod error_code_enum;
 mod exit_code_enum;
 mod exit_status_struct;
+pub(crate) mod macros;
 mod mount_builder_error_enum;
 mod mount_builder_struct;
 mod mount_error_enum;
