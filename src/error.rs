@@ -44,6 +44,7 @@ use crate::mount::MountBuilderError;
 use crate::mount::MountError;
 use crate::mount::MountIterError;
 use crate::mount::ReMountIterError;
+use crate::mount::UMountIterError;
 use crate::mount::UnmountBuilderError;
 use crate::mount::UnmountError;
 
@@ -127,6 +128,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     ReMountIter(#[from] ReMountIterError),
+
+    #[error(transparent)]
+    UMountIter(#[from] UMountIterError),
 
     // #[error(transparent)]
     // MountTable(#[from] MountTableError),
