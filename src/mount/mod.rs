@@ -31,8 +31,9 @@
 //!     3. [Mount a device in `/etc/fstab`](#mount-a-device-in-etcfstab)
 //!     4. [Override the mount options, and mount a device in
 //!        `/etc/fstab`](#override-the-mount-options-amd-mount-a-device-in-etcfstab)
-//!     5. [Create a bind mount](#create-a-bind-mount)
-//!     6. [Mark a mount point as `shared`](#mark-a-mount-point-as-shared)
+//!     5. [Mount all devices with a specific file system](#mount-all-devices-with-a-specific-file-system)
+//!     6. [Create a bind mount](#create-a-bind-mount)
+//!     7. [Mark a mount point as `shared`](#mark-a-mount-point-as-shared)
 //! 3. [Mount namespaces](#mount-namespaces)
 //!     1. [Shared subtrees](#shared-subtrees)
 //!     2. [Peer groups](#peer-groups)
@@ -225,6 +226,77 @@
 //!
 //!     // Mount `/dev/usbdisk` at `/media/usb`.
 //!     mount.mount_device()?;
+//!
+//!     Ok(())
+//! }
+//! ```
+//!
+//! ### Mount all devices with a specific file system
+//!
+//! Assuming the following content in `/etc/fstab`...
+//!
+//! ```text
+//! # /etc/fstab
+//!
+//! UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f  /      ext4  rw,relatime        0 1
+//! UUID=07aae9ba-12a1-4325-8b16-2ee214a6d7fd  /boot  ext4  noauto,rw,relatime 0 2
+//! UUID=b9d72af2-f231-4cf8-9d0a-ba19e94a5087  swap   swap  defaults           0 0
+//!
+//! /dev/cdrom    /media/cdrom  iso9660 noauto,ro       0 0
+//! /dev/usbdisk  /media/usb    vfat    noauto          0 0
+//! none          /tmp          tmpfs   nosuid,nodev    0 0
+//! ```
+//!
+//! ...we can manually mount all devices with an `ext4` file system with the code below.
+//!
+//! ```
+//! use rsmount::mount::Mount;
+//! use rsmount::mount::StepResult;
+//!
+//! fn main() -> rsmount::Result<()> {
+//!     let mut mount = Mount::builder()
+//!         .match_file_systems("ext4")
+//!         // Skips all mount source preparation, mount option analysis, and the actual mounting
+//!         // process.
+//!         .dry_run()
+//!         .build()?;
+//!
+//!     for result in mount.seq_mount() {
+//!         match result {
+//!             StepResult::MountAlreadyDone(entry) => {
+//!                 let source = entry.source().unwrap();
+//!                 let mount_point = entry.target().unwrap();
+//!
+//!                 eprintln!("Already mounted: {} at {:?}", source, mount_point);
+//!             }
+//!             StepResult::MountFail(entry) => {
+//!                 let source = entry.source().unwrap();
+//!                 let mount_point = entry.target().unwrap();
+//!
+//!                 eprintln!("Failed to mount: {} at {:?}", source, mount_point);
+//!             }
+//!             StepResult::MountSkipped(entry) => {
+//!                 let mount_point = entry.target().unwrap();
+//!                 eprintln!("Skipped: {:?}", mount_point);
+//!             }
+//!             StepResult::MountSuccess(entry) => {
+//!                 let source = entry.source().unwrap();
+//!                 let mount_point = entry.target().unwrap();
+//!
+//!                 eprintln!("Mounted: {} at {:?}", source, mount_point);
+//!             }
+//!             _ => unreachable!(),
+//!         }
+//!     }
+//!
+//!     // Example output
+//!     //
+//!     // Already mounted: UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f  at "/"
+//!     // Mounted: UUID=07aae9ba-12a1-4325-8b16-2ee214a6d7fd at "/boot"
+//!     // Skipped: "swap"
+//!     // Skipped: "/media/cdrom"
+//!     // Skipped: "/media/usb"
+//!     // Skipped: "/tmp"
 //!
 //!     Ok(())
 //! }

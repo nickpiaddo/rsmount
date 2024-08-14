@@ -28,6 +28,7 @@ use crate::mount::ExitStatus;
 use crate::mount::MntBuilder;
 use crate::mount::MountBuilder;
 use crate::mount::MountError;
+use crate::mount::MountIter;
 use crate::mount::MountNamespace;
 use crate::mount::MountOptionsMode;
 use crate::mount::MountSource;
@@ -2066,6 +2067,19 @@ impl Mount {
         }
     }
     //---- END getters
+
+    //---- BEGIN iterators
+
+    /// Tries to sequentially mount entries in `/etc/fstab`.
+    ///
+    /// To filter devices to mount by file system type and/or mount options, use the
+    /// methods [`MountBuilder::match_file_systems`] and/or [`MountBuilder::match_mount_options`]
+    /// when instantiating a new `Mount` object.
+    pub fn seq_mount(&mut self) -> MountIter {
+        MountIter::new(self).unwrap()
+    }
+
+    //---- END iterators
 
     //---- BEGIN predicates
 
