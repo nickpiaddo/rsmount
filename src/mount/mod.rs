@@ -623,6 +623,7 @@ pub use mount_source_enum::MountSource;
 pub use mount_struct::Mount;
 pub use process_exit_status_struct::ProcessExitStatus;
 pub use remount_iter_error_enum::ReMountIterError;
+pub use remount_iter_struct::ReMountIter;
 pub use step_result_enum::StepResult;
 
 mod error_code_enum;
@@ -640,4 +641,5 @@ mod mount_source_enum;
 mod mount_struct;
 mod process_exit_status_struct;
 mod remount_iter_error_enum;
+mod remount_iter_struct;
 mod step_result_enum;
