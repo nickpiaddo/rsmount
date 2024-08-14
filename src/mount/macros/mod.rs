@@ -6,3 +6,5 @@
 // From standard library
 
 // From this library
+
+pub(crate) mod gen_stepper_error_macro;
