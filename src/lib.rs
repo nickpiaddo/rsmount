@@ -851,20 +851,20 @@
 //! ### Mount options
 //! #### Options string
 //!
-//! | `libmount`                             | `rsmount` |
-//! | ------------------                     | --------- |
-//! | [`mnt_optstr_append_option`][330]      |           |
-//! | [`mnt_optstr_apply_flags`][331]        |           |
-//! | [`mnt_optstr_deduplicate_option`][332] |           |
-//! | [`mnt_optstr_get_flags`][333]          |           |
-//! | [`mnt_optstr_get_option`][334]         |           |
-//! | [`mnt_optstr_get_options`][335]        |           |
-//! | [`mnt_optstr_next_option`][336]        |           |
-//! | [`mnt_optstr_prepend_option`][337]     |           |
-//! | [`mnt_optstr_remove_option`][338]      |           |
-//! | [`mnt_optstr_set_option`][339]         |           |
-//! | [`mnt_split_optstr`][340]              |           |
-//! | [`mnt_match_options`][341]             |           |
+//! | `libmount`                             | `rsmount`                                                                                  |
+//! | ------------------                     | ---------                                                                                  |
+//! | [`mnt_optstr_append_option`][330]      | [`core::optstring::append_option`]                                                         |
+//! | [`mnt_optstr_apply_flags`][331]        | Deprecated.                                                                                |
+//! | [`mnt_optstr_deduplicate_option`][332] | [`core::optstring::deduplicate_option`]                                                    |
+//! | [`mnt_optstr_get_flags`][333]          | [`core::optstring::find_mount_flags`] <br> [`core::optstring::find_userspace_mount_flags`] |
+//! | [`mnt_optstr_get_option`][334]         | [`core::optstring::option_value`]                                                          |
+//! | [`mnt_optstr_get_options`][335]        |                                                                                            |
+//! | [`mnt_optstr_next_option`][336]        |                                                                                            |
+//! | [`mnt_optstr_prepend_option`][337]     | [`core::optstring::prepend_option`]                                                        |
+//! | [`mnt_optstr_remove_option`][338]      | [`core::optstring::remove_option`]                                                         |
+//! | [`mnt_optstr_set_option`][339]         | [`core::optstring::set_option_value`] <br> [`core::optstring::unset_option_value`]         |
+//! | [`mnt_split_optstr`][340]              |                                                                                            |
+//! | [`mnt_match_options`][341]             | [`core::optstring::matches_any_option`]                                                    |
 //!
 //! [330]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Options-string.html#mnt-optstr-append-option
 //! [331]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Options-string.html#mnt-optstr-apply-flags

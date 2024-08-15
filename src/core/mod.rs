@@ -16,4 +16,5 @@ pub mod flags;
 pub mod fs;
 pub mod iter;
 pub(crate) mod macros;
+pub mod optstring;
 pub mod utils;

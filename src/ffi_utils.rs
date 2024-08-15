@@ -49,6 +49,27 @@ where
 }
 
 #[doc(hidden)]
+/// Converts a [`str`](std::str) reference to a raw C char array.
+///
+/// # Warning
+///
+/// You MUST manually free the memory allocated when the data is no longer used.
+pub fn as_ref_str_to_owned_c_char_array<T>(s: T) -> Result<MaybeUninit<*mut libc::c_char>, NulError>
+where
+    T: AsRef<str>,
+{
+    let s: &str = s.as_ref();
+    let c_string = CString::new(s)?;
+    let mut ptr = MaybeUninit::<*mut libc::c_char>::zeroed();
+
+    unsafe {
+        ptr.write(libc::strdup(c_string.as_ptr()));
+    }
+
+    Ok(ptr)
+}
+
+#[doc(hidden)]
 /// Converts a `const` [`c_char`](libc::c_char) C string to a [`PathBuf`].
 ///
 ///  # Safety
