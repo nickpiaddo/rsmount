@@ -9,5 +9,7 @@
 
 // From this library
 pub use label_struct::Label;
+pub use uuid_struct::Uuid;
 
 mod label_struct;
+mod uuid_struct;

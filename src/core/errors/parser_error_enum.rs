@@ -15,4 +15,8 @@ pub enum ParserError {
     /// Error while parsing a string into a [`Label`](crate::core::device::Label).
     #[error("{0}")]
     Label(String),
+
+    /// Error while parsing a string into a [`Uuid`](crate::core::device::Uuid).
+    #[error("{0}")]
+    Uuid(String),
 }
