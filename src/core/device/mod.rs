@@ -8,3 +8,6 @@
 // From standard library
 
 // From this library
+pub use label_struct::Label;
+
+mod label_struct;

@@ -11,4 +11,8 @@ use thiserror::Error;
 /// String parser runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
-pub enum ParserError {}
+pub enum ParserError {
+    /// Error while parsing a string into a [`Label`](crate::core::device::Label).
+    #[error("{0}")]
+    Label(String),
+}
