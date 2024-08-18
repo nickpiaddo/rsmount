@@ -8,11 +8,11 @@ use thiserror::Error;
 
 // From this library
 
-/// `OptionIter` runtime error.
+/// [`OptionIter`](crate::core::optstring::OptionIter) runtime error.
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum OptionIterError {
-    /// Error while creating a new `OptionIter` instance.
+    /// Error while creating a new [`OptionIter`](crate::core::optstring::OptionIter) instance.
     #[error("{0}")]
     Creation(String),
 }

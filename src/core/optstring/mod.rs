@@ -13,6 +13,9 @@ use std::mem::MaybeUninit;
 use crate::core::flags::MountFlag;
 use crate::core::flags::UserspaceMountFlag;
 use crate::ffi_utils;
+pub use option_iter_struct::OptionIter;
+
+mod option_iter_struct;
 
 /// Returns a new list of mount options with `option_name=options_value,` prepended to it, or `None` if
 /// an error occurred.
