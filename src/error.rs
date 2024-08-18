@@ -24,6 +24,7 @@ use crate::core::errors::MountInfoDiffIterError;
 use crate::core::errors::MountInfoEntryError;
 use crate::core::errors::MountInfoError;
 use crate::core::errors::MountInfoIterError;
+use crate::core::errors::OptionIterError;
 use crate::core::errors::ParserError;
 use crate::core::errors::SwapsDiffError;
 use crate::core::errors::SwapsDiffIterError;
@@ -107,6 +108,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     MountInfoIter(#[from] MountInfoIterError),
+
+    #[error(transparent)]
+    OptionIter(#[from] OptionIterError),
 
     #[error(transparent)]
     Parser(#[from] ParserError),
