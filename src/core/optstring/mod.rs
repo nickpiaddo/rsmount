@@ -1021,6 +1021,47 @@ where
     get_options(options_list, option_map, skip)
 }
 
+/// Returns all userspace options from the list of mount options, skipping the ones matching any of
+/// the given [`OptionFilter`]s.
+///
+/// # Examples
+///
+/// ```
+/// # use pretty_assertions::assert_eq;
+/// use rsmount::core::optstring::OptionFilter;
+/// use rsmount::core::optstring;
+///
+/// fn main() -> rsmount::Result<()> {
+///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
+///     let skip = [];
+///
+///     let actual = optstring::take_userspace_options(options_list, skip);
+///     let options = "noowner,noauto".to_owned();
+///     let expected = Some(options);
+///     assert_eq!(actual, expected);
+///
+///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
+///     let skip = [OptionFilter::Negated];
+///
+///     let actual = optstring::take_userspace_options(options_list, skip);
+///     let options = "noauto".to_owned();
+///     let expected = Some(options);
+///     assert_eq!(actual, expected);
+///
+///     Ok(())
+/// }
+/// ```
+pub fn take_userspace_options<T>(options_list: &str, skip: T) -> Option<String>
+where
+    T: AsRef<[OptionFilter]>,
+{
+    let skip = skip.as_ref();
+    let option_map =
+        unsafe { libmount::mnt_get_builtin_optmap(libmount::MNT_USERSPACE_MAP as i32) };
+
+    get_options(options_list, option_map, skip)
+}
+
 #[cfg(test)]
 #[allow(unused_imports)]
 mod tests {
@@ -1360,7 +1401,7 @@ mod tests {
     }
 
     // see
-    // https://github.com/util-linux/util-linux/blob/stable/v2.39/libmount/src/optmap.c#L148
+    // https://github.com/util-linux/util-linux/blob/stable/v2.39/libmount/src/optmap.c#L71
     // for a full list of option-mount flag mapping
     #[test]
     fn take_fs_independent_options_can_not_extract_options_from_an_empty_list() {
@@ -1450,6 +1491,87 @@ mod tests {
 
         let actual = take_fs_independent_options(options_list, skip);
         let options = "bind,noexec".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    // see
+    // https://github.com/util-linux/util-linux/blob/stable/v2.39/libmount/src/optmap.c#L148
+    // for a full list of option-userspace mount flag mapping
+    #[test]
+    fn take_userspace_options_can_not_extract_options_from_an_empty_list() {
+        let options_list = "";
+        let skip = [];
+
+        let actual = take_userspace_options(options_list, skip);
+        let expected = None;
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_userspace_options_can_not_extract_options_from_a_list_of_non_matching_options() {
+        let options_list = "protect,usemp,verbose";
+        let skip = [];
+
+        let actual = take_userspace_options(options_list, skip);
+        let expected = None;
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_userspace_options_can_extract_options_from_list_with_one_matching_option_no_skip() {
+        let options_list = "auto";
+        let skip = [];
+
+        let actual = take_userspace_options(options_list, skip);
+        let options = "auto".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+
+        let options_list = "protect,auto,usemp,verbose";
+
+        let actual = take_userspace_options(options_list, skip);
+        let options = "auto".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_userspace_options_can_extract_options_skipping_negated() {
+        let options_list = "protect,verbose,_netdev,auto,users,nogroup,nofail";
+        let skip = [OptionFilter::Negated];
+
+        let actual = take_userspace_options(options_list, skip);
+        let options = "_netdev,users,nofail".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_userspace_options_can_extract_options_skipping_not_in_mountinfo() {
+        let options_list = "protect,verbose,_netdev,auto,users,nogroup,nofail";
+        let skip = [OptionFilter::NotInMountInfo];
+
+        let actual = take_userspace_options(options_list, skip);
+        let options = "_netdev".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_userspace_options_can_extract_options_skipping_negated_and_not_in_mountinfo() {
+        let options_list = "protect,verbose,_netdev,auto,users,nogroup,nofail";
+        let skip = [OptionFilter::Negated, OptionFilter::NotInMountInfo];
+
+        let actual = take_userspace_options(options_list, skip);
+        let options = "_netdev".to_owned();
         let expected = Some(options);
 
         assert_eq!(actual, expected);
