@@ -913,6 +913,114 @@ pub fn iter_options(options_list: &str) -> Result<OptionIter, OptionIterError> {
     OptionIter::new(options_list)
 }
 
+#[doc(hidden)]
+/// Extracts options from the options list that match mount flags/userspace mount flags.
+fn get_options(
+    options_list: &str,
+    option_map: *const libmount::libmnt_optmap,
+    skip: &[OptionFilter],
+) -> Option<String> {
+    log::debug!(
+        "optstring::get_options extracting options from list {:?} with filters {:?}",
+        options_list,
+        skip
+    );
+
+    let options_list_cstr = ffi_utils::as_ref_str_to_c_string(options_list).ok()?;
+    let mut option_ptr = MaybeUninit::<*mut libc::c_char>::zeroed();
+    let ignore = skip.iter().fold(0i32, |acc, &x| acc | x as i32);
+
+    let result = unsafe {
+        libmount::mnt_optstr_get_options(
+            options_list_cstr.as_ptr(),
+            option_ptr.as_mut_ptr(),
+            option_map,
+            ignore,
+        )
+    };
+
+    match result {
+        0 => {
+            match unsafe { option_ptr.assume_init() } {
+                ptr if ptr.is_null() => {
+                    log::debug!("optstring::get_options found no match");
+
+                    None
+                }
+                ptr => {
+                    let options = ffi_utils::c_char_array_to_string(ptr);
+
+                    // option_ptr points to memory allocated by `mnt_optstr_get_options`, we free it here
+                    // to avoid a leak.
+                    unsafe {
+                        libc::free(ptr as *mut _);
+                    }
+
+                    log::debug!("optstring::get_options extracted options {:?}", options);
+
+                    Some(options)
+                }
+            }
+        }
+        code => {
+            let err_msg = format!(
+                "failed to extract options from list {:?} with filters {:?}",
+                options_list, skip
+            );
+            log::debug!(
+                "optstring::get_options {}. mnt_optstr_get_options returned error code: {:?}",
+                err_msg,
+                code
+            );
+
+            None
+        }
+    }
+}
+
+/// Returns all file system independent options from the list of mount options, skipping the ones
+/// matching any of the given [`OptionFilter`]s.
+///
+/// For more information about file system specific mount options see the [`mount` command's
+/// manpage](https://www.man7.org/linux/man-pages/man8/mount.8.html#FILESYSTEM-INDEPENDENT_MOUNT_OPTIONS).
+///
+/// # Examples
+///
+/// ```
+/// # use pretty_assertions::assert_eq;
+/// use rsmount::core::optstring::OptionFilter;
+/// use rsmount::core::optstring;
+///
+/// fn main() -> rsmount::Result<()> {
+///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
+///     let skip = [];
+///
+///     let actual = optstring::take_fs_independent_options(options_list, skip);
+///     let options = "sync,rw,lazytime".to_owned();
+///     let expected = Some(options);
+///     assert_eq!(actual, expected);
+///
+///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
+///     let skip = [OptionFilter::FsIo];
+///
+///     let actual = optstring::take_fs_independent_options(options_list, skip);
+///     let options = "rw".to_owned();
+///     let expected = Some(options);
+///     assert_eq!(actual, expected);
+///
+///     Ok(())
+/// }
+/// ```
+pub fn take_fs_independent_options<T>(options_list: &str, skip: T) -> Option<String>
+where
+    T: AsRef<[OptionFilter]>,
+{
+    let skip = skip.as_ref();
+    let option_map = unsafe { libmount::mnt_get_builtin_optmap(libmount::MNT_LINUX_MAP as i32) };
+
+    get_options(options_list, option_map, skip)
+}
+
 #[cfg(test)]
 #[allow(unused_imports)]
 mod tests {
@@ -1247,6 +1355,102 @@ mod tests {
         let actual = find_mount_flags(options_list);
         let flags = HashSet::from([MountFlag::NoUpdateAccessTime, MountFlag::Bind]);
         let expected = Some(flags);
+
+        assert_eq!(actual, expected);
+    }
+
+    // see
+    // https://github.com/util-linux/util-linux/blob/stable/v2.39/libmount/src/optmap.c#L148
+    // for a full list of option-mount flag mapping
+    #[test]
+    fn take_fs_independent_options_can_not_extract_options_from_an_empty_list() {
+        let options_list = "";
+        let skip = [];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let expected = None;
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_independent_options_can_not_extract_options_from_a_list_of_non_matching_options() {
+        let options_list = "protect,usemp,verbose";
+        let skip = [];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let expected = None;
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_independent_options_can_extract_options_from_list_with_one_matching_option_no_skip()
+    {
+        let options_list = "bind";
+        let skip = [];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let options = "bind".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+
+        let options_list = "protect,bind,usemp,verbose";
+        let skip = [];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let options = "bind".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_independent_options_can_extract_options_from_list_with_multiple_matching_option_no_skip(
+    ) {
+        let options_list = "protect,verbose,rw,bind,noexec,sync,lazytime";
+        let skip = [];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let options = "rw,bind,noexec,sync,lazytime".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_independent_options_can_extract_options_skipping_negated() {
+        let options_list = "protect,verbose,rw,bind,noexec,sync,sub,lazytime";
+        let skip = [OptionFilter::Negated];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let options = "bind,noexec,sync,lazytime".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_independent_options_can_extract_options_skipping_fs_io() {
+        let options_list = "protect,verbose,rw,bind,noexec,sync,sub,lazytime";
+        let skip = [OptionFilter::FsIo];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let options = "rw,bind,noexec".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_independent_options_can_extract_options_skipping_negated_and_fs_io() {
+        let options_list = "protect,verbose,rw,bind,noexec,sync,sub,lazytime";
+        let skip = [OptionFilter::Negated, OptionFilter::FsIo];
+
+        let actual = take_fs_independent_options(options_list, skip);
+        let options = "bind,noexec".to_owned();
+        let expected = Some(options);
 
         assert_eq!(actual, expected);
     }
