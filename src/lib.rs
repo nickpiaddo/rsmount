@@ -881,14 +881,14 @@
 //!
 //! #### Option maps
 //!
-//! | `libmount`                      | `rsmount` |
-//! | ------------------              | --------- |
-//! | [`struct libmnt_optmap`][342]   |           |
-//! | [`MNT_INVERT`][343]             |           |
-//! | [`MNT_NOMTAB`][344]             |           |
-//! | [`MNT_PREFIX`][345]             |           |
-//! | [`MNT_NOHLPS`][346]             |           |
-//! | [`mnt_get_builtin_optmap`][347] |           |
+//! | `libmount`                      | `rsmount`                                                                                      |
+//! | ------------------              | ---------                                                                                      |
+//! | [`struct libmnt_optmap`][342]   | Internal.                                                                                      |
+//! | [`MNT_INVERT`][343]             | [`OptionFilter::Negated`](crate::core::optstring::OptionFilter::Negated)                       |
+//! | [`MNT_NOMTAB`][344]             | [`OptionFilter::NotInMountInfo`](crate::core::optstring::OptionFilter::NotInMountInfo)         |
+//! | [`MNT_PREFIX`][345]             | [`OptionFilter::Prefixed`](crate::core::optstring::OptionFilter::Prefixed)                     |
+//! | [`MNT_NOHLPS`][346]             | [`OptionFilter::NotForMountHelpers`](crate::core::optstring::OptionFilter::NotForMountHelpers) |
+//! | [`mnt_get_builtin_optmap`][347] | Internal.                                                                                      |
 //!
 //! [342]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Option-maps.html#libmnt-optmap
 //! [343]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Option-maps.html#MNT-INVERT:CAPS
