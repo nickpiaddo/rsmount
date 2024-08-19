@@ -10,6 +10,7 @@ use std::collections::HashSet;
 use std::mem::MaybeUninit;
 
 // From this library
+use crate::core::errors::OptionIterError;
 use crate::core::flags::MountFlag;
 use crate::core::flags::UserspaceMountFlag;
 use crate::ffi_utils;
@@ -876,6 +877,38 @@ pub fn matches_any_option(options_list: &str, pattern: &str) -> bool {
     );
 
     state
+}
+
+/// Returns an iterator over the options in the given `options_list`.
+///
+/// # Examples
+///
+/// ```
+/// # use pretty_assertions::assert_eq;
+/// use rsmount::tables::MountOption;
+/// use rsmount::core::optstring;
+///
+/// fn main() -> rsmount::Result<()> {
+///     let options_list = "noatime,ro=recursive";
+///     let mut iterator = optstring::iter_options(options_list)?;
+///
+///     // First option.
+///     let actual = iterator.next();
+///     let option: MountOption = "noatime".parse()?;
+///     let expected = Some(option);
+///     assert_eq!(actual, expected);
+///
+///     // Second option.
+///     let actual = iterator.next();
+///     let option: MountOption = "ro=recursive".parse()?;
+///     let expected = Some(option);
+///     assert_eq!(actual, expected);
+///
+///     Ok(())
+/// }
+/// ```
+pub fn iter_options(options_list: &str) -> Result<OptionIter, OptionIterError> {
+    OptionIter::new(options_list)
 }
 
 #[cfg(test)]

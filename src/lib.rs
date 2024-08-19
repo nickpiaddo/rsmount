@@ -859,7 +859,7 @@
 //! | [`mnt_optstr_get_flags`][333]          | [`core::optstring::find_mount_flags`] <br> [`core::optstring::find_userspace_mount_flags`] |
 //! | [`mnt_optstr_get_option`][334]         | [`core::optstring::option_value`]                                                          |
 //! | [`mnt_optstr_get_options`][335]        |                                                                                            |
-//! | [`mnt_optstr_next_option`][336]        |                                                                                            |
+//! | [`mnt_optstr_next_option`][336]        | [`core::optstring::iter_options`]                                                          |
 //! | [`mnt_optstr_prepend_option`][337]     | [`core::optstring::prepend_option`]                                                        |
 //! | [`mnt_optstr_remove_option`][338]      | [`core::optstring::remove_option`]                                                         |
 //! | [`mnt_optstr_set_option`][339]         | [`core::optstring::set_option_value`] <br> [`core::optstring::unset_option_value`]         |

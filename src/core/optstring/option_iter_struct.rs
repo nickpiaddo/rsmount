@@ -21,7 +21,6 @@ pub struct OptionIter<'a> {
 
 impl<'a> OptionIter<'a> {
     #[doc(hidden)]
-    #[allow(dead_code)]
     /// Creates a new `OptionIter` instance.
     pub(crate) fn new(options_list: &'a str) -> Result<OptionIter<'a>, OptionIterError> {
         log::debug!("OptionIter::new creating a new `OptionIter` instance");
