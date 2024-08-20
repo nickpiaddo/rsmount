@@ -863,7 +863,7 @@
 //! | [`mnt_optstr_prepend_option`][337]     | [`core::optstring::prepend_option`]                                                               |
 //! | [`mnt_optstr_remove_option`][338]      | [`core::optstring::remove_option`]                                                                |
 //! | [`mnt_optstr_set_option`][339]         | [`core::optstring::set_option_value`] <br> [`core::optstring::unset_option_value`]                |
-//! | [`mnt_split_optstr`][340]              |                                                                                                   |
+//! | [`mnt_split_optstr`][340]              | [`core::optstring::take_fs_specific_options`]                                                     |
 //! | [`mnt_match_options`][341]             | [`core::optstring::matches_any_option`]                                                           |
 //!
 //! [330]: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/libmount-docs/libmount-Options-string.html#mnt-optstr-append-option

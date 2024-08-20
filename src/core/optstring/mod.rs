@@ -1062,6 +1062,93 @@ where
     get_options(options_list, option_map, skip)
 }
 
+/// Returns all file system specific options in the list of mount options.
+///
+/// For more information about file system specific mount options see the [`mount` command's
+/// manpage](https://www.man7.org/linux/man-pages/man8/mount.8.html#FILESYSTEM-SPECIFIC_MOUNT_OPTIONS).
+///
+/// # Examples
+///
+/// ```
+/// # use pretty_assertions::assert_eq;
+/// use rsmount::core::optstring::OptionFilter;
+/// use rsmount::core::optstring;
+///
+/// fn main() -> rsmount::Result<()> {
+///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
+///
+///     let actual = optstring::take_fs_specific_options(options_list);
+///     let options = "protect,verbose".to_owned();
+///     let expected = Some(options);
+///     assert_eq!(actual, expected);
+///
+///     Ok(())
+/// }
+/// ```
+pub fn take_fs_specific_options(options_list: &str) -> Option<String> {
+    log::debug!(
+        "optstring::take_fs_specific_options getting file system specific options from list: {:?}",
+        options_list
+    );
+
+    let options_list_cstr = ffi_utils::as_ref_str_to_c_string(options_list).ok()?;
+    let mut options_ptr = MaybeUninit::<*mut libc::c_char>::zeroed();
+
+    let result = unsafe {
+        libmount::mnt_split_optstr(
+            options_list_cstr.as_ptr(),
+            std::ptr::null_mut(),
+            std::ptr::null_mut(),
+            options_ptr.as_mut_ptr(),
+            0,
+            0,
+        )
+    };
+
+    match result {
+        0 => {
+            match unsafe { options_ptr.assume_init() } {
+                ptr if ptr.is_null() => {
+                    log::debug!(
+                        "optstring::take_fs_specific_options found no file system specific options"
+                    );
+
+                    None
+                }
+                ptr => {
+                    let options = ffi_utils::c_char_array_to_string(ptr);
+
+                    // option_ptr points to memory allocated by `mnt_optstr_split_optstr`, we free it here
+                    // to avoid a leak.
+                    unsafe {
+                        libc::free(ptr as *mut _);
+                    }
+
+                    log::debug!(
+                        "optstring::take_fs_specific_options extracted options {:?}",
+                        options
+                    );
+
+                    Some(options)
+                }
+            }
+        }
+        code => {
+            let err_msg = format!(
+                "failed to extract file system specific options from list {:?}",
+                options_list
+            );
+            log::debug!(
+                "optstring::get_options {}. mnt_split_optstr returned error code: {:?}",
+                err_msg,
+                code
+            );
+
+            None
+        }
+    }
+}
+
 #[cfg(test)]
 #[allow(unused_imports)]
 mod tests {
@@ -1572,6 +1659,64 @@ mod tests {
 
         let actual = take_userspace_options(options_list, skip);
         let options = "_netdev".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_specific_options_can_not_extract_options_from_an_empty_list() {
+        let options_list = "";
+
+        let actual = take_fs_specific_options(options_list);
+        let expected = None;
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_specific_options_can_not_extract_options_from_a_list_of_non_matching_options() {
+        let options_list = "noowner,sync,noauto,rw,lazytime";
+
+        let actual = take_fs_specific_options(options_list);
+        let expected = None;
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_specific_options_can_extract_options_from_list_with_one_matching_option() {
+        let options_list = "protect";
+
+        let actual = take_fs_specific_options(options_list);
+        let options = "protect".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+
+        let options_list = "noowner,protect,sync,noauto,rw,lazytime";
+
+        let actual = take_fs_specific_options(options_list);
+        let options = "protect".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn take_fs_specific_options_can_extract_options_from_list_with_multiple_matching_options() {
+        let options_list = "protect,verbose";
+
+        let actual = take_fs_specific_options(options_list);
+        let options = "protect,verbose".to_owned();
+        let expected = Some(options);
+
+        assert_eq!(actual, expected);
+
+        let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
+
+        let actual = take_fs_specific_options(options_list);
+        let options = "protect,verbose".to_owned();
         let expected = Some(options);
 
         assert_eq!(actual, expected);
