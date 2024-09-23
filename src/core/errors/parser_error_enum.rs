@@ -32,6 +32,10 @@ pub enum ParserError {
     #[error("{0}")]
     NFS(String),
 
+    /// Error while parsing a string into a [`Pseudo`](crate::core::device::Pseudo).
+    #[error("{0}")]
+    Pseudo(String),
+
     /// Error while parsing a string into a [`SmbFs`](crate::core::device::SmbFs).
     #[error("{0}")]
     SmbFs(String),
