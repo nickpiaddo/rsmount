@@ -11,6 +11,7 @@
 pub use block_device_struct::BlockDevice;
 pub use id_struct::Id;
 pub use label_struct::Label;
+pub use mount_point_struct::MountPoint;
 pub use nfs_struct::NFS;
 pub use smb_fs_struct::SmbFs;
 pub use ssh_fs_struct::SshFs;
@@ -21,6 +22,7 @@ pub use uuid_struct::Uuid;
 mod block_device_struct;
 mod id_struct;
 mod label_struct;
+mod mount_point_struct;
 mod nfs_struct;
 mod smb_fs_struct;
 mod ssh_fs_struct;
