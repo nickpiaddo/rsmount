@@ -44,6 +44,7 @@ use crate::mount::MountBuilderError;
 use crate::mount::MountError;
 use crate::mount::MountIterError;
 use crate::mount::ReMountIterError;
+use crate::mount::UnmountError;
 
 /// A specialized [`Result`](std::result::Result) type for `rsmount`.
 ///
@@ -157,6 +158,9 @@ pub enum RsMountError {
 
     #[error(transparent)]
     TableMonitor(#[from] TableMonitorError),
+
+    #[error(transparent)]
+    Unmount(#[from] UnmountError),
 
     #[error(transparent)]
     UTab(#[from] UTabError),
