@@ -698,6 +698,7 @@ pub use remount_iter_error_enum::ReMountIterError;
 pub use remount_iter_struct::ReMountIter;
 pub use step_result_enum::StepResult;
 pub use umount_namespace_struct::UMountNamespace;
+pub use unmount_builder_error_enum::UnmountBuilderError;
 pub use unmount_error_enum::UnmountError;
 pub use unmount_struct::Unmount;
 
@@ -719,5 +720,6 @@ mod remount_iter_error_enum;
 mod remount_iter_struct;
 mod step_result_enum;
 mod umount_namespace_struct;
+mod unmount_builder_error_enum;
 mod unmount_error_enum;
 mod unmount_struct;
