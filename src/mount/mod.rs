@@ -32,8 +32,9 @@
 //!     4. [Override the mount options, and mount a device in
 //!        `/etc/fstab`](#override-the-mount-options-amd-mount-a-device-in-etcfstab)
 //!     5. [Mount all devices with a specific file system](#mount-all-devices-with-a-specific-file-system)
-//!     6. [Create a bind mount](#create-a-bind-mount)
-//!     7. [Mark a mount point as `shared`](#mark-a-mount-point-as-shared)
+//!     6. [Unmount a device](#unmount-a-device)
+//!     7. [Create a bind mount](#create-a-bind-mount)
+//!     8. [Mark a mount point as `shared`](#mark-a-mount-point-as-shared)
 //! 3. [Mount namespaces](#mount-namespaces)
 //!     1. [Shared subtrees](#shared-subtrees)
 //!     2. [Peer groups](#peer-groups)
@@ -297,6 +298,32 @@
 //!     // Skipped: "/media/cdrom"
 //!     // Skipped: "/media/usb"
 //!     // Skipped: "/tmp"
+//!
+//!     Ok(())
+//! }
+//! ```
+//!
+//! ### Unmount a device
+//!
+//! This example shows how to unmount the network device mounted [above](#mount-a-network-device).
+//!
+//! ```
+//! use rsmount::mount::Unmount;
+//!
+//! fn main() -> rsmount::Result<()> {
+//!     // Configure the `Unmount` struct to umount a device.
+//!     let mut unmount = Unmount::builder()
+//!         // Location of the mount point in the file tree.
+//!         .target("/net/share")
+//!         // Force an unmount (in case of an unreachable NFS system).
+//!         .force_unmount()
+//!         // Skips all mount source preparation, mount option analysis, and the actual mounting
+//!         // process.
+//!         .dry_run()
+//!         .build()?;
+//!
+//!     // Unmount the shared NFS device at knuth.cwi.nl:/nfs/share
+//!     unmount.unmount_device()?;
 //!
 //!     Ok(())
 //! }
@@ -699,6 +726,8 @@ pub use remount_iter_struct::ReMountIter;
 pub use step_result_enum::StepResult;
 pub use umount_namespace_struct::UMountNamespace;
 pub use unmount_builder_error_enum::UnmountBuilderError;
+use unmount_builder_struct::UmntBuilder;
+pub use unmount_builder_struct::UnmountBuilder;
 pub use unmount_error_enum::UnmountError;
 pub use unmount_struct::Unmount;
 
@@ -721,5 +750,6 @@ mod remount_iter_struct;
 mod step_result_enum;
 mod umount_namespace_struct;
 mod unmount_builder_error_enum;
+mod unmount_builder_struct;
 mod unmount_error_enum;
 mod unmount_struct;

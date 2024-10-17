@@ -9,10 +9,14 @@ use thiserror::Error;
 // From this library
 use crate::mount::UnmountError;
 
-/// `UnmountBuilder` runtime errors.
+/// [`UnmountBuilder`](crate::mount::UnmountBuilder) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum UnmountBuilderError {
     #[error(transparent)]
     Unmount(#[from] UnmountError),
+
+    /// Error if required functions were NOT called.
+    #[error("{0}")]
+    Required(String),
 }
