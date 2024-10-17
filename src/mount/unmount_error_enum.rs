@@ -8,7 +8,7 @@ use thiserror::Error;
 
 // From this library
 
-/// `Unmount` runtime errors.
+/// [`Unmount`](crate::mount::Unmount) runtime errors.
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum UnmountError {}
