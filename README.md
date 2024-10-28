@@ -21,7 +21,6 @@ The `rsmount` library is a safe Rust wrapper around [`util-linux/libmount`][3].
   at boot.
 - etc.
 
-
 ## Usage
 
 This crate requires `libmount` version `2.39.2` or later.
@@ -44,6 +43,37 @@ install the required dependencies on your system.
 
 [Documentation (docs.rs)][2]
 
+## Example
+
+In this example we mount a disk on `/mnt/backup`.
+
+```rust
+use rsmount::core::device::BlockDevice;
+use rsmount::core::flags::MountFlag;
+use rsmount::core::fs::FileSystem;
+use rsmount::mount::Mount;
+
+fn main() -> rsmount::Result<()> {
+    // Configure the `Mount` struct.
+    let block_device: BlockDevice = "/dev/vda".parse()?;
+    let mut mount = Mount::builder()
+        // Device to mount.
+        .source(block_device.into())
+        // Location of the mount point in the file tree.
+        .target("/mnt/backup")
+        // Do not allow writing to the file system while it is mounted.
+        .mount_flags(vec![MountFlag::ReadOnly])
+        // Gives a hint about the file system used by the device (optional).
+        .file_system(FileSystem::Ext4)
+        .build()?;
+
+    // Mount `/dev/vda` at `/mnt/backup`.
+    mount.mount_device()?;
+
+    Ok(())
+}
+
+```
 
 ## Install required dependencies
 
