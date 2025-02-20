@@ -6,7 +6,7 @@ all:
 	cargo build
 
 # Build figures and diagrams
-fig-build: $(FIGURES)
+build-figs: $(FIGURES)
 	./scripts/build-diagrams --output $(SVG_OUTPUT_DIR) $?
 
 # Build the library documentation
@@ -14,15 +14,23 @@ doc:
 	cargo doc --no-deps -p rsmount-sys -p rsmount
 
 # Rebuild documentation and diagrams
-doc-rebuild: fig-build doc
+doc-rebuild: build-figs doc
+
+# Publish crate to crates.io
+do-publish: build-figs
+    cargo publish
+
+# Dry run cargo publish
+publish: test-all doc-rebuild
+    cargo publish --dry-run
 
 # Run unit/integration tests
 test:
 	cargo nextest run
 
 # Run doc tests
-doctest:
+test-doc:
 	cargo test --doc
 
 # Run all tests
-fulltest: test doctest
+test-all: test test-doc

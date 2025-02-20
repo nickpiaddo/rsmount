@@ -38,6 +38,9 @@
             lynx
             w3m
 
+            # Command runner
+            just
+
             # Rust
             cargo
             cargo-audit
