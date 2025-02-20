@@ -258,7 +258,7 @@ that copy with the one provided."
     //         )
     //     )]
     //     override_table_entry: Option<MountTableEntry>,
-    #[builder(default, setter(strip_option, doc = "Sets the device to mount."))]
+    #[builder(default, setter(transform = |source: impl Into<MountSource>| Some(Into::<MountSource>::into(source)), doc = "Sets the device to mount."))]
     source: Option<MountSource>,
 
     #[builder(

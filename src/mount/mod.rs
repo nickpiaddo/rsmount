@@ -89,7 +89,7 @@
 //!     let block_device: BlockDevice = "/dev/vda".parse()?;
 //!     let mut mount = Mount::builder()
 //!         // Device to mount.
-//!         .source(block_device.into())
+//!         .source(block_device)
 //!         // Location of the mount point in the file tree.
 //!         .target("/mnt")
 //!         // Do not allow writing to the file system while it is mounted.
@@ -123,7 +123,7 @@
 //!     let net_device: NFS = "knuth.cwi.nl:/nfs/share".parse()?;
 //!     let mut mount = Mount::builder()
 //!         // Device to mount.
-//!         .source(net_device.into())
+//!         .source(net_device)
 //!         // Location of the mount point in the file tree.
 //!         .target("/net/share")
 //!         // Do not allow writing to the file system while it is mounted.
@@ -212,7 +212,7 @@
 //!     let block_device: BlockDevice = "/dev/usbdisk".parse()?;
 //!     let mut mount = Mount::builder()
 //!         // Device to mount.
-//!         .source(block_device.into())
+//!         .source(block_device)
 //!         // Comma-separated list of file system independent mount options.
 //!         // `ro`: mount the filesystem as read-only.
 //!         // `exec`: permit the execution of binaries and other executable files on the mounted
@@ -349,7 +349,7 @@
 //!     // Configure the `Mount` struct to create a bind mount of the boot device.
 //!     let mount_point: MountPoint = "/boot".parse()?;
 //!     let mut mount = Mount::builder()
-//!         .source(mount_point.into())
+//!         .source(mount_point)
 //!         // Location of the mount point in the file tree.
 //!         .target("/bind/mnt/boot")
 //!         // Create a bind mount.

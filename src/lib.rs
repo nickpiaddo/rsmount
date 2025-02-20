@@ -55,7 +55,7 @@
 //!     let block_device: BlockDevice = "/dev/vda".parse()?;
 //!     let mut mount = Mount::builder()
 //!         // Device to mount.
-//!         .source(block_device.into())
+//!         .source(block_device)
 //!         // Location of the mount point in the file tree.
 //!         .target("/mnt")
 //!         // Do not allow writing to the file system while it is mounted.

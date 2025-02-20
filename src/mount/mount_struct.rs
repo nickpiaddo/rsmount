@@ -2362,7 +2362,7 @@ mod tests {
             let source = BlockDevice::from(image_file.path());
             let tmp_dir = Builder::new().prefix("rsmount-test-").tempdir().unwrap();
             let mut mount = Mount::builder()
-                .source(source.into())
+                .source(source)
                 .target(tmp_dir.path())
                 .build()?;
 
