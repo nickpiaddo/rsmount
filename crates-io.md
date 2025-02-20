@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rsmount = "0.1.0"
+rsmount = "0.2.0"
 ```
 
 Then install the system packages below before running `cargo build`:
