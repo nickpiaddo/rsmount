@@ -106,7 +106,11 @@ macro_rules! table_entry_set_source {
             //---- BEGIN setters
 
             /// Sets the source of the device to mount.
-            pub fn set_source(&mut self, source: Source) -> Result<(), $entry_error_type> {
+            pub fn set_source<S>(&mut self, source: S) -> Result<(), $entry_error_type>
+            where
+                S: Into<Source>,
+            {
+                let source: Source = source.into();
                 log::debug!(
                     concat!(
                         stringify!($entry_type),
