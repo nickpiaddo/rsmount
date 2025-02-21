@@ -38,7 +38,7 @@ impl FsTabEntry {
     ///     // UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f / ext4 rw,relatime 0 1
     ///     let uuid: Tag = "UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f".parse()?;
     ///     let entry = FsTabEntry::builder()
-    ///         .source(uuid.into())
+    ///         .source(uuid)
     ///         .target("/")
     ///         .file_system_type(FileSystem::Ext4)
     ///         // Comma-separated list of mount options.
@@ -293,7 +293,7 @@ mod tests {
         let uuid: Tag = "UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f".parse()?;
         let entry = FsTabEntry::builder()
             .comment_line("Root mount")
-            .source(uuid.into())
+            .source(uuid)
             .target("/")
             .file_system_type(FileSystem::Ext4)
             // Comma-separated list of mount options.

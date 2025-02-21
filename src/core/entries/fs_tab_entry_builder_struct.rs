@@ -27,7 +27,7 @@ pub(crate) struct FsTbEntBuilder {
 parameter `line` if it is not present."))]
     comment_line: Option<String>,
 
-    #[builder(setter(doc = "Sets the device to mount."))]
+    #[builder(setter(transform = |source: impl Into<Source>| Into::<Source>::into(source), doc = "Sets the device to mount."))]
     source: Source,
 
     #[builder(

@@ -89,7 +89,7 @@
 //!     fstab.append_to_intro_comments("# Example from scratch\n")?;
 //!
 //!     // Mount the device with the following UUID as the root file system.
-//!     let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f").map(Source::from)?;
+//!     let uuid = Tag::from_str("UUID=dd476616-1ce4-415e-9dbd-8c2fa8f42f0f")?;
 //!     let entry1 = FsTabEntry::builder()
 //!         .source(uuid)
 //!         .target("/")
@@ -104,7 +104,7 @@
 //!         .build()?;
 //!
 //!     // Mount the removable device `/dev/usbdisk` on demand.
-//!     let block_device = BlockDevice::from_str("/dev/usbdisk").map(Source::from)?;
+//!     let block_device = BlockDevice::from_str("/dev/usbdisk")?;
 //!     let entry2 = FsTabEntry::builder()
 //!         .source(block_device)
 //!         .target("/media/usb")
@@ -116,7 +116,7 @@
 //!
 //!     // Mount a pseudo-filesystem (tmpfs) at `/tmp`
 //!     let entry3 = FsTabEntry::builder()
-//!         .source(Pseudo::None.into())
+//!         .source(Pseudo::None)
 //!         .target("/tmp")
 //!         .file_system_type(FileSystem::Tmpfs)
 //!         .mount_options("nosuid,nodev")
