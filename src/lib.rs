@@ -1,33 +1,6 @@
 // Copyright (c) 2023 Nick Piaddo
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! # Table of Contents
-//! 1. [Description](#description)
-//! 2. [Examples](#examples)
-//! 3. [API structure](#api-structure)
-//! 4. [From `libmount` to `rsmount`](#from-libmount-to-rsmount)
-//!     1. [Higher-level API](#higher-level-api)
-//!         1. [Library high-level contaxt](#library-high-level-context)
-//!         2. [Mount context](#mount-context)
-//!         3. [Umount context](#umount-context)
-//!     2. [Files parsing](#files-parsing)
-//!         1. [Table of filesystems](#table-of-filesystems)
-//!         2. [Filesystem](#filesystem)
-//!     3. [Tables management](#tables-management)
-//!         1. [Locking](#locking)
-//!         2. [Tables update](#tables-update)
-//!         3. [Monitor](#monitor)
-//!         4. [Compare changes in mount tables](#compare-changes-in-mount-tables)
-//!     4. [Mount options](#mount-options)
-//!         1. [Options string](#options-string)
-//!         2. [Option maps](#option-maps)
-//!     5. [Misc](#misc)
-//!         1. [Library initialization](#library-initialization)
-//!         2. [Cache](#cache)
-//!         3. [Iterator](#iterator)
-//!         4. [Utils](#utils)
-//!         5. [Version functions](#version-functions)
-//!
 //! ## Description
 //!
 //! The `rsmount` library is a safe Rust wrapper around `util-linux/libmount`.

@@ -3,15 +3,6 @@
 
 //! Module for working with file system description files.
 //!
-//! # Table of Contents
-//! 1. [Description](#description)
-//! 2. [Examples](#examples)
-//!     1. [Import `/etc/fstab` to RAM](#import-etcfstab-to-ram)
-//!     2. [Manually create an `fstab` file](#manually-create-an-fstab-file)
-//!     3. [Print `/proc/self/mountinfo` to the terminal](#print-procselfmountinfo-to-the-terminal)
-//!     4. [Compare `/etc/fstab` to another `fstab` file](#compare-etcfstab-to-another-fstab-file)
-//!
-//!
 //! ## Description
 //!
 //! On Linux, descriptive information about the devices the system can mount, or devices already

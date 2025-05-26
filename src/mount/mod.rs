@@ -3,7 +3,6 @@
 
 //! High-level API to mount/unmount devices.
 //!
-
 #![cfg_attr(doc,
     cfg_attr(all(),
         doc = ::embed_doc_image::embed_image!( "fig-01", "assets/diagrams/svg/fig01-initial-namespace.svg"),
@@ -23,30 +22,6 @@
         doc = ::embed_doc_image::embed_image!("fig-15", "assets/diagrams/svg/fig15-ns2-usbdisk-ns2-ns3-slave-shared.svg"),
         doc = ::embed_doc_image::embed_image!("fig-16", "assets/diagrams/svg/fig16-ns1-shared-ns2-private-mnt.svg"),
         ))]
-//! # Table of Contents
-//! 1. [Description](#description)
-//! 2. [Examples](#examples)
-//!     1. [Mount a local device](#mount-a-local-device)
-//!     2. [Mount a network device](#mount-a-network-device)
-//!     3. [Mount a device in `/etc/fstab`](#mount-a-device-in-etcfstab)
-//!     4. [Override the mount options, and mount a device in
-//!        `/etc/fstab`](#override-the-mount-options-amd-mount-a-device-in-etcfstab)
-//!     5. [Mount all devices with a specific file system](#mount-all-devices-with-a-specific-file-system)
-//!     6. [Unmount a device](#unmount-a-device)
-//!     7. [Create a bind mount](#create-a-bind-mount)
-//!     8. [Mark a mount point as `shared`](#mark-a-mount-point-as-shared)
-//! 3. [Mount namespaces](#mount-namespaces)
-//!     1. [Shared subtrees](#shared-subtrees)
-//!     2. [Peer groups](#peer-groups)
-//!     3. [Effects of propagation type transitions on peer
-//!        groups](#effects-of-propagation-type-transitions-on-peer-groups)
-//!         1. [Effects of a `shared` mount point](#effects-of-a-shared-mount-point)
-//!         2. [Effects of a `slave` mount point](#effects-of-a-slave-mount-point)
-//!         3. [Effects of a `slave-and-shared` mount
-//!            point](#effects-of-a-slave-and-shared-mount-point)
-//!         4. [Effects of a `private` mount point](#effects-of-a-private-mount-point)
-//!         5. [Effects of a `unbindable` mount point](#effects-of-a-unbindable-mount-point)
-//!
 //! ## Description
 //!
 //! On Unix systems, files are organised around a file tree with `/` as its root. Files may be
