@@ -303,8 +303,8 @@ pub fn path_to_swaps() -> Option<PathBuf> {
 /// # Examples
 ///
 /// ```
-/// use rsmount::core::fs::FileSystem;
-/// use rsmount::core::utils;
+/// use rsmount::fs::FileSystem;
+/// use rsmount::utils;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///
@@ -342,8 +342,8 @@ pub fn is_network_fs(fs_type: FileSystem) -> bool {
 /// # Examples
 ///
 /// ```
-/// use rsmount::core::fs::FileSystem;
-/// use rsmount::core::utils;
+/// use rsmount::fs::FileSystem;
+/// use rsmount::utils;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///

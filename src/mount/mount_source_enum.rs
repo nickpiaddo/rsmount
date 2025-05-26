@@ -42,13 +42,13 @@ use crate::core::errors::ParserError;
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::device::BlockDevice;
-/// use rsmount::core::device::MountPoint;
-/// use rsmount::core::device::NFS;
-/// use rsmount::core::device::Pseudo;
-/// use rsmount::core::device::SmbFs;
-/// use rsmount::core::device::SshFs;
-/// use rsmount::core::device::Tag;
+/// use rsmount::device::BlockDevice;
+/// use rsmount::device::MountPoint;
+/// use rsmount::device::NFS;
+/// use rsmount::device::Pseudo;
+/// use rsmount::device::SmbFs;
+/// use rsmount::device::SshFs;
+/// use rsmount::device::Tag;
 /// use rsmount::mount::MountSource;
 ///
 /// fn main() -> rsmount::Result<()> {

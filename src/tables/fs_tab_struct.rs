@@ -133,12 +133,12 @@ use crate::ffi_utils;
 /// use tempfile::tempfile;
 /// use std::fs::File;
 /// use rsmount::tables::FsTab;
-/// use rsmount::core::entries::FsTabEntry;
-/// use rsmount::core::errors::FsTabError;
-/// use rsmount::core::device::BlockDevice;
-/// use rsmount::core::device::Pseudo;
-/// use rsmount::core::device::Tag;
-/// use rsmount::core::fs::FileSystem;
+/// use rsmount::entries::FsTabEntry;
+/// use rsmount::errors::FsTabError;
+/// use rsmount::device::BlockDevice;
+/// use rsmount::device::Pseudo;
+/// use rsmount::device::Tag;
+/// use rsmount::fs::FileSystem;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let mut fstab = FsTab::new()?;
@@ -941,11 +941,11 @@ impl FsTab {
     /// # use pretty_assertions::assert_eq;
     /// use std::path::PathBuf;
     /// use std::str::FromStr;
-    /// use rsmount::core::device::Source;
-    /// use rsmount::core::device::Tag;
-    /// use rsmount::core::entries::FsTabEntry;
+    /// use rsmount::device::Source;
+    /// use rsmount::device::Tag;
+    /// use rsmount::entries::FsTabEntry;
     /// use rsmount::tables::FsTab;
-    /// use rsmount::core::fs::FileSystem;
+    /// use rsmount::fs::FileSystem;
     ///
     /// fn main() -> rsmount::Result<()> {
     ///     let mut fstab = FsTab::new()?;
@@ -1772,7 +1772,7 @@ impl FsTab {
     /// ```
     /// # use pretty_assertions::assert_eq;
     /// use rsmount::tables::FsTab;
-    /// use rsmount::core::entries::FsTabEntry;
+    /// use rsmount::entries::FsTabEntry;
     ///
     /// fn main() -> rsmount::Result<()> {
     ///     let mut fstab = FsTab::new()?;
@@ -2147,12 +2147,12 @@ impl FsTab {
     /// # use pretty_assertions::assert_eq;
     /// use std::path::Path;
     /// use rsmount::tables::FsTab;
-    /// use rsmount::core::entries::FsTabEntry;
-    /// use rsmount::core::device::BlockDevice;
-    /// use rsmount::core::device::Pseudo;
-    /// use rsmount::core::device::Source;
-    /// use rsmount::core::device::Tag;
-    /// use rsmount::core::fs::FileSystem;
+    /// use rsmount::entries::FsTabEntry;
+    /// use rsmount::device::BlockDevice;
+    /// use rsmount::device::Pseudo;
+    /// use rsmount::device::Source;
+    /// use rsmount::device::Tag;
+    /// use rsmount::fs::FileSystem;
     ///
     /// fn main() -> rsmount::Result<()> {
     ///     let mut fstab = FsTab::new()?;

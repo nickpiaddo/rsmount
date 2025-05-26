@@ -27,7 +27,7 @@ mod option_iter_struct;
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "";
@@ -124,7 +124,7 @@ pub fn prepend_option(options_list: &str, option_name: &str, option_value: &str)
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "";
@@ -221,7 +221,7 @@ pub fn append_option(options_list: &str, option_name: &str, option_value: &str) 
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "async,remount,async,ro=,async";
@@ -309,7 +309,7 @@ pub fn deduplicate_option(options_list: &str, option_name: &str) -> Option<Strin
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "async,remount,async,ro=,async";
@@ -405,7 +405,7 @@ pub fn remove_option(options_list: &str, option_name: &str) -> Option<String> {
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list =
@@ -566,7 +566,7 @@ fn set_option(
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     // Set an option's value.
@@ -623,7 +623,7 @@ pub fn set_option_value(
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "rbind,ro=recursive";
@@ -725,8 +725,8 @@ fn flags_to_userspace_mount_flags(flags: libc::c_ulong) -> Option<HashSet<Usersp
 /// ```
 /// # use pretty_assertions::assert_eq;
 /// use std::collections::HashSet;
-/// use rsmount::core::flags::MountFlag;
-/// use rsmount::core::optstring;
+/// use rsmount::flags::MountFlag;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "noauto,noatime,bind";
@@ -767,8 +767,8 @@ pub fn find_mount_flags(options_list: &str) -> Option<HashSet<MountFlag>> {
 /// ```
 /// # use pretty_assertions::assert_eq;
 /// use std::collections::HashSet;
-/// use rsmount::core::flags::UserspaceMountFlag;
-/// use rsmount::core::optstring;
+/// use rsmount::flags::UserspaceMountFlag;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "noauto,noatime,bind";
@@ -836,7 +836,7 @@ macro_rules! unwrap_or_return {
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "atime,nodiratime,noatime,bind,discard";
@@ -888,7 +888,7 @@ pub fn matches_any_option(options_list: &str, pattern: &str) -> bool {
 /// ```
 /// # use pretty_assertions::assert_eq;
 /// use rsmount::tables::MountOption;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "noatime,ro=recursive";
@@ -988,8 +988,8 @@ fn get_options(
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring::OptionFilter;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring::OptionFilter;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
@@ -1028,8 +1028,8 @@ where
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring::OptionFilter;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring::OptionFilter;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";
@@ -1071,8 +1071,8 @@ where
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::optstring::OptionFilter;
-/// use rsmount::core::optstring;
+/// use rsmount::optstring::OptionFilter;
+/// use rsmount::optstring;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///     let options_list = "noowner,protect,sync,noauto,verbose,rw,lazytime";

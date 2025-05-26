@@ -18,9 +18,9 @@
 //! Mount a device on a operating system's file tree.
 //!
 //! ```ignore
-//! use rsmount::core::device::BlockDevice;
-//! use rsmount::core::flags::MountFlag;
-//! use rsmount::core::fs::FileSystem;
+//! use rsmount::device::BlockDevice;
+//! use rsmount::flags::MountFlag;
+//! use rsmount::fs::FileSystem;
 //! use rsmount::mount::Mount;
 //!
 //! fn main() -> rsmount::Result<()> {
@@ -48,12 +48,12 @@
 //! ```
 //! use std::str::FromStr;
 //! use rsmount::tables::FsTab;
-//! use rsmount::core::entries::FsTabEntry;
-//! use rsmount::core::device::BlockDevice;
-//! use rsmount::core::device::Pseudo;
-//! use rsmount::core::device::Source;
-//! use rsmount::core::device::Tag;
-//! use rsmount::core::fs::FileSystem;
+//! use rsmount::entries::FsTabEntry;
+//! use rsmount::device::BlockDevice;
+//! use rsmount::device::Pseudo;
+//! use rsmount::device::Source;
+//! use rsmount::device::Tag;
+//! use rsmount::fs::FileSystem;
 //!
 //! fn main() -> rsmount::Result<()> {
 //!     let mut fstab = FsTab::new()?;
@@ -118,8 +118,7 @@
 //!
 //! ## API structure
 //!
-//! `rsmount`'s API is roughly divided into three main modules:
-//! - [`core`]: a module for items in the library's low-level API.
+//! `rsmount`'s API is roughly divided into two main modules:
 //! - [`tables`]: a module for manipulating file system descriptions tables (`/etc/fstab`,
 //!   `/proc/self/mountinfo`, `/proc/swaps`, `/run/mount/utab`).
 //! - [`mount`]: a module to mount devices on the system's file tree.
@@ -1018,7 +1017,18 @@ use prelude::*;
 
 pub use error::*;
 
-pub mod core;
+pub use core::cache;
+pub use core::device;
+pub use core::entries;
+pub use core::errors;
+pub use core::flags;
+pub use core::fs;
+pub use core::iter;
+pub use core::optstring;
+pub use core::utils;
+pub use core::version;
+
+mod core;
 pub mod debug;
 mod error;
 pub(crate) mod ffi_utils;

@@ -16,7 +16,7 @@ use crate::core::errors::ParserError;
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::device::NFS;
+/// use rsmount::device::NFS;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///    let host = "nfs.server.internal";

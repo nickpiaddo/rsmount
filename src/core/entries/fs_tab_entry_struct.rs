@@ -131,9 +131,9 @@ impl FsTabEntry {
     ///
     /// ```
     /// # use pretty_assertions::assert_eq;
-    /// use rsmount::core::entries::FsTabEntry;
-    /// use rsmount::core::device::Tag;
-    /// use rsmount::core::fs::FileSystem;
+    /// use rsmount::entries::FsTabEntry;
+    /// use rsmount::device::Tag;
+    /// use rsmount::fs::FileSystem;
     ///
     /// fn main() -> rsmount::Result<()> {
     ///     // Example entry in /etc/fstab

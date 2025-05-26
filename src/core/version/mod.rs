@@ -32,7 +32,7 @@ pub static VERSION_NUMBER_PATCH: u32 = libmount::LIBMOUNT_PATCH_VERSION as u32;
 /// # Examples
 ///
 /// ```
-/// use rsmount::core::version;
+/// use rsmount::version;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///

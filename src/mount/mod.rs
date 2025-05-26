@@ -54,9 +54,9 @@
 //! mount the `ext4` file system found on `/dev/vda` at the `/mnt` directory.
 //!
 //! ```
-//! use rsmount::core::device::BlockDevice;
-//! use rsmount::core::flags::MountFlag;
-//! use rsmount::core::fs::FileSystem;
+//! use rsmount::device::BlockDevice;
+//! use rsmount::flags::MountFlag;
+//! use rsmount::fs::FileSystem;
 //! use rsmount::mount::Mount;
 //!
 //! fn main() -> rsmount::Result<()> {
@@ -88,9 +88,9 @@
 //! You can also attach a network device.
 //!
 //! ```
-//! use rsmount::core::device::NFS;
-//! use rsmount::core::flags::MountFlag;
-//! use rsmount::core::fs::FileSystem;
+//! use rsmount::device::NFS;
+//! use rsmount::flags::MountFlag;
+//! use rsmount::fs::FileSystem;
 //! use rsmount::mount::Mount;
 //!
 //! fn main() -> rsmount::Result<()> {
@@ -178,7 +178,7 @@
 //! ```
 //!
 //! ```
-//! use rsmount::core::device::BlockDevice;
+//! use rsmount::device::BlockDevice;
 //! use rsmount::mount::Mount;
 //! use rsmount::mount::MountOptionsMode;
 //!
@@ -316,8 +316,8 @@
 //! a [`Mount`].
 //!
 //! ```
-//! use rsmount::core::device::MountPoint;
-//! use rsmount::core::flags::MountFlag;
+//! use rsmount::device::MountPoint;
+//! use rsmount::flags::MountFlag;
 //! use rsmount::mount::Mount;
 //!
 //! fn main() -> rsmount::Result<()> {
@@ -354,8 +354,8 @@
 //! namespaces](#mount-namespaces).
 //!
 //! ```ignore
-//! use rsmount::core::device::MountPoint;
-//! use rsmount::core::flags::MountFlag;
+//! use rsmount::device::MountPoint;
+//! use rsmount::flags::MountFlag;
 //! use rsmount::mount::Mount;
 //!
 //! fn main() -> rsmount::Result<()> {

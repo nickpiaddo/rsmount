@@ -130,7 +130,7 @@ impl UTabEntry {
     ///
     /// ```
     /// # use pretty_assertions::assert_eq;
-    /// use rsmount::core::entries::UTabEntry;
+    /// use rsmount::entries::UTabEntry;
     ///
     /// fn main() -> rsmount::Result<()> {
     ///     // Example entry in /etc/fstab

@@ -38,12 +38,12 @@
 //! # use tempfile::NamedTempFile;
 //! use std::str::FromStr;
 //! use rsmount::tables::FsTab;
-//! use rsmount::core::entries::FsTabEntry;
-//! use rsmount::core::device::BlockDevice;
-//! use rsmount::core::device::Pseudo;
-//! use rsmount::core::device::Source;
-//! use rsmount::core::device::Tag;
-//! use rsmount::core::fs::FileSystem;
+//! use rsmount::entries::FsTabEntry;
+//! use rsmount::device::BlockDevice;
+//! use rsmount::device::Pseudo;
+//! use rsmount::device::Source;
+//! use rsmount::device::Tag;
+//! use rsmount::fs::FileSystem;
 //!
 //! fn main() -> rsmount::Result<()> {
 //!     let mut fstab = FsTab::new()?;
@@ -133,12 +133,12 @@
 //! ```
 //! # use tempfile::NamedTempFile;
 //! # use std::str::FromStr;
-//! # use rsmount::core::entries::FsTabEntry;
-//! # use rsmount::core::device::BlockDevice;
-//! # use rsmount::core::device::Pseudo;
-//! # use rsmount::core::device::Source;
-//! # use rsmount::core::device::Tag;
-//! # use rsmount::core::fs::FileSystem;
+//! # use rsmount::entries::FsTabEntry;
+//! # use rsmount::device::BlockDevice;
+//! # use rsmount::device::Pseudo;
+//! # use rsmount::device::Source;
+//! # use rsmount::device::Tag;
+//! # use rsmount::fs::FileSystem;
 //! use rsmount::tables::FsTab;
 //! use rsmount::tables::FsTabDiff;
 //!

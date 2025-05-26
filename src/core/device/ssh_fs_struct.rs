@@ -16,7 +16,7 @@ use crate::core::errors::ParserError;
 ///
 /// ```
 /// # use pretty_assertions::assert_eq;
-/// use rsmount::core::device::SshFs;
+/// use rsmount::device::SshFs;
 ///
 /// fn main() -> rsmount::Result<()> {
 ///    let user_name = "tux";
