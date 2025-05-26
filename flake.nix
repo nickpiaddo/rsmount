@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs / NixOS version to use.
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
 
     # Set of functions to make flake nix packages simpler to set up without
     # external dependencies.
