@@ -94,10 +94,10 @@ impl AsRef<Tag> for Tag {
     }
 }
 
-impl FromStr for Tag {
-    type Err = ParserError;
+impl TryFrom<&str> for Tag {
+    type Error = ParserError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
         let err_msg = format!("invalid tag: {:?}. Missing `=` sign", s);
         let (tag_name, value) = s.split_once('=').ok_or(ParserError::Tag(err_msg))?;
 
@@ -109,5 +109,29 @@ impl FromStr for Tag {
             TagName::PartUuid => Uuid::from_str(value).map(Self::PartUuid),
             TagName::Id => Id::from_str(value).map(Self::Id),
         }
+    }
+}
+
+impl TryFrom<String> for Tag {
+    type Error = ParserError;
+
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for Tag {
+    type Error = ParserError;
+
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl FromStr for Tag {
+    type Err = ParserError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from(s)
     }
 }
