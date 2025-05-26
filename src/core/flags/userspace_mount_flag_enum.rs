@@ -61,7 +61,7 @@ pub enum UserspaceMountFlag {
     /// run time if they are signed by a certificate already in the secondary trusted keyring.
     RootHashSignature = libmount::MNT_MS_ROOT_HASH_SIG as u64,
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// dm-verity: Instruct the kernel to ignore, reboot or panic when corruption is detected. By
     /// default the I/O operation simply fails.
     VerityOnCorruption = libmount::MNT_MS_VERITY_ON_CORRUPTION as u64,

@@ -383,7 +383,7 @@ impl FsTab {
     /// **Note:**
     /// - this method ignores any dotfile in the directory.
     /// - by default, comment lines are ignored during importation. If you want them included, call
-    /// [`FsTab::import_with_comments`] **before** invoking this method.
+    ///   [`FsTab::import_with_comments`] **before** invoking this method.
     pub fn import_directory<T>(&mut self, dir_path: T) -> Result<(), FsTabError>
     where
         T: AsRef<Path>,
@@ -447,9 +447,9 @@ impl FsTab {
     ///
     /// **Note:**
     /// - by default, comment lines are ignored during import. If you want them included, call
-    /// [`FsTab::import_with_comments`] **before** invoking this method.
+    ///   [`FsTab::import_with_comments`] **before** invoking this method.
     /// - the parser ignores lines with syntax errors. It will report defective lines to the caller
-    /// through an error callback function.
+    ///   through an error callback function.
     ///
     // FIXME Defective lines are reported to the caller by the errcb() function (see mnt_table_set_parser_errcb()).
     // can not currently wrap the function `mnt_table_set_parser_errcb`

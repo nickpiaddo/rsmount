@@ -45,9 +45,9 @@ impl UTab {
     ///
     /// **Note:**
     /// - by default, comment lines are ignored during import. If you want them included, call
-    /// [`UTab::import_with_comments`] **before** invoking this method.
+    ///   [`UTab::import_with_comments`] **before** invoking this method.
     /// - the parser ignores lines with syntax errors. It will report defective lines to the caller
-    /// through an error callback function.
+    ///   through an error callback function.
     ///
     // FIXME Defective lines are reported to the caller by the errcb() function (see mnt_table_set_parser_errcb()).
     // can not currently wrap the function `mnt_table_set_parser_errcb`

@@ -468,10 +468,10 @@ impl<
         }
 
         if builder.ignore_autofs {
-            #[cfg(v2_39)]
+            #[cfg(mount = "v2_39")]
             mount.enable_ignore_autofs()?;
         } else {
-            #[cfg(v2_39)]
+            #[cfg(mount = "v2_39")]
             mount.disable_ignore_autofs()?;
         }
 
@@ -482,10 +482,10 @@ impl<
         }
 
         if builder.mount_only_once {
-            #[cfg(v2_39)]
+            #[cfg(mount = "v2_39")]
             mount.enable_mount_only_once()?;
         } else {
-            #[cfg(v2_39)]
+            #[cfg(mount = "v2_39")]
             mount.disable_mount_only_once()?;
         }
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 // From dependency library
-#[cfg(v2_39)]
+#[cfg(mount = "v2_39")]
 use rsblkid::probe::FsProperty;
 
 // From standard library
@@ -65,6 +65,7 @@ impl Cache {
     }
 
     #[doc(hidden)]
+    #[allow(dead_code)]
     /// Wraps a boxed raw `libmount::mnt_cache` pointer in a safe mutable reference.
     pub(crate) unsafe fn mut_from_boxed_ptr<'a>(
         ptr: Box<*mut libmount::libmnt_cache>,
@@ -251,7 +252,7 @@ impl Cache {
         }
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// Behind the scene, a `Cache` uses `rsblkid` to scan a device for tags. This method allows the
     /// caller to control which extra file system properties a `Cache` collects.
     ///

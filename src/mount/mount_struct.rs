@@ -403,7 +403,7 @@ impl Mount {
         Self::enable_force_mount_device_read_write(self.inner, false)
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     #[doc(hidden)]
     /// Enables/disables ignore `autofs` mount table entries.
     fn ignore_autofs(mount: *mut libmount::libmnt_context, ignore: bool) -> Result<(), MountError> {
@@ -434,7 +434,7 @@ impl Mount {
         }
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     #[doc(hidden)]
     /// Enables `Mount` to ignore `autofs` mount table entries.
     pub(crate) fn enable_ignore_autofs(&mut self) -> Result<(), MountError> {
@@ -445,7 +445,7 @@ impl Mount {
         Self::ignore_autofs(self.inner, true)
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     #[doc(hidden)]
     /// Disables `Mount` to ignore `autofs` mount table entries.
     pub(crate) fn disable_ignore_autofs(&mut self) -> Result<(), MountError> {
@@ -579,7 +579,7 @@ impl Mount {
         Self::enable_verbose(self.inner, false)
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     #[doc(hidden)]
     /// Enables/disables `Mount` functionality to check that a device is not already mounted before mounting it.
     fn enable_only_once(
@@ -610,7 +610,7 @@ impl Mount {
         }
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     #[doc(hidden)]
     /// Enables `Mount` to check that a device is not already mounted before mounting it.
     pub(crate) fn enable_mount_only_once(&mut self) -> Result<(), MountError> {
@@ -619,7 +619,7 @@ impl Mount {
         Self::enable_only_once(self.inner, true)
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     #[doc(hidden)]
     /// Disables `Mount` to check that a device is not already mounted before mounting it.
     pub(crate) fn disable_mount_only_once(&mut self) -> Result<(), MountError> {
@@ -2266,7 +2266,7 @@ impl Mount {
         state
     }
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// Returns `true` if this `Mount` is configured to check that a device is not already mounted
     /// before mounting it.
     pub fn mounts_only_once(&self) -> bool {

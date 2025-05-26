@@ -55,12 +55,12 @@
 //!
 //! The `mount` module provides the necessary tools:
 //! - to attach, or detach, file systems found on a device to a node of the file tree (usually
-//! called *mount point*),
+//!   called *mount point*),
 //! - to make the contents of a device accessible at different nodes of the file tree (called *bind
-//! mounts*),
+//!   mounts*),
 //! - to move the location of a mount point in the tree,
 //! - to create mirrors of a mount point that will propagate mount/unmount events within any of
-//! its mirror group.
+//!   its mirror group.
 //!
 //! The [`Mount`] struct is the main entry-point to perform the actions outlined above.
 //!
@@ -462,20 +462,20 @@
 //!
 //! Linux kernel developers defined four propagation types:
 //!  - **shared**: A mount point marked `shared` propagates mount and unmount events to other mount
-//!  points belonging to its *peer group* (peer groups are described in the [next
-//!  section](#peer-groups)). When a mount point is added (or removed) below a `shared` mount
-//!  point, changes will propagate to its peer group, so that a mount or unmount will also take
-//!  place below each of the peer mount points. Event propagation works both ways, from the mount
-//!  point to its peers and vice-versa.
+//!    points belonging to its *peer group* (peer groups are described in the [next
+//!    section](#peer-groups)). When a mount point is added (or removed) below a `shared` mount
+//!    point, changes will propagate to its peer group, so that a mount or unmount will also take
+//!    place below each of the peer mount points. Event propagation works both ways, from the mount
+//!    point to its peers and vice-versa.
 //! - **private**: A mount point marked `private` is the converse of a `shared` mount point. A
-//! `private` mount point does neither propagate events to, nor receive propagation events from
-//! peers.
+//!   `private` mount point does neither propagate events to, nor receive propagation events from
+//!   peers.
 //! - **slave**: A mount point marked `slave` sits midway between `shared` and `private`. A slave
-//! mount has as master, a shared peer group whose members propagate mount and unmount events to
-//! the slave. However, the slave mount does not propagate events to the master peer group.
+//!   mount has as master, a shared peer group whose members propagate mount and unmount events to
+//!   the slave. However, the slave mount does not propagate events to the master peer group.
 //! - **unbindable**: Like a `private` mount point, a mount point marked `unbindable` does neither
-//! propagate to, nor receive events from peers. In addition, an `unbindable` mount point can't be
-//! the source for a bind mount operation.
+//!   propagate to, nor receive events from peers. In addition, an `unbindable` mount point can't be
+//!   the source for a bind mount operation.
 //!
 //! By default, the kernel marks new mount points `private`, as long as their parent mount (if they
 //! have one) is not marked `shared`. In that case, they will also be marked `shared`. We can now
@@ -609,11 +609,11 @@
 //! Now, let's switch the propagation type of `/mnt` (mount ID 22) in `ns2` from `shared` to
 //! `slave-and-shared`. This change has two consequences:
 //! - from `ns1`'s point of view, the mount point in `ns2` (mount ID 22) is now `slave` to its
-//! `/mnt` mount point (mount ID 21). In peer group 1, the previous bi-directional channel between
-//! `/mnt` mount ID 21 and its copy `/mnt` mount ID 22 is now unidirectional, with `/mnt` mount ID 22
-//! set as `slave`.
+//!   `/mnt` mount point (mount ID 21). In peer group 1, the previous bi-directional channel between
+//!   `/mnt` mount ID 21 and its copy `/mnt` mount ID 22 is now unidirectional, with `/mnt` mount ID 22
+//!   set as `slave`.
 //! - from `ns2`'s point of view, `/mnt` mount ID 22 is a `shared` mount point, thus a new peer
-//! group is created, adding it as a member (peer group 2). See the diagram below.
+//!   group is created, adding it as a member (peer group 2). See the diagram below.
 //!
 //! ![][fig-12]
 //!
@@ -688,7 +688,7 @@
 //! Back to an initial state as in the previous section ([Effects of a `slave-and-shared` mount
 //! point](#effects-of-a-slave-and-shared-mount-point)):
 //! - two namespaces `ns1` and `ns2`, each with a `shared` mount point `/mnt` (respectively mount
-//! ID 21 and 22),
+//!   ID 21 and 22),
 //! - one peer group (peer group 1) with the `shared` mount points as members.
 //!
 //! ![][fig-11]

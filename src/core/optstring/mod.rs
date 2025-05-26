@@ -811,11 +811,11 @@ macro_rules! unwrap_or_return {
 ///
 /// **Note**:
 /// - a value prefixed with `no` will match if it is **NOT** present in the options list. For
-/// example, a `"noatime"` pattern means *return `true` if the `atime` option is absent from
-/// the list of mount options*.
+///   example, a `"noatime"` pattern means *return `true` if the `atime` option is absent from
+///   the list of mount options*.
 /// - for values prefixed with a `no`, adding a `+` at the beginning will push the function to
-/// search for an exact match. For example, a `"+noatime"` pattern means *return `true` if the
-/// `noatime` option is present in the list of mount options*.
+///   search for an exact match. For example, a `"+noatime"` pattern means *return `true` if the
+///   `noatime` option is present in the list of mount options*.
 ///
 /// | List of mount options          | Search pattern   | Result |
 /// | ----                           | ----             | ----   |

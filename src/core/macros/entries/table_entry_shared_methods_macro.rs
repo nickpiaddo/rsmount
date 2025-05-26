@@ -730,7 +730,7 @@ macro_rules! table_entry_shared_methods {
                 state
             }
 
-            #[cfg(v2_39)]
+            #[cfg(mount = "v2_39")]
             #[doc = concat!("Returns `true` if the file system of this `", stringify!($entry_type),"` is a regular file system (neither a network nor a pseudo file system).")]
             pub fn is_regular_fs(&self) -> bool {
                 let state = unsafe { libmount::mnt_fs_is_regularfs(self.inner) == 1 };
@@ -1150,11 +1150,11 @@ macro_rules! table_entry_shared_options_methods {
             ///
             /// **Note**:
             /// - a value prefixed with `no` will match if it is **NOT** present in the options list. For
-            /// example, a `"noatime"` pattern means *return `true` if the `atime` option is absent from
-            /// the list of mount options*.
+            ///   example, a `"noatime"` pattern means *return `true` if the `atime` option is absent from
+            ///   the list of mount options*.
             /// - for values prefixed with a `no`, adding a `+` at the beginning will push the function to
-            /// search for an exact match. For example, a `"+noatime"` pattern means *return `true` if the
-            /// `noatime` option is present in the list of mount options*.
+            ///   search for an exact match. For example, a `"+noatime"` pattern means *return `true` if the
+            ///   `noatime` option is present in the list of mount options*.
             ///
             /// # Examples
             ///

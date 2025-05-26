@@ -381,11 +381,11 @@ pub fn is_pseudo_fs(fs_type: FileSystem) -> bool {
 ///
 /// **Note**:
 /// - an item in the `pattern` prefixed with `no` will match if it is **NOT** the file system type
-/// provided. For example, a `"noext4"` pattern means *return `true` if the `ext4` file system type
-/// is not the parameter `fs_type`*.
+///   provided. For example, a `"noext4"` pattern means *return `true` if the `ext4` file system type
+///   is not the parameter `fs_type`*.
 /// - prefixing the `pattern` with a `no` will negate all the items in the list. For
-/// example, the pattern `"noapfs,ntfs,ext4"` is equivalent to `"noapfs,nontfs,noext4"` which means
-/// *return `true` if the file system type is neither of `apfs`, `ntfs` or `ext4`*.
+///   example, the pattern `"noapfs,ntfs,ext4"` is equivalent to `"noapfs,nontfs,noext4"` which means
+///   *return `true` if the file system type is neither of `apfs`, `ntfs` or `ext4`*.
 ///
 /// # Examples
 ///

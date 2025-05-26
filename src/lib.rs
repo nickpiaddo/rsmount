@@ -37,7 +37,7 @@
 //! - list/manage mount points in `/proc/<pid>/mountinfo`,
 //! - consult the system's swap usage from `/proc/swaps`,
 //! - compose/edit `/etc/fstab`, the file describing all devices an OS
-//! should mount at boot.
+//!   should mount at boot.
 //! - etc.
 //!
 //! ## Examples
@@ -148,7 +148,7 @@
 //! `rsmount`'s API is roughly divided into three main modules:
 //! - [`core`]: a module for items in the library's low-level API.
 //! - [`tables`]: a module for manipulating file system descriptions tables (`/etc/fstab`,
-//! `/proc/self/mountinfo`, `/proc/swaps`, `/run/mount/utab`).
+//!   `/proc/self/mountinfo`, `/proc/swaps`, `/run/mount/utab`).
 //! - [`mount`]: a module to mount devices on the system's file tree.
 //!
 //! Finally, look to the [`debug`] module if you need to consult debug messages during development.

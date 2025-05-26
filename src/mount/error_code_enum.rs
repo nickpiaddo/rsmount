@@ -19,15 +19,15 @@ pub enum ErrorCode {
     /// Failed to set the propagation type of mount and unmount events between namespaces.
     ApplyFlags = libmount::MNT_ERR_APPLYFLAGS,
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// File system mounted, but subsequent `X-mount.mode=` [chmod(2)](https://www.man7.org/linux/man-pages/man2/chmod.2.html) failed
     ChangeMode = libmount::MNT_ERR_CHMOD,
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// File system mounted, but subsequent `X-mount.owner=/X-mount.group=` [lchown(2)](https://www.man7.org/linux/man-pages/man2/lchown.2.html) failed
     ChangeOwner = libmount::MNT_ERR_CHOWN,
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// File system mounted, but subsequent `X-mount.idmap=` failed.
     IdMap = libmount::MNT_ERR_IDMAP,
 
@@ -55,7 +55,7 @@ pub enum ErrorCode {
     /// Required mount source was undefined.
     UndefinedMountSource = libmount::MNT_ERR_NOSOURCE,
 
-    #[cfg(v2_39)]
+    #[cfg(mount = "v2_39")]
     /// File system mounted, but `--onlyonce` specified
     OnlyOnce = libmount::MNT_ERR_ONLYONCE,
 }
