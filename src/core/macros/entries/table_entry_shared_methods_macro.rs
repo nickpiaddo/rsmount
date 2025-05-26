@@ -37,19 +37,6 @@ macro_rules! declare_tab_entry {
 #[allow(unused_macros)]
 #[macro_export]
 #[doc(hidden)]
-/// Methods shared by MountImfoEntry with other objects.
-macro_rules! mount_info_entry_shared_methods {
-    ($entry_type:ident, $entry_error_type:ident) => {
-        $crate::print_debug_to!($entry_type, $entry_error_type);
-        $crate::table_entry_shared_methods!($entry_type, $entry_error_type);
-        $crate::table_entry_shared_fs_methods!($entry_type, $entry_error_type);
-        $crate::table_entry_shared_target_methods!($entry_type, $entry_error_type);
-    };
-}
-
-#[allow(unused_macros)]
-#[macro_export]
-#[doc(hidden)]
 /// Methods shared by SwapsEntry with other objects.
 macro_rules! swaps_entry_shared_methods {
     ($entry_type:ident, $entry_error_type:ident) => {
