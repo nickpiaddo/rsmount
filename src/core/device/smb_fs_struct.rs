@@ -24,7 +24,7 @@ use crate::core::errors::ParserError;
 ///
 ///    // smb://samba.server.internal/shared
 ///    let address = format!("smb://{host}{share}");
-///    let smbfs: SmbFs = address.parse()?;
+///    let smbfs = SmbFs::try_from(address)?;
 ///
 ///    assert_eq!(smbfs.host(), host);
 ///    assert_eq!(smbfs.share(), share);
@@ -75,10 +75,10 @@ impl fmt::Display for SmbFs {
     }
 }
 
-impl FromStr for SmbFs {
-    type Err = ParserError;
+impl TryFrom<&str> for SmbFs {
+    type Error = ParserError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
         let err_missing_prefix = format!(
             "invalid Samba share address: {}. Missing prefix `smb://`",
             s
@@ -114,6 +114,33 @@ impl FromStr for SmbFs {
                 Ok(share)
             }
         }
+    }
+}
+
+impl TryFrom<String> for SmbFs {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for SmbFs {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl FromStr for SmbFs {
+    type Err = ParserError;
+
+    #[inline]
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from(s)
     }
 }
 
