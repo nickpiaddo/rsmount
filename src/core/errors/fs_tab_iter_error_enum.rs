@@ -2,10 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 // From dependency library
+use thiserror::Error;
 
 // From standard library
 
 // From this library
-use crate::gen_table_iter_error;
+use crate::core::errors::GenIteratorError;
 
-gen_table_iter_error!(FsTab);
+/// [`FsTabIter`](crate::core::iter::FsTabIter) runtime errors.
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum FsTabIterError {
+    #[error(transparent)]
+    GenIterator(#[from] GenIteratorError),
+}

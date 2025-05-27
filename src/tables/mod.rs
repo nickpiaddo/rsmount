@@ -84,9 +84,9 @@
 //!         .fsck_checking_order(0)
 //!         .build()?;
 //!
-//!     fstab.push(entry1)?;
-//!     fstab.push(entry2)?;
-//!     fstab.push(entry3)?;
+//!     fstab.push(entry1);
+//!     fstab.push(entry2);
+//!     fstab.push(entry3);
 //!
 //!     # let temp_file = NamedTempFile::new().unwrap();
 //!     # let file_path = temp_file.path();
@@ -181,9 +181,9 @@
 //! #       .fsck_checking_order(0)
 //! #       .build()?;
 //! #
-//! #   fstab.push(entry1)?;
-//! #   fstab.push(entry2)?;
-//! #   fstab.push(entry3)?;
+//! #   fstab.push(entry1);
+//! #   fstab.push(entry2);
+//! #   fstab.push(entry3);
 //! #
 //! #   let temp_file = NamedTempFile::new().unwrap();
 //! #   let file_path = temp_file.path();
