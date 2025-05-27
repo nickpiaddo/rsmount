@@ -7,4 +7,3 @@
 
 // From this library
 mod gen_entry_diff_macro;
-mod table_entry_shared_methods_macro;
