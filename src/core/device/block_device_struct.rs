@@ -49,14 +49,43 @@ impl fmt::Display for BlockDevice {
     }
 }
 
+impl TryFrom<&str> for BlockDevice {
+    type Error = ParserError;
+
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
+        if s.is_empty() {
+            let err_msg = format!("expected a device path instead of {s:?}");
+            Err(ParserError::BlockDevice(err_msg))
+        } else {
+            let path = Path::new(s);
+            let device = BlockDevice::new(path);
+
+            Ok(device)
+        }
+    }
+}
+
+impl TryFrom<String> for BlockDevice {
+    type Error = ParserError;
+
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for BlockDevice {
+    type Error = ParserError;
+
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
 impl FromStr for BlockDevice {
     type Err = ParserError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let path = Path::new(s);
-        let device = BlockDevice::new(path);
-
-        Ok(device)
+        Self::try_from(s)
     }
 }
 
