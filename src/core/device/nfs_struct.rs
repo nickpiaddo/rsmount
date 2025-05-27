@@ -24,7 +24,7 @@ use crate::core::errors::ParserError;
 ///
 ///    // nfs.server.internal:/shared
 ///    let address = format!("{host}:{share}");
-///    let nfs: NFS = address.parse()?;
+///    let nfs = NFS::try_from(address)?;
 ///
 ///    assert_eq!(nfs.host(), host);
 ///    assert_eq!(nfs.share(), share);
@@ -75,10 +75,10 @@ impl fmt::Display for NFS {
     }
 }
 
-impl FromStr for NFS {
-    type Err = ParserError;
+impl TryFrom<&str> for NFS {
+    type Error = ParserError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
         let err_missing_host_and_path = format!(
             "invalid NFS share address: {}. Missing host name and path of shared file/directory",
             s
@@ -110,6 +110,33 @@ impl FromStr for NFS {
                 Ok(share)
             }
         }
+    }
+}
+
+impl TryFrom<String> for NFS {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for NFS {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl FromStr for NFS {
+    type Err = ParserError;
+
+    #[inline]
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from(s)
     }
 }
 
