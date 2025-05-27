@@ -25,7 +25,7 @@ use crate::core::errors::ParserError;
 ///
 ///    // tux@sshfs.server.internal:/shared
 ///    let address = format!("{user_name}@{host}:{share}");
-///    let sshfs: SshFs = address.parse()?;
+///    let sshfs = SshFs::try_from(address)?;
 ///
 ///    assert_eq!(sshfs.user_name(), Some(user_name));
 ///    assert_eq!(sshfs.host(), host);
@@ -33,7 +33,7 @@ use crate::core::errors::ParserError;
 ///
 ///    // sshfs.server.internal:/shared
 ///    let address = format!("{host}:{share}");
-///    let sshfs: SshFs = address.parse()?;
+///    let sshfs = SshFs::try_from(address)?;
 ///
 ///    assert_eq!(sshfs.user_name(), None);
 ///    assert_eq!(sshfs.host(), host);
@@ -41,7 +41,7 @@ use crate::core::errors::ParserError;
 ///
 ///    // sshfs.server.internal:
 ///    let address = format!("{host}:");
-///    let sshfs: SshFs = address.parse()?;
+///    let sshfs = SshFs::try_from(address)?;
 ///
 ///    assert_eq!(sshfs.user_name(), None);
 ///    assert_eq!(sshfs.host(), host);
@@ -121,10 +121,10 @@ impl fmt::Display for SshFs {
     }
 }
 
-impl FromStr for SshFs {
-    type Err = ParserError;
+impl TryFrom<&str> for SshFs {
+    type Error = ParserError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
         let err_missing_column = format!("invalid SshFs address: {}. Missing ':' delimiter", s);
 
         // Split [user@]host:[dir]
@@ -149,6 +149,33 @@ impl FromStr for SshFs {
                 Some((user_name, host)) => Ok(SshFs::new(user_name, host, share)),
             },
         }
+    }
+}
+
+impl TryFrom<String> for SshFs {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for SshFs {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl FromStr for SshFs {
+    type Err = ParserError;
+
+    #[inline]
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from(s)
     }
 }
 
