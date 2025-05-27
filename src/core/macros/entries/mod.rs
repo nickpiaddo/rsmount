@@ -6,4 +6,3 @@
 // From standard library
 
 // From this library
-mod gen_entry_diff_macro;
