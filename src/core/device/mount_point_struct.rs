@@ -49,19 +49,51 @@ impl fmt::Display for MountPoint {
     }
 }
 
+impl TryFrom<&str> for MountPoint {
+    type Error = ParserError;
+
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
+        if s.is_empty() {
+            let err_msg = format!("expected a path instead of {s:?}");
+            Err(ParserError::MountPoint(err_msg))
+        } else {
+            let path = Path::new(s);
+            if path.is_dir() {
+                let device = MountPoint::new(path);
+
+                Ok(device)
+            } else {
+                let err_msg = format!("A mount point must be a directory. {:?} is not", s);
+                Err(ParserError::MountPoint(err_msg))
+            }
+        }
+    }
+}
+
+impl TryFrom<String> for MountPoint {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for MountPoint {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
 impl FromStr for MountPoint {
     type Err = ParserError;
 
+    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let path = Path::new(s);
-        if path.is_dir() {
-            let device = MountPoint::new(path);
-
-            Ok(device)
-        } else {
-            let err_msg = format!("A mount point must be a directory. {:?} is not", s);
-            Err(ParserError::MountPoint(err_msg))
-        }
+        Self::try_from(s)
     }
 }
 
