@@ -39,17 +39,44 @@ impl fmt::Display for Pseudo {
     }
 }
 
-impl FromStr for Pseudo {
-    type Err = ParserError;
+impl TryFrom<&str> for Pseudo {
+    type Error = ParserError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
         match s.trim() {
             "none" => Ok(Self::None),
             _ => {
-                let err_msg = format!("unsupported pseudofs source: {:?}", s);
+                let err_msg = format!("unsupported pseudofs source: {s:?}");
                 Err(ParserError::Pseudo(err_msg))
             }
         }
+    }
+}
+
+impl TryFrom<String> for Pseudo {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl TryFrom<&String> for Pseudo {
+    type Error = ParserError;
+
+    #[inline]
+    fn try_from(s: &String) -> Result<Self, Self::Error> {
+        Self::try_from(s.as_str())
+    }
+}
+
+impl FromStr for Pseudo {
+    type Err = ParserError;
+
+    #[inline]
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::try_from(s)
     }
 }
 
