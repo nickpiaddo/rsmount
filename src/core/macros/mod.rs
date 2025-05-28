@@ -7,4 +7,3 @@
 
 // From this library
 pub mod device;
-pub mod tables;
