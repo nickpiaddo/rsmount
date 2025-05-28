@@ -170,10 +170,10 @@ macro_rules! gen_mount_source {
                 }
             }
 
-            impl FromStr for $type_name {
-                type Err = ParserError;
+            impl TryFrom<&str> for $type_name {
+                type Error = ParserError;
 
-                fn from_str(s: &str) -> Result<Self, Self::Err> {
+                fn try_from(s: &str) -> Result<Self, Self::Error> {
                     // Parse string into matching type...
                     Tag::from_str(s)
                         .map(Self::from)
@@ -184,6 +184,32 @@ macro_rules! gen_mount_source {
                         .or_else(|_| MountPoint::from_str(s).map(Self::from))
                         // ...if all else fails, assume `s` is a block device.
                         .or_else(|_| BlockDevice::from_str(s).map(Self::from))
+                }
+            }
+
+            impl TryFrom<String> for $type_name {
+                type Error = ParserError;
+
+                #[inline]
+                fn try_from(s: String) -> Result<Self, Self::Error> {
+                    Self::try_from(s.as_str())
+                }
+            }
+
+            impl TryFrom<&String> for $type_name {
+                type Error = ParserError;
+
+                #[inline]
+                fn try_from(s: &String) -> Result<Self, Self::Error> {
+                    Self::try_from(s.as_str())
+                }
+            }
+
+            impl FromStr for $type_name {
+                type Err = ParserError;
+
+                fn from_str(s: &str) -> Result<Self, Self::Err> {
+                    Self::try_from(s)
                 }
             }
 
@@ -259,13 +285,10 @@ macro_rules! gen_mount_source {
                 use pretty_assertions::{assert_eq, assert_ne};
 
                 #[test]
-                fn [<$test_prefix _parses_an_empty_string_as_a_block_device>]() -> $crate::Result<()> {
+                #[should_panic(expected = "expected a device path instead of")]
+                fn [<$test_prefix _does_not_parse_an_empty_string_as_a_block_device>]() {
                     let source = "";
-                    let actual: $type_name = source.parse()?;
-
-                    assert!(actual.is_block_device());
-
-                    Ok(())
+                    let _ = $type_name::try_from(source).unwrap();
                 }
 
                 #[test]
