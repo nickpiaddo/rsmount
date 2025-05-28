@@ -2,10 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 // From dependency library
+use thiserror::Error;
 
 // From standard library
 
 // From this library
-use crate::gen_table_iter_error;
+use crate::core::errors::GenIteratorError;
 
-gen_table_iter_error!(Swaps);
+/// [`SwapsIter`](crate::core::iter::SwapsIter) runtime errors.
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum SwapsIterError {
+    #[error(transparent)]
+    GenIterator(#[from] GenIteratorError),
+}
