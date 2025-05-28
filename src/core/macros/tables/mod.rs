@@ -7,4 +7,3 @@
 
 // From this library
 mod gen_table_diff_macro;
-mod table_shared_methods_macro;
