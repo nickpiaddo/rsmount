@@ -426,7 +426,7 @@ dependencies = [
 
 [[package]]
 name = "rsmount"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "embed-doc-image",
  "enum-iterator",

@@ -1,7 +1,7 @@
 [package]
 name = "rsmount"
 description = "Safe Rust wrapper around the `util-linux/libmount` C library"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Nick Piaddo <nick.piaddo@protonmail.com>"]
 license = "Apache-2.0 OR MIT"
 rust-version = "1.82"
