@@ -6,4 +6,3 @@
 // From standard library
 
 // From this library
-pub mod device;
