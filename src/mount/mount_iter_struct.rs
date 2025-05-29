@@ -24,11 +24,9 @@ impl<'mount> MountIter<'mount> {
     /// Creates a new `MountIter`.
     #[allow(dead_code)]
     pub(crate) fn new(mount: &'mount mut Mount) -> Result<MountIter<'mount>, MountIterError> {
-        let iterator = GenIterator::new(Direction::Forward)?;
-
-        let iterator = Self { mount, iterator };
-
-        Ok(iterator)
+        GenIterator::new(Direction::Forward)
+            .map(|iterator| MountIter { mount, iterator })
+            .map_err(MountIterError::from)
     }
 }
 
