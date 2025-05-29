@@ -1122,8 +1122,12 @@ impl UTab {
     pub fn set_cache(&mut self, cache: Cache) -> Result<(), UTabError> {
         log::debug!("UTab::set_cache setting up a cache of paths and tags");
 
-        let result = unsafe { libmount::mnt_table_set_cache(self.inner, cache.inner) };
+        // Increment cache's reference counter to avoid a premature deallocation leading to a SIGSEV.
+        unsafe {
+            libmount::mnt_ref_cache(cache.inner);
+        }
 
+        let result = unsafe { libmount::mnt_table_set_cache(self.inner, cache.inner) };
         match result {
             0 => {
                 log::debug!("UTab::set_cache set up a cache of paths and tags");

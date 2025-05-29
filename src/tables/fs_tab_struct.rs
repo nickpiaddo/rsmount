@@ -1461,6 +1461,11 @@ impl FsTab {
     pub fn set_cache(&mut self, cache: Cache) -> Result<(), FsTabError> {
         log::debug!("FsTab::set_cache setting up a cache of paths and tags");
 
+        // Increment cache's reference counter to avoid a premature deallocation leading to a SIGSEV.
+        unsafe {
+            libmount::mnt_ref_cache(cache.inner);
+        }
+
         let result = unsafe { libmount::mnt_table_set_cache(self.inner, cache.inner) };
         match result {
             0 => {
