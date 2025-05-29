@@ -7,6 +7,5 @@
 
 // From this library
 pub mod device;
-pub mod errors;
 pub mod iter;
 pub mod tables;
