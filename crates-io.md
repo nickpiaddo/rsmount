@@ -48,17 +48,17 @@ install the required dependencies on your system.
 In this example we mount a disk on `/mnt/backup`.
 
 ```rust
-use rsmount::core::device::BlockDevice;
-use rsmount::core::flags::MountFlag;
-use rsmount::core::fs::FileSystem;
+use rsmount::device::BlockDevice;
+use rsmount::flags::MountFlag;
+use rsmount::fs::FileSystem;
 use rsmount::mount::Mount;
 
 fn main() -> rsmount::Result<()> {
     // Configure the `Mount` struct.
-    let block_device: BlockDevice = "/dev/vda".parse()?;
+    let block_device = BlockDevice::try_from("/dev/vda")?;
     let mut mount = Mount::builder()
         // Device to mount.
-        .source(block_device.into())
+        .source(block_device)
         // Location of the mount point in the file tree.
         .target("/mnt/backup")
         // Do not allow writing to the file system while it is mounted.
