@@ -80,17 +80,6 @@ macro_rules! owning_mut_from_ptr {
 #[allow(unused_macros)]
 #[macro_export]
 #[doc(hidden)]
-macro_rules! mount_info_shared_methods {
-    ($table_type:tt, $table_entry_type: tt, $table_error_type:tt) => {
-        $crate::table_shared_methods!($table_type, $table_entry_type, $table_error_type);
-        $crate::table_shared_target_methods!($table_type, $table_entry_type, $table_error_type);
-        $crate::table_find_mount_point!($table_type, $table_entry_type, $table_error_type);
-    };
-}
-
-#[allow(unused_macros)]
-#[macro_export]
-#[doc(hidden)]
 macro_rules! swaps_shared_methods {
     ($table_type:tt, $table_entry_type: tt, $table_error_type:tt) => {
         $crate::table_shared_methods!($table_type, $table_entry_type, $table_error_type);
