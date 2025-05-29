@@ -7,5 +7,4 @@
 
 // From this library
 
-pub(crate) mod gen_stepper_error_macro;
 pub(crate) mod gen_stepper_macro;
